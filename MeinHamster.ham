@@ -1,0 +1,28 @@
+/*class*/
+
+class MeinHamster extends Hamster {
+	private Spielfeld spielfeld;
+	private int energieLevel;
+    
+    public MeinHamster(int p1, int p2, int p3, int p4){
+    	super(p1,p2,p3,p4);
+   		spielfeld = new Spielfeld();
+    }
+
+	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException
+	{
+		if(Richtung>3 || Richtung < 0)return this;
+		while(this.getBlickrichtung()!=Richtung){
+			this.linksUm();
+		}
+		verbraucheEnergie();
+		return this;
+	}
+	
+	private void verbraucheEnergie() throws HamsterEnergieException
+	{
+		if(energieLevel==0)throw new HamsterEnergieException();
+		energieLevel--;
+	}
+    
+}

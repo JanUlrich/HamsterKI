@@ -1,0 +1,4 @@
+/*object-oriented program*/void main() {
+    MeinHamster hamster = new MeinHamster();
+    hamster.init(5,5,0,0,3);
+}

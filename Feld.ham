@@ -1,0 +1,11 @@
+/*class*/class Feld {
+    private boolean mauer;
+    private int koerner;
+
+	
+	public Feld(RelativerPunkt punkt, boolean mauer){
+		this.mauer = mauer;
+		this.koerner = 0;
+	}
+
+}
