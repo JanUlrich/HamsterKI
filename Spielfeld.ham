@@ -1,5 +1,15 @@
 /*class*/class Spielfeld {
     
+    public int anzahlSpalten;
+    public int anzahlReihen;
     
+    public Spielfeld(int width, int height){
+    	anzahlSpalten = width;
+    	anzahlReihen = height;
+    }
+    
+    public int getChance(int reihe, int spalte){
+    	return 0;
+    }
     
 }

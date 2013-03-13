@@ -1,17 +1,19 @@
 /*class*/
 
 class MeinHamster extends Hamster {
-	private Spielfeld spielfeld;
+	private Karte karte;
 	private int energieLevel;
     
     public MeinHamster(int p1, int p2, int p3, int p4){
     	super(p1,p2,p3,p4);
-   		spielfeld = new Spielfeld();
+   		karte = new Karte();
     }
 
 	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException
 	{
-		if(Richtung>3 || Richtung < 0)return this;
+		//Sind die Parameter ungültig oder schaut der Hamster bereits in die gewünschte Richtung wird keine Energie verbraucht und keine Drehung ausgeführt.
+		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)return this;
+		//
 		while(this.getBlickrichtung()!=Richtung){
 			this.linksUm();
 		}
