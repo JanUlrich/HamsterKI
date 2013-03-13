@@ -1,7 +1,6 @@
 /*class*/class Feld {
     private boolean mauer;
     private boolean koerner;
-
 	
 	public Feld(){
 		this.mauer = false;

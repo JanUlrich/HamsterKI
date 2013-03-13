@@ -1,0 +1,27 @@
+/*class*//**
+ * HamsterWegfindung berechnet die Energieaufwände für einen Hamster um
+ * auf die einzelnen Felder des Spielfelds zu gelangen.
+ */
+class HamsterWegfindung {
+    Spielfeld spielfeld;
+    
+    /**
+     * @param hamster - Die Ausgangslage des Hamsters. Dabei ist nur die Position und die Richtung des Hamsters relevant.
+     * @param felder - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
+     */
+    public HamsterWegfindung(Hamster hamster, Spielfeld felder){
+    	spielfeld = felder;
+    }
+
+	
+	public void berechneEntfernungen(){
+		
+	}
+	
+	private void doStepfrom(int reihe, int spalte, int richtung){
+		/*
+		Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
+		auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
+		*/ 
+	}
+}

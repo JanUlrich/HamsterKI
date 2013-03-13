@@ -27,7 +27,7 @@ class Karte {
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
-	 * 
+	 * Hier werden, allerding WegberechnungsFeld er verwendet.
 	 */
 	public Spielfeld createSpielfeld(){
 		int height = minReihe
