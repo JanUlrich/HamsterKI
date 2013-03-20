@@ -44,5 +44,11 @@ Die Javadoc kann bei Github-Pages gehostet werden: [Creating Github-pages]("http
 HOWTO Deploy github pages:
 1. Zu Branch 'gh-pages' wechseln:
     git checkout gh-pages
-2. Änderungen
-
+2. Änderungen aus dem master-branch pullen
+    git pull origin master
+3. Irg wie alle Dateien löschen (git rm -rf <file>) außer dem javadoc-Ordner
+4. Committen und pushen
+    git commit -m 'Javadoc editiert'
+    git push origni gh-pages
+5. Besser wieder zu Branch master wechseln:
+    git checkout master
