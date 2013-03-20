@@ -12,4 +12,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	this(x,y);
     	this.direction = direction;
     }
+    
+    public Position getPositionInRichtung(int direction){
+    	return new Position(0,0);
+    }
 }

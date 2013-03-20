@@ -21,6 +21,13 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	this.spielfeld = felder;
     }
     
+    public int getEnergie(Position pos){
+    	return 0;
+    }
+    
+    public void setEnergie(Position pos, int energie){
+    }
+    
     public int getChance(int reihe, int spalte){
     	return 0;
     }

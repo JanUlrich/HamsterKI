@@ -66,7 +66,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		energieLevel--;
 	}
     
-    public Position getHamsterPosition(){
+    public Position getPosition(){
     	return new Position(this.getSpalte(), this.getReihe(), this.getBlickrichtung());
     }
     

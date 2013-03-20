@@ -16,7 +16,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     }
 
 	public int getBestMove(){
-		berechneEntferungen();
+		berechneEntfernungen();
+		return 0;
 	}
 	
 	public void berechneEntfernungen(){
