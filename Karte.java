@@ -12,6 +12,10 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		karte = new ZweiDimensionalesArray<Feld>();
 	}
 	
+	public void setFeld(int reihe, int spalte, Feld feld) {
+		karte.setFeld(reihe, spalte, feld);
+	}
+	
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen

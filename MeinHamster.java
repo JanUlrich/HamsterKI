@@ -38,23 +38,27 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     {
     	int reihe = getReihe();
     	int spalte = getSpalte();
+    	
     	  	
     	for (int i = reihe-1; i < reihe + 2 ; i++)	
     	{
     		for (int j = spalte -1; j < spalte + 2 ; j++)		
     		{
+    			if(i<0 || j<0)
+    				continue;
+		    	Feld f = karte.getFeld(i,j);
+		    	if(f==null) {
+		    		f = new Feld();
+		    		karte.setFeld(i,j,f);
+		    	}
     			if (Territorium.mauerDa(i,j))
-    			{
-    				karte.getFeld(i,j).setMauer(true);
-    			}
+    				f.setMauer(true);
     			else
-    			{
-    				karte.getFeld(i,j).setMauer(false);
-    			}
+    				f.setMauer(false);
     		}				
     	} 
     	
-    	if(!kornDa())
+		if(!kornDa()) 
 			karte.getFeld(reihe, spalte).setKoerner(false);
     }
 	
@@ -81,9 +85,9 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	int richtung = berechneZug();
     	dreheInRichtung(richtung);
     	vor();
+    	KachelnAbfragen();
     	if(kornDa())
     		nimm();
-    	KachelnAbfragen();
     }
     
     /**
@@ -92,7 +96,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     private int berechneZug(){
     	Spielfeld sp = karte.createSpielfeld();
     	HamsterWegfindung ki = new HamsterWegfindung(this, sp);
-    	ki.berechneEntfernungen();
+    	//ki.berechneEntfernungen();
     	
     	if(vornFrei()) 
 	    	return getBlickrichtung();

@@ -12,6 +12,10 @@ public class Karte {
 		karte = new ZweiDimensionalesArray<Feld>();
 	}
 	
+	public void setFeld(int reihe, int spalte, Feld feld) {
+		karte.setFeld(reihe, spalte, feld);
+	}
+	
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen

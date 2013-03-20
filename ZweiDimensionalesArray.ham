@@ -65,11 +65,16 @@ public class ZweiDimensionalesArray<E>{
 	 * Wird benötigt um wichtige Variablen für die createSpielfeld-Methode zu setzen.
 	 */
 	private void feldZugriff(int reihe, int spalte){
-		if(reihe<0 || spalte<0)throw new IllegalArgumentException("Ungültige Werte für Reihe ("+reihe+") und Spalte ("+spalte+")");
-		if(reihe<minReihe || minReihe == -1)minReihe=reihe;
-		if(reihe>maxReihe || maxReihe == -1)maxReihe=reihe;
-		if(spalte<minSpalte || minSpalte == -1)minSpalte=reihe;
-		if(spalte>maxSpalte || maxSpalte == -1)maxSpalte=reihe;
+		if(reihe<0 || spalte<0)
+			throw new IllegalArgumentException("Ungültige Werte für Reihe ("+reihe+") und Spalte ("+spalte+")");
+		if(reihe<minReihe || minReihe == -1)
+			minReihe=reihe;
+		if(reihe>maxReihe || maxReihe == -1)
+			maxReihe=reihe;
+		if(spalte<minSpalte || minSpalte == -1)
+			minSpalte=reihe;
+		if(spalte>maxSpalte || maxSpalte == -1)
+			maxSpalte=reihe;
 	}
 	
 	private String generateHashValue(int reihe, int spalte){
