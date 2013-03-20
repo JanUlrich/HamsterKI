@@ -19,7 +19,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		berechneEntferungen();
 	}
 	
-	private void berechneEntfernungen(){
+	public void berechneEntfernungen(){
 		doStepfrom(initialHamster.getPosition());
 	}
 	
@@ -44,3 +44,4 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		}
 	}
 }
+ 

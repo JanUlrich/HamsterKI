@@ -25,6 +25,35 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		return this;
 	}
 	
+	 /**
+    @author Simon Herrmann
+    @param karte Karte des Hamsters
+    @return Karte des Hamsters mit nach der Sensorabfrage 
+    */
+    void KachelnAbfragen()
+    {
+    	int reihe = getReihe();
+    	int spalte = getSpalte();
+    	  	
+    	for (int i = reihe-1; i < reihe + 2 ; i++)	
+    	{
+    		for (int j = spalte -1; j < spalte + 2 ; j++)		
+    		{
+    			if (Territorium.mauerDa(i,j))
+    			{
+    				karte.getFeld(i,j).setMauer(true);
+    			}
+    			else
+    			{
+    				karte.getFeld(i,j).setMauer(false);
+    			}
+    		}				
+    	} 
+    	
+    	if(!kornDa())
+			karte.getFeld(reihe, spalte).setKoerner(false);
+    }
+	
 	public void vorwärts() throws HamsterEnergieException{
 		vor();
 		verbraucheEnergie();
@@ -50,6 +79,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	vor();
     	if(kornDa())
     		nimm();
+    	KachelnAbfragen();
     }
     
     /**

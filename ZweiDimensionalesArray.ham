@@ -27,8 +27,8 @@ class ZweiDimensionalesArray<E>{
 	}
 	
 	public boolean feldBelegt(int reihe, int spalte){
-	String key = generateHashValue(reihe,spalte);
-	return felder.containsKey(key);
+		String key = generateHashValue(reihe,spalte);
+		return felder.containsKey(key);
 	}
 	
 	public int getMinSpalte(){

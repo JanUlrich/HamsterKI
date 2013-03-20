@@ -19,7 +19,7 @@ class HamsterWegfindung {
 		berechneEntferungen();
 	}
 	
-	private void berechneEntfernungen(){
+	public void berechneEntfernungen(){
 		doStepfrom(initialHamster.getPosition());
 	}
 	
@@ -44,3 +44,4 @@ class HamsterWegfindung {
 		}
 	}
 }
+ 
