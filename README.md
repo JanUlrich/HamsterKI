@@ -28,3 +28,16 @@ Variable 'richtung' ist die von der KI berechnete optimale Richtung für den nä
 3. Der Hamster scannt sein Umfeld
 4. Der Hamster versucht ein Korn aufzusammeln. Liegt kein Korn mehr auf dem Feld, dann wird dies auf der Karte vermerkt.
 
+Javadoc
+=======
+
+Javadoc generieren
+------------------
+Das Javadoc-Tool ist im JDK enthalten.
+# Generieren von Javadoc:
+    cd /HAMSTERKI_SOURCE_VERZEICHNIS/   
+    javadoc *.java -d javadoc
+
+Github-Pages
+------------
+Die Javadoc kann bei Github-Pages gehostet werden: [Creating Github-pages]("https://help.github.com/articles/creating-project-pages-manually")
