@@ -1,13 +1,20 @@
 /*object-oriented program*/void main() {
+	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
     MeinHamster hamster = new MeinHamster(5,5,0,0,3, 20);
     
+	mainLoop(hamster);
+	    
+	int uebrigeAnzahlKoerner = Territorium.getAnzahlKoerner();
+    
+    System.out.println("Ende");   
+}
+
+void mainLoop(MeinHamster hamster) {
     while(true) {
     	try {
 	    	hamster.kiStep();
     	} catch(HamsterEnergieException e) {
-    		break;
+    		return;
     	}
     }
-    
-    System.out.println("Ende");
 }

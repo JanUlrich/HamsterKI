@@ -17,7 +17,6 @@ class HamsterWegfindung {
 
 	public int getBestMove(){
 		berechneEntferungen();
-		
 	}
 	
 	private void berechneEntfernungen(){
@@ -32,7 +31,11 @@ class HamsterWegfindung {
 		int momentaneEnergie = spielfeld.getEnergie(pos);
 		for(int direction = 0; direction<4;direction++){
 			int benoetigteEnergie = 2;
-			if(pos.direction == direction) benoetigteEnergie = 1; // Schaut der Hamster schon in entsprechende Richtung, braucht er sich nicht mehr drehen -> spart einen Energiepunkt
+
+	    	// Schaut der Hamster schon in entsprechende Richtung, 
+	    	// braucht er sich nicht mehr drehen
+			if(pos.direction == direction)
+				benoetigteEnergie = 1;
 			
 			if(spielfeld.istBessererEnergiewert(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie)){
 				spielfeld.setEnergie(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie);
