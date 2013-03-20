@@ -14,6 +14,12 @@ class ZweiDimensionalesArray<E>{
 	private int maxSpalte = -1;
 	
 	private HashMap<String,E> felder = new HashMap<String,E>();
+	
+	public void setFeld(int reihe, int spalte, Feld feld) {
+		feldZugriff(reihe, spalte);
+		String key = generateHashValue(reihe, spalte);
+		felder.put(key, feld);
+	}
 
 	/**
 	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
