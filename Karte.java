@@ -19,6 +19,13 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		return null;
 	}
 	
-
+	public Feld getFeld(int reihe, int spalte){
+		return null;
+	}
+	
+	public void update(Karte informationen){
+		
+	}
+	
 	
 }

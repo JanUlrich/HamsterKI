@@ -19,7 +19,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		berechneEntferungen();
 	}
 	
-	private void berechneEntfernungen(){
+	public void berechneEntfernungen(){
 		doStepfrom(initialHamster.getPosition());
 	}
 	
@@ -31,7 +31,11 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		int momentaneEnergie = spielfeld.getEnergie(pos);
 		for(int direction = 0; direction<4;direction++){
 			int benoetigteEnergie = 2;
-			if(pos.direction == direction) benoetigteEnergie = 1; // Schaut der Hamster schon in entsprechende Richtung, braucht er sich nicht mehr drehen -> spart einen Energiepunkt
+
+	    	// Schaut der Hamster schon in entsprechende Richtung, 
+	    	// braucht er sich nicht mehr drehen
+			if(pos.direction == direction)
+				benoetigteEnergie = 1;
 			
 			if(spielfeld.istBessererEnergiewert(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie)){
 				spielfeld.setEnergie(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie);
@@ -40,3 +44,4 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		}
 	}
 }
+ 

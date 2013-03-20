@@ -27,8 +27,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	}
 	
 	public boolean feldBelegt(int reihe, int spalte){
-	String key = generateHashValue(reihe,spalte);
-	return felder.containsKey(key);
+		String key = generateHashValue(reihe,spalte);
+		return felder.containsKey(key);
 	}
 	
 	public int getMinSpalte(){

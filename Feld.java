@@ -10,5 +10,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	public void setMauer(boolean mauer){
 		this.mauer = mauer;
 	}
-
+	
+	public void setKoerner(boolean koerner) {
+		this.koerner = koerner;
+	}
 }

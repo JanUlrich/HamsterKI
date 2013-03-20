@@ -30,7 +30,7 @@ class MeinHamster extends Hamster {
     @param karte Karte des Hamsters
     @return Karte des Hamsters mit nach der Sensorabfrage 
     */
-    Karte KachelnAbfragen(Karte karte)
+    void KachelnAbfragen()
     {
     	int reihe = getReihe();
     	int spalte = getSpalte();
@@ -50,7 +50,8 @@ class MeinHamster extends Hamster {
     		}				
     	} 
     	
-    	return karte; 	
+    	if(!kornDa())
+			karte.getFeld(reihe, spalte).setKoerner(false);
     }
 	
 	public void vorwärts() throws HamsterEnergieException{
@@ -78,6 +79,7 @@ class MeinHamster extends Hamster {
     	vor();
     	if(kornDa())
     		nimm();
+    	KachelnAbfragen();
     }
     
     /**
