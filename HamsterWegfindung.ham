@@ -4,13 +4,13 @@
  */
 class HamsterWegfindung {
     Spielfeld spielfeld;
-    Hamster initialHamster;
+    MeinHamster initialHamster;
     
     /**
      * @param hamster - Die Ausgangslage des Hamsters. Dabei ist nur die Position und die Richtung des Hamsters relevant.
      * @param felder - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
      */
-    public HamsterWegfindung(Hamster hamster, Spielfeld felder){
+    public HamsterWegfindung(MeinHamster hamster, Spielfeld felder){
     	spielfeld = felder;
     	initialHamster = hamster;
     }
