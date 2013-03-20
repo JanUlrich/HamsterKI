@@ -1,7 +1,7 @@
 /*class*//**
  * Erweiterung eines normalen Feldes. Es können in dieser Klasse zusätzliche für die Wegberechnung erforderliche Informationen gespeichert werden.
 */
-class WegberechnungsFeld {
+public class WegberechnungsFeld {
 	private Feld feld;
     public int[] energieaufwand;
     

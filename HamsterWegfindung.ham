@@ -2,7 +2,7 @@
  * HamsterWegfindung berechnet die Energieaufwände für einen Hamster um
  * auf die einzelnen Felder des Spielfelds zu gelangen. Die Werte können für weitere AI-Operationen verwendet werden.
  */
-class HamsterWegfindung {
+public class HamsterWegfindung {
     Spielfeld spielfeld;
     MeinHamster initialHamster;
     
@@ -20,6 +20,9 @@ class HamsterWegfindung {
 		return 0;
 	}
 	
+	/**
+	 * Berechnet die Energieaufwände für den Hamster 'initialHamster' um auf die einzelnen Felder des Spielfelds zu gelangen.
+	 */
 	public void berechneEntfernungen(){
 		doStepfrom(initialHamster.getPosition());
 	}

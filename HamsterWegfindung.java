@@ -2,7 +2,7 @@
  * HamsterWegfindung berechnet die Energieaufwände für einen Hamster um
  * auf die einzelnen Felder des Spielfelds zu gelangen. Die Werte können für weitere AI-Operationen verwendet werden.
  */
-import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Territory;import de.hamster.model.HamsterException;import de.hamster.model.HamsterInitialisierungsException;import de.hamster.model.HamsterNichtInitialisiertException;import de.hamster.model.KachelLeerException;import de.hamster.model.MauerDaException;import de.hamster.model.MaulLeerException;import de.hamster.model.MouthEmptyException;import de.hamster.model.WallInFrontException;import de.hamster.model.TileEmptyException;import de.hamster.debugger.model.Hamster;class HamsterWegfindung {
+import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Territory;import de.hamster.model.HamsterException;import de.hamster.model.HamsterInitialisierungsException;import de.hamster.model.HamsterNichtInitialisiertException;import de.hamster.model.KachelLeerException;import de.hamster.model.MauerDaException;import de.hamster.model.MaulLeerException;import de.hamster.model.MouthEmptyException;import de.hamster.model.WallInFrontException;import de.hamster.model.TileEmptyException;import de.hamster.debugger.model.Hamster;public class HamsterWegfindung {
     Spielfeld spielfeld;
     MeinHamster initialHamster;
     
@@ -20,6 +20,9 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		return 0;
 	}
 	
+	/**
+	 * Berechnet die Energieaufwände für den Hamster 'initialHamster' um auf die einzelnen Felder des Spielfelds zu gelangen.
+	 */
 	public void berechneEntfernungen(){
 		doStepfrom(initialHamster.getPosition());
 	}

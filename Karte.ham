@@ -4,7 +4,7 @@
  * Die Felder der Karte können Editiert werden.
  * Quasi die Karte die der Hamster (die AI das Hamsters) dabei hat und alle aufgedeckten Felder darauf vermerkt.
 */
-class Karte {
+public class Karte {
 
 	private ZweiDimensionalesArray<Feld> karte;
 	

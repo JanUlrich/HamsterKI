@@ -3,7 +3,7 @@
 /**
  * Diese Klasse stellt ein 2D-Array mit Variabler größe dar.
  */
-class ZweiDimensionalesArray<E>{
+public class ZweiDimensionalesArray<E>{
     
     public ZweiDimensionalesArray(){
     }
@@ -15,7 +15,7 @@ class ZweiDimensionalesArray<E>{
 	
 	private HashMap<String,E> felder = new HashMap<String,E>();
 	
-	public void setFeld(int reihe, int spalte, Feld feld) {
+	public void setFeld(int reihe, int spalte, E feld) {
 		feldZugriff(reihe, spalte);
 		String key = generateHashValue(reihe, spalte);
 		felder.put(key, feld);
@@ -24,7 +24,7 @@ class ZweiDimensionalesArray<E>{
 	/**
 	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
 	 * Dieses kann anschließend editiert werden.
-	 * @return - Das Feld an der Stelle reihe,spalte
+	 * @return - Das Feld an der Stelle reihe,spalte / Wenn kein Feld vorhanden, dann wird null zurückgegeben.
 	*/
 	public E getFeld(int reihe, int spalte){
 		feldZugriff(reihe,spalte);
@@ -32,6 +32,9 @@ class ZweiDimensionalesArray<E>{
 		return felder.get(key);
 	}
 	
+	/**
+	 * @return True, falls sich bereits ein Feld an Stelle reihe, spalte befindet - ansonsten false
+	 */
 	public boolean feldBelegt(int reihe, int spalte){
 		String key = generateHashValue(reihe,spalte);
 		return felder.containsKey(key);

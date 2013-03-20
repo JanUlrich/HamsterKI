@@ -1,4 +1,4 @@
-/*class*/class Feld {
+/*class*/public class Feld {
     private boolean mauer;
     private boolean koerner;
 	

@@ -1,0 +1,3 @@
+/*class*/public class HamsterEnergieException extends Exception {
+    
+}

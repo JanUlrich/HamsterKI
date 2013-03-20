@@ -1,4 +1,4 @@
-/*class*/class Position {
+/*class*/public class Position {
     public int x;
     public int y;
     public int direction;

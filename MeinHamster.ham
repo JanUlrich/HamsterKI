@@ -1,6 +1,10 @@
 /*class*/
-
-class MeinHamster extends Hamster {
+/**
+ * Ein Hamster mit zusätzlichen Funktionalitäten und begrenzter Energie.
+ * Verbraucht für jede Drehung und jede Bewegung auf eine andere Kachel Energie.
+ * Kann sich nur so lange bewegen, wie Energie vorhanden.
+ */
+public class MeinHamster extends Hamster {
 	private Karte karte;
 	private int energieLevel;
     

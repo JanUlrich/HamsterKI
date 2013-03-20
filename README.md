@@ -40,4 +40,9 @@ Das Javadoc-Tool ist im JDK enthalten.
 
 Github-Pages
 ------------
-Die Javadoc kann bei Github-Pages gehostet werden: [Creating Github-pages]("https://help.github.com/articles/creating-project-pages-manually")
+Die Javadoc kann bei Github-Pages gehostet werden: [Creating Github-pages]("https://help.github.com/articles/creating-project-pages-manually")    
+HOWTO Deploy github pages:
+1. Zu Branch 'gh-pages' wechseln:
+    git checkout gh-pages
+2. Änderungen
+

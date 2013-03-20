@@ -2,7 +2,7 @@
 /**
  * Eine Zustand des Spielfelds. Wird zur Wegberechnung verwendet
  */
-class Spielfeld {
+public class Spielfeld {
     
     public int anzahlSpalten;
     public int anzahlReihen;
