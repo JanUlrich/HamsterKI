@@ -21,10 +21,44 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		return this;
 	}
 	
+	@Override
+	public void vor(){
+		
+	}
+	
+	public void vorwärts() throws HamsterEnergieException{
+		super.vor();
+		verbraucheEnergie();
+	}
+	
 	private void verbraucheEnergie() throws HamsterEnergieException
 	{
 		if(energieLevel==0)throw new HamsterEnergieException();
 		energieLevel--;
 	}
+    
+    public Position getHamsterPosition(){
+    	return new Position(this.getSpalte(), this.getReihe(), this.getBlickrichtung());
+    }
+    
+    /**
+     * Bewegt den Hamster KI gesteuert einen Schritt weiter
+     */
+    public void kiStep() throws HamsterEnergieException{
+    	int richtung = berechneZug();
+    	dreheInRichtung(richtung);
+    	vor();
+    }
+    
+    /**
+     * @return - gibt die Richtung zurück
+     */
+    private int berechneZug(){
+    	Spielfeld sp = karte.createSpielfeld();
+    	HamsterWegfindung ki = new HamsterWegfindung(this, sp);
+    	ki.berechneEntfernungen();
+    	
+    	return 0;
+    }
     
 }

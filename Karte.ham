@@ -1,51 +1,24 @@
-/*class*/import java.util.HashMap;
-
+/*class*/
 /**
  * Die Karte stellt ein Spielfeld mit Variabler Größe dar.
  * Die Felder der Karte können Editiert werden.
+ * Quasi die Karte die der Hamster (die AI das Hamsters) dabei hat und alle aufgedeckten Felder darauf vermerkt.
 */
 class Karte {
 
-	int minReihe = -1;
-	int maxReihe = -1;
-	int minSpalte = -1;
-	int maxSpalte = -1;
-	
-	HashMap<String,Feld> felder = new HashMap<String,Feld>();
-
-	/**
-	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
-	 * Dieses kann anschließend editiert werden.
-	 * @return - Das Feld an der Stelle reihe,spalte
-	*/
-	public Feld getFeld(int reihe, int spalte){
-		feldZugriff(reihe,spalte);
-		String key = ""+reihe+""+spalte+"";
-		if(!felder.containsKey(key)){felder.put(key, new Feld());}
-		return felder.get(key);
-	}
+	private ZweiDimensionalesArray<Feld> karte;
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
 	 * Hier werden, allerding WegberechnungsFeld er verwendet.
 	 */
 	public Spielfeld createSpielfeld(){
-		int height = minReihe
-		Spielfeld ret = new Spielfeld(width, height);
-		
+		//int height = minReihe;
+		//Spielfeld ret = new Spielfeld(width, height);
+		Spielfeld ret = new Spielfeld();
 		return null;
 	}
 	
-	/**
-	 * Bei einem Zugriff auf ein Feld sollte diese Funktion aufgerufen werden.
-	 * Wird benötigt um wichtige Variablen für die createSpielfeld-Methode zu setzen.
-	 */
-	private void feldZugriff(int reihe, int spalte){
-		if(reihe<0 || spalte<0)throw new IllegalArgumentException("Ungültige Werte für Reihe ("+reihe+") und Spalte ("+spalte+")");
-		if(reihe<minReihe || minReihe == -1)minReihe=reihe;
-		if(reihe>maxReihe || maxReihe == -1)maxReihe=reihe;
-		if(spalte<minSpalte || minSpalte == -1)minSpalte=reihe;
-		if(spalte>maxSpalte || maxSpalte == -1)maxSpalte=reihe;
-	}
+
 	
 }
