@@ -19,6 +19,13 @@ class Karte {
 		return null;
 	}
 	
-
+	public Feld getFeld(int reihe, int spalte){
+		return null;
+	}
+	
+	public void update(Karte informationen){
+		
+	}
+	
 	
 }
