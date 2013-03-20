@@ -1,15 +1,19 @@
 import java.util.HashMap;
+
+/**
+ * Diese Klasse stellt ein 2D-Array mit Variabler größe dar.
+ */
 import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Territory;import de.hamster.model.HamsterException;import de.hamster.model.HamsterInitialisierungsException;import de.hamster.model.HamsterNichtInitialisiertException;import de.hamster.model.KachelLeerException;import de.hamster.model.MauerDaException;import de.hamster.model.MaulLeerException;import de.hamster.model.MouthEmptyException;import de.hamster.model.WallInFrontException;import de.hamster.model.TileEmptyException;import de.hamster.debugger.model.Hamster;class ZweiDimensionalesArray<E>{
     
     public ZweiDimensionalesArray(){
     }
     
-	int minReihe = -1;
-	int maxReihe = -1;
-	int minSpalte = -1;
-	int maxSpalte = -1;
+	private int minReihe = -1;
+	private int maxReihe = -1;
+	private int minSpalte = -1;
+	private int maxSpalte = -1;
 	
-	HashMap<String,E> felder = new HashMap<String,E>();
+	private HashMap<String,E> felder = new HashMap<String,E>();
 
 	/**
 	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
@@ -27,6 +31,26 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	return felder.containsKey(key);
 	}
 	
+	public int getMinSpalte(){
+		if(minSpalte==-1)return 0;
+		return minSpalte;
+	}
+	
+	public int getMaxSpalte(){
+		if(maxSpalte==-1)return 0;
+		return maxSpalte;
+	}
+	
+	public int getMinReihe(){
+		if(minReihe==-1)return 0;
+		return minReihe;
+	}
+	
+	public int getMaxReihe(){
+		if(maxReihe==-1)return 0;
+		return maxReihe;
+	}
+	
 	/**
 	 * Bei einem Zugriff auf ein Feld sollte diese Funktion aufgerufen werden.
 	 * Wird benötigt um wichtige Variablen für die createSpielfeld-Methode zu setzen.
@@ -40,6 +64,6 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	}
 	
 	private String generateHashValue(int reihe, int spalte){
-		return ""+reihe+""+spalte+"";
+		return ""+reihe+","+spalte+"";
 	}
 }

@@ -4,36 +4,36 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	private Karte karte;
 	private int energieLevel;
     
-    public MeinHamster(int p1, int p2, int p3, int p4, int p5){
+    public MeinHamster(int p1, int p2, int p3, int p4, int p5, int energie){
     	super(p1,p2,p3,p4,p5);
+    	energieLevel = energie;
    		karte = new Karte();
     }
 
 	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException
 	{
-		//Sind die Parameter ungültig oder schaut der Hamster bereits in die gewünschte Richtung wird keine Energie verbraucht und keine Drehung ausgeführt.
-		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)return this;
-		//
-		while(this.getBlickrichtung()!=Richtung){
+		// Sind die Parameter ungültig oder schaut der Hamster bereits 
+		// in die gewünschte Richtung wird keine Energie verbraucht und 
+		// keine Drehung ausgeführt.
+		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)
+			return this;
+		
+		while(this.getBlickrichtung()!=Richtung)
 			this.linksUm();
-		}
+		
 		verbraucheEnergie();
 		return this;
 	}
 	
-	@Override
-	public void vor(){
-		
-	}
-	
 	public void vorwärts() throws HamsterEnergieException{
-		super.vor();
+		vor();
 		verbraucheEnergie();
 	}
 	
 	private void verbraucheEnergie() throws HamsterEnergieException
 	{
-		if(energieLevel==0)throw new HamsterEnergieException();
+		if(energieLevel==0)
+			throw new HamsterEnergieException();
 		energieLevel--;
 	}
     
@@ -48,6 +48,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	int richtung = berechneZug();
     	dreheInRichtung(richtung);
     	vor();
+    	if(kornDa())
+    		nimm();
     }
     
     /**
@@ -58,7 +60,10 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	HamsterWegfindung ki = new HamsterWegfindung(this, sp);
     	ki.berechneEntfernungen();
     	
-    	return 0;
+    	if(vornFrei()) 
+	    	return getBlickrichtung();
+	    else
+	    	return (getBlickrichtung()+1) % 4;
     }
     
 }

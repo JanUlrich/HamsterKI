@@ -1,4 +1,13 @@
 /*object-oriented program*/void main() {
-    MeinHamster hamster = new MeinHamster(5,5,0,0,3);
-
+    MeinHamster hamster = new MeinHamster(5,5,0,0,3, 20);
+    
+    while(true) {
+    	try {
+	    	hamster.kiStep();
+    	} catch(HamsterEnergieException e) {
+    		break;
+    	}
+    }
+    
+    System.out.println("Ende");
 }
