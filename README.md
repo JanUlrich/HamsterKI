@@ -29,26 +29,35 @@ Variable 'richtung' ist die von der KI berechnete optimale Richtung für den nä
 4. Der Hamster versucht ein Korn aufzusammeln. Liegt kein Korn mehr auf dem Feld, dann wird dies auf der Karte vermerkt.
 
 Javadoc
-=======
+-------
 
-Javadoc generieren
-------------------
+## Javadoc generieren ##
+
 Das Javadoc-Tool ist im JDK enthalten.
-# Generieren von Javadoc:
+### Generieren von Javadoc ###
     cd /HAMSTERKI_SOURCE_VERZEICHNIS/   
     javadoc *.java -d javadoc
 
-Github-Pages
-------------
+## Github-Pages ##
+
 Die Javadoc kann bei Github-Pages gehostet werden: [Creating Github-pages]("https://help.github.com/articles/creating-project-pages-manually")    
-HOWTO Deploy github pages:
+    
+### HOWTO Deploy github pages ###
+
 1. Zu Branch 'gh-pages' wechseln:
+
     git checkout gh-pages
+
 2. Änderungen aus dem master-branch pullen
+
     git pull origin master
+
 3. Irg wie alle Dateien löschen (git rm -rf <file>) außer dem javadoc-Ordner
 4. Committen und pushen
+
     git commit -m 'Javadoc editiert'
     git push origni gh-pages
+
 5. Besser wieder zu Branch master wechseln:
+
     git checkout master
