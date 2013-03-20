@@ -8,6 +8,11 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 
 	private ZweiDimensionalesArray<Feld> karte;
 	
+	public Karte() {
+		karte = new ZweiDimensionalesArray<Feld>();
+	}
+	
+	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
 	 * Hier werden, allerding WegberechnungsFeld er verwendet.
@@ -15,11 +20,14 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	public Spielfeld createSpielfeld(){
 		//int height = minReihe;
 		//Spielfeld ret = new Spielfeld(width, height);
-		Spielfeld ret = new Spielfeld();
+		Spielfeld ret = new Spielfeld(new ZweiDimensionalesArray<WegberechnungsFeld>());
 		return null;
 	}
 	
 	public Feld getFeld(int reihe, int spalte){
+		if(karte.feldBelegt(reihe, spalte)) {
+			return karte.getFeld(reihe, spalte);
+		}
 		return null;
 	}
 	
