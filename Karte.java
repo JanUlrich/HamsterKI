@@ -16,25 +16,6 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		karte.setFeld(new Position(spalte, reihe), feld);
 	}
 		
-	public Feld getFeld(int reihe, int spalte){
-		Position pos = new Position(spalte, reihe);
-		return getFeld(pos);
-	}
-	
-	public Feld getFeld(Position pos){
-		if(karte.feldBelegt(pos)) {
-			return karte.getFeld(pos);
-		}
-		return unerkundetesFeld();
-	}
-	
-	private Feld unerkundetesFeld(){
-		return new Feld(false);
-	}
-	
-	public void update(Karte informationen){
-		
-	}
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
@@ -48,11 +29,27 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		int minY = karte.getMinReihe();
 		for(int x = minX;x<karte.getMaxSpalte();x++)for(int y = minY;y<karte.getMaxReihe();y++){
 			Position pos = new Position(x,y);
-			WegberechnungsFeld feld = new WegberechnungsFeld(this.getFeld(pos));
-			felder.setFeld(new Position(x-minX,y-minY),feld);
+			felder.setFeld(new Position(x-minX,y-minY),this.getFeld(pos));
 		}
 		Spielfeld ret = new Spielfeld(felder);
 		return ret;
 	}
+	
+	public Feld getFeld(int reihe, int spalte){
+		Position pos = new Position(spalte, reihe);
+		if(karte.feldBelegt(pos)) {
+			return karte.getFeld(pos);
+		}
+		return unerkundetesFeld();
+	}
+	
+	private Feld unerkundetesFeld(){
+		return new Feld(false, 25);
+	}
+	
+	public void update(Karte informationen){
+		
+	}
+	
 	
 }
