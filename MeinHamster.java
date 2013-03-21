@@ -23,7 +23,6 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	 */
 	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException
 	{
-		
 		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)
 			return this;
 		
@@ -44,7 +43,6 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	int reihe = getReihe();
     	int spalte = getSpalte();
     	
-    	  	
     	for (int i = reihe-1; i < reihe + 2 ; i++)	
     	{
     		for (int j = spalte -1; j < spalte + 2 ; j++)		
@@ -52,14 +50,11 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     			if(i<0 || j<0)
     				continue;
 		    	Feld f = karte.getFeld(i,j);
-		    	if(f==null) {
-		    		f = new Feld();
-		    		karte.setFeld(i,j,f);
-		    	}
     			if (Territorium.mauerDa(i,j))
     				f.setMauer(true);
     			else
     				f.setMauer(false);
+    			karte.setFeld(i,j,f);
     		}				
     	} 
     	
@@ -87,10 +82,12 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
      * Bewegt den Hamster KI gesteuert einen Schritt weiter
      */
     public void kiStep() throws HamsterEnergieException{
+    	// Als erstes Umgebung abfragen
+    	KachelnAbfragen();
+    	
     	int richtung = berechneZug();
     	dreheInRichtung(richtung);
-    	vor();
-    	KachelnAbfragen();
+    	vorwärts();
     	if(kornDa())
     		nimm();
     }
@@ -103,10 +100,30 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	HamsterWegfindung ki = new HamsterWegfindung(this, sp);
     	//ki.berechneEntfernungen();
     	
-    	if(vornFrei()) 
-	    	return getBlickrichtung();
-	    else
-	    	return (getBlickrichtung()+1) % 4;
+    	int richtung = getBlickrichtung();
+		while(!freiInRichtung(richtung)) {
+			richtung = (richtung + 1) % 4;
+		}
+		return richtung;
     }
     
+    /**
+     * Gibt zurück, ob in der angegebenen Richtung frei ist,
+     * oder ob dort eine Mauer liegt
+     * @return true, wenn in der angegebenen Richtung keine Mauer ist
+     */
+    private boolean freiInRichtung(int richtung) {
+    	Feld feld = feldInRichtung(richtung);
+    	return !feld.getMauer();
+    }
+    
+    private Feld feldInRichtung(int richtung) {
+    	int reihe = getReihe();
+    	int spalte = getSpalte();
+    	
+    	reihe += (richtung - 1) % 2;
+    	spalte += (richtung * -1 + 2) % 2;
+    	
+    	return karte.getFeld(reihe, spalte);
+    }
 }
