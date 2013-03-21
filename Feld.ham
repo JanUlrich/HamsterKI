@@ -1,17 +1,27 @@
 /*class*/public class Feld {
     private boolean mauer;
-    private boolean koerner;
+    private int koerner;//Prozentchance auf Körner
 	
 	public Feld(){
 		this.mauer = false;
-		this.koerner = true;
+		this.koerner = 25;
+	}
+	
+	public Feld(boolean mauer, int koerner){
+		this.mauer = mauer;
+		this.koerner = koerner;
 	}
 
 	public void setMauer(boolean mauer){
 		this.mauer = mauer;
 	}
 	
-	public void setKoerner(boolean koerner) {
+	public void setKoerner(int koerner) {
 		this.koerner = koerner;
+	}
+	
+	public int getKornChance(){
+		if(mauer)return 0;
+		return koerner;
 	}
 }

@@ -28,6 +28,12 @@ Variable 'richtung' ist die von der KI berechnete optimale Richtung für den nä
 3. Der Hamster scannt sein Umfeld
 4. Der Hamster versucht ein Korn aufzusammeln. Liegt kein Korn mehr auf dem Feld, dann wird dies auf der Karte vermerkt.
 
+KI
+==
+
+KI funktioniert nach dem Heiß/Kalt Prinzip.    
+Die KI versucht zu berechnen, in welcher Richtung die größte Chance auf einen Erhalt von Körnern besteht.
+
 Javadoc
 -------
 
@@ -61,3 +67,5 @@ Die Javadoc kann bei Github-Pages gehostet werden: [Creating Github-pages]("http
 5. Besser wieder zu Branch master wechseln:
 
     git checkout master
+
+6. Javadoc als Github-Page [bewundern]("http://janulrich.github.com/HamsterKI/javadoc/")

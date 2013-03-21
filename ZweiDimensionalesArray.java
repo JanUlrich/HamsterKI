@@ -1,5 +1,4 @@
 import java.util.HashMap;
-
 /**
  * Diese Klasse stellt ein 2D-Array mit Variabler größe dar.
  */
@@ -15,7 +14,9 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	
 	private HashMap<String,E> felder = new HashMap<String,E>();
 	
-	public void setFeld(int reihe, int spalte, E feld) {
+	public void setFeld(Position pos, E feld) {
+		int reihe = pos.y;
+		int spalte = pos.x;
 		feldZugriff(reihe, spalte);
 		String key = generateHashValue(reihe, spalte);
 		felder.put(key, feld);
@@ -26,16 +27,21 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	 * Dieses kann anschließend editiert werden.
 	 * @return - Das Feld an der Stelle reihe,spalte / Wenn kein Feld vorhanden, dann wird null zurückgegeben.
 	*/
-	public E getFeld(int reihe, int spalte){
+	public E getFeld( Position pos){
+		int reihe = pos.y;
+		int spalte = pos.x;		
 		feldZugriff(reihe,spalte);
 		String key = generateHashValue(reihe,spalte);
-		return felder.get(key);
+		E ret = felder.get(key);
+		return ret;
 	}
 	
 	/**
 	 * @return True, falls sich bereits ein Feld an Stelle reihe, spalte befindet - ansonsten false
 	 */
-	public boolean feldBelegt(int reihe, int spalte){
+	public boolean feldBelegt(Position pos){
+		int reihe = pos.y;
+		int spalte = pos.x;
 		String key = generateHashValue(reihe,spalte);
 		return felder.containsKey(key);
 	}
@@ -65,11 +71,16 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	 * Wird benötigt um wichtige Variablen für die createSpielfeld-Methode zu setzen.
 	 */
 	private void feldZugriff(int reihe, int spalte){
-		if(reihe<0 || spalte<0)throw new IllegalArgumentException("Ungültige Werte für Reihe ("+reihe+") und Spalte ("+spalte+")");
-		if(reihe<minReihe || minReihe == -1)minReihe=reihe;
-		if(reihe>maxReihe || maxReihe == -1)maxReihe=reihe;
-		if(spalte<minSpalte || minSpalte == -1)minSpalte=reihe;
-		if(spalte>maxSpalte || maxSpalte == -1)maxSpalte=reihe;
+		if(reihe<0 || spalte<0)
+			throw new IllegalArgumentException("Ungültige Werte für Reihe ("+reihe+") und Spalte ("+spalte+")");
+		if(reihe<minReihe || minReihe == -1)
+			minReihe=reihe;
+		if(reihe>maxReihe || maxReihe == -1)
+			maxReihe=reihe;
+		if(spalte<minSpalte || minSpalte == -1)
+			minSpalte=reihe;
+		if(spalte>maxSpalte || maxSpalte == -1)
+			maxSpalte=reihe;
 	}
 	
 	private String generateHashValue(int reihe, int spalte){

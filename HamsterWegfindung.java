@@ -16,15 +16,29 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     }
 
 	public int getBestMove(){
-		berechneEntfernungen();
+		Position ausgangsPosition = initialHamster.getPosition();
+		berechneKornChancen();
+		for(int direction = 0; direction < 4 ; direction++){
+			berechneEntfernungen(ausgangsPosition.getPositionInRichtung(direction));
+			
+		}
+		
 		return 0;
+	}
+	
+	private int berechneKornChancen(){
+		int totalChance = 0;
+		for(int x=0;x<spielfeld.getWidth();x++)for(int y=0;y<spielfeld.getHeight();y++){
+			totalChance += spielfeld.getKornChance(new Position(x,y));
+		}
+		return totalChance;
 	}
 	
 	/**
 	 * Berechnet die Energieaufwände für den Hamster 'initialHamster' um auf die einzelnen Felder des Spielfelds zu gelangen.
 	 */
-	public void berechneEntfernungen(){
-		doStepfrom(initialHamster.getPosition());
+	private void berechneEntfernungen(Position fromPos){
+		doStepfrom(fromPos);
 	}
 	
 	private void doStepfrom(Position pos){

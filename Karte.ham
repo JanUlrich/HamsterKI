@@ -3,7 +3,7 @@
  * Die Karte stellt ein Spielfeld mit Variabler Größe dar.
  * Die Felder der Karte können Editiert werden.
  * Quasi die Karte die der Hamster (die AI das Hamsters) dabei hat und alle aufgedeckten Felder darauf vermerkt.
-*/
+ */
 public class Karte {
 
 	private ZweiDimensionalesArray<Feld> karte;
@@ -13,7 +13,7 @@ public class Karte {
 	}
 	
 	public void setFeld(int reihe, int spalte, Feld feld) {
-		karte.setFeld(reihe, spalte, feld);
+		karte.setFeld(new Position(spalte, reihe), feld);
 	}
 	
 	
@@ -24,15 +24,27 @@ public class Karte {
 	public Spielfeld createSpielfeld(){
 		//int height = minReihe;
 		//Spielfeld ret = new Spielfeld(width, height);
-		Spielfeld ret = new Spielfeld(new ZweiDimensionalesArray<WegberechnungsFeld>());
-		return null;
+		ZweiDimensionalesArray<WegberechnungsFeld> felder = new ZweiDimensionalesArray<WegberechnungsFeld>();
+		int minX = karte.getMinSpalte();
+		int minY = karte.getMinReihe();
+		for(int x = minX;x<karte.getMaxSpalte();x++)for(int y = minY;y<karte.getMaxReihe();y++){
+			Position pos = new Position(x,y);
+			felder.setFeld(new Position(x-minX,y-minY),this.getFeld(pos));
+		}
+		Spielfeld ret = new Spielfeld(felder);
+		return ret;
 	}
 	
 	public Feld getFeld(int reihe, int spalte){
-		if(karte.feldBelegt(reihe, spalte)) {
-			return karte.getFeld(reihe, spalte);
+		Position pos = new Position(spalte, reihe);
+		if(karte.feldBelegt(pos)) {
+			return karte.getFeld(pos);
 		}
-		return null;
+		return unerkundetesFeld();
+	}
+	
+	private Feld unerkundetesFeld(){
+		return new Feld(false, 25);
 	}
 	
 	public void update(Karte informationen){

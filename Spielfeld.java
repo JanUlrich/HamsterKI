@@ -1,6 +1,6 @@
 
 /**
- * Eine Zustand des Spielfelds. Wird zur Wegberechnung verwendet
+ * SPielfeld. Wird zur Wegberechnung verwendet
  */
 import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Territory;import de.hamster.model.HamsterException;import de.hamster.model.HamsterInitialisierungsException;import de.hamster.model.HamsterNichtInitialisiertException;import de.hamster.model.KachelLeerException;import de.hamster.model.MauerDaException;import de.hamster.model.MaulLeerException;import de.hamster.model.MouthEmptyException;import de.hamster.model.WallInFrontException;import de.hamster.model.TileEmptyException;import de.hamster.debugger.model.Hamster;public class Spielfeld {
     
@@ -19,13 +19,27 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     
     public Spielfeld(ZweiDimensionalesArray<WegberechnungsFeld> felder){
     	this.spielfeld = felder;
+    	anzahlSpalten = spielfeld.getMaxSpalte();
+    	anzahlReihen = spielfeld.getMaxReihe();
     }
     
-    public int getEnergie(Position pos){
-    	return 0;
+    public int getKornChance(Position pos){
+    	return spielfeld.getFeld(pos).getFeld().getKornChance();
     }
     
-    public void setEnergie(Position pos, int energie){
+    public int getWidth(){
+    	return anzahlSpalten;
+    }
+    
+    public int getHeight(){
+    	return anzahlReihen;
+    }
+    
+    public int getEnergieAufwand(Position pos){
+    	return 1;
+    }
+    
+    public void setEnergieAufwand(Position pos, int energie){
     }
     
     public int getChance(int reihe, int spalte){
@@ -39,7 +53,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
      * Wenn an der übergebenen Position noch kein Energiewert vorhanden ist, dann wird true zurückgegeben.
      */
     public boolean istBessererEnergiewert(Position pos, int energie){
-    	WegberechnungsFeld feld = spielfeld.getFeld(pos.x, pos.y);
+    	WegberechnungsFeld feld = spielfeld.getFeld(pos);
     	return feld.energieaufwand[pos.direction]>energie;
     }
     

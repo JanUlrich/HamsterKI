@@ -1,5 +1,4 @@
 /*class*/import java.util.HashMap;
-
 /**
  * Diese Klasse stellt ein 2D-Array mit Variabler größe dar.
  */
@@ -15,7 +14,9 @@ public class ZweiDimensionalesArray<E>{
 	
 	private HashMap<String,E> felder = new HashMap<String,E>();
 	
-	public void setFeld(int reihe, int spalte, E feld) {
+	public void setFeld(Position pos, E feld) {
+		int reihe = pos.y;
+		int spalte = pos.x;
 		feldZugriff(reihe, spalte);
 		String key = generateHashValue(reihe, spalte);
 		felder.put(key, feld);
@@ -26,16 +27,21 @@ public class ZweiDimensionalesArray<E>{
 	 * Dieses kann anschließend editiert werden.
 	 * @return - Das Feld an der Stelle reihe,spalte / Wenn kein Feld vorhanden, dann wird null zurückgegeben.
 	*/
-	public E getFeld(int reihe, int spalte){
+	public E getFeld( Position pos){
+		int reihe = pos.y;
+		int spalte = pos.x;		
 		feldZugriff(reihe,spalte);
 		String key = generateHashValue(reihe,spalte);
-		return felder.get(key);
+		E ret = felder.get(key);
+		return ret;
 	}
 	
 	/**
 	 * @return True, falls sich bereits ein Feld an Stelle reihe, spalte befindet - ansonsten false
 	 */
-	public boolean feldBelegt(int reihe, int spalte){
+	public boolean feldBelegt(Position pos){
+		int reihe = pos.y;
+		int spalte = pos.x;
 		String key = generateHashValue(reihe,spalte);
 		return felder.containsKey(key);
 	}
