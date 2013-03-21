@@ -4,13 +4,25 @@
 public class WegberechnungsFeld {
 	private Feld feld;
     public int[] energieaufwand;
+    private int koernerChance;//Prozentchance auf Körner
     
     public WegberechnungsFeld(Feld feld){
     	this.feld = feld;
     	energieaufwand = new int[4];
+    	koernerChance = 50; //Initialwert für Körnerchance
     }
     
     public Feld getFeld(){
     return feld;
     }
+    
+    public void setKoernerChance(int koerner) {
+		this.koernerChance = koernerChance;
+	}
+	
+	public int getKornChance(){
+		if(this.getFeld().getMauer())return 0;
+		return koernerChance;
+	}
+    
 }

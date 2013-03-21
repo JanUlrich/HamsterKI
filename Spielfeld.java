@@ -24,7 +24,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     }
     
     public int getKornChance(Position pos){
-    	return spielfeld.getFeld(pos).getFeld().getKornChance();
+    	return spielfeld.getFeld(pos).getKornChance();
     }
     
     public int getWidth(){
@@ -45,6 +45,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     public int getChance(int reihe, int spalte){
     	return 0;
     }
+    
+
    	
     /**
      * Wichtige Funktion für Wegberechnung.

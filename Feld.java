@@ -1,13 +1,16 @@
 import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Territory;import de.hamster.model.HamsterException;import de.hamster.model.HamsterInitialisierungsException;import de.hamster.model.HamsterNichtInitialisiertException;import de.hamster.model.KachelLeerException;import de.hamster.model.MauerDaException;import de.hamster.model.MaulLeerException;import de.hamster.model.MouthEmptyException;import de.hamster.model.WallInFrontException;import de.hamster.model.TileEmptyException;import de.hamster.debugger.model.Hamster;public class Feld {
     private boolean mauer;
-    private int koerner;//Prozentchance auf Körner
+    private boolean koerner;
 	
 	public Feld(){
-		this.mauer = false;
-		this.koerner = 25;
+		this(false,true);
 	}
 	
-	public Feld(boolean mauer, int koerner){
+	public Feld(boolean mauer){
+		this(mauer,true);
+	}
+	
+	public Feld(boolean mauer, boolean koerner){
 		this.mauer = mauer;
 		this.koerner = koerner;
 	}
@@ -16,12 +19,11 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		this.mauer = mauer;
 	}
 	
-	public void setKoerner(int koerner) {
-		this.koerner = koerner;
+	public boolean getMauer(){
+		return mauer;
 	}
 	
-	public int getKornChance(){
-		if(mauer)return 0;
-		return koerner;
+	public void setKoerner(boolean koerner){
+		this.koerner = koerner;
 	}
 }

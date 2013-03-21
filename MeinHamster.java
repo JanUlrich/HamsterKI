@@ -14,11 +14,16 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
    		karte = new Karte();
     }
 
+	/**
+	 * Dreht den Hamster in die übergebene Richtung. Dabei wird Energie verbraucht.
+	 * @param Richtung - Zahl 0-3, steht für die 4 Himmelsrichtungen.
+	 * Sind die Parameter ungültig oder schaut der Hamster bereits 
+	 * in die gewünschte Richtung wird keine Energie verbraucht und 
+	 * keine Drehung ausgeführt.
+	 */
 	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException
 	{
-		// Sind die Parameter ungültig oder schaut der Hamster bereits 
-		// in die gewünschte Richtung wird keine Energie verbraucht und 
-		// keine Drehung ausgeführt.
+		
 		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)
 			return this;
 		
@@ -29,10 +34,10 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		return this;
 	}
 	
-	 /**
-    @author Simon Herrmann
-    @param karte Karte des Hamsters
-    @return Karte des Hamsters mit nach der Sensorabfrage 
+	/**
+     * @author Simon Herrmann
+     * @param karte Karte des Hamsters
+     * @return Karte des Hamsters mit nach der Sensorabfrage 
     */
     void KachelnAbfragen()
     {

@@ -29,7 +29,8 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 	private int berechneKornChancen(){
 		int totalChance = 0;
 		for(int x=0;x<spielfeld.getWidth();x++)for(int y=0;y<spielfeld.getHeight();y++){
-			totalChance += spielfeld.getKornChance(new Position(x,y));
+			Position pos = new Position(x,y);
+			totalChance += spielfeld.getKornChance(pos) / spielfeld.getEnergieAufwand(pos);
 		}
 		return totalChance;
 	}
@@ -46,7 +47,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
 		auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
 		*/
-		int momentaneEnergie = spielfeld.getEnergie(pos);
+		int momentaneEnergie = spielfeld.getEnergieAufwand(pos);
 		for(int direction = 0; direction<4;direction++){
 			int benoetigteEnergie = 2;
 
@@ -56,7 +57,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 				benoetigteEnergie = 1;
 			
 			if(spielfeld.istBessererEnergiewert(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie)){
-				spielfeld.setEnergie(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie);
+				spielfeld.setEnergieAufwand(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie);
 				doStepfrom(pos.getPositionInRichtung(direction)); // 
 			}
 		}
