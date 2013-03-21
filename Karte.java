@@ -16,27 +16,12 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		karte.setFeld(new Position(spalte, reihe), feld);
 	}
 		
-	
-	/**
-	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
-	 * Hier werden, allerding WegberechnungsFeld er verwendet.
-	 */
-	public Spielfeld createSpielfeld(){
-		//int height = minReihe;
-		//Spielfeld ret = new Spielfeld(width, height);
-		ZweiDimensionalesArray<WegberechnungsFeld> felder = new ZweiDimensionalesArray<WegberechnungsFeld>();
-		int minX = karte.getMinSpalte();
-		int minY = karte.getMinReihe();
-		for(int x = minX;x<karte.getMaxSpalte();x++)for(int y = minY;y<karte.getMaxReihe();y++){
-			Position pos = new Position(x,y);
-			felder.setFeld(new Position(x-minX,y-minY),this.getFeld(pos));
-		}
-		Spielfeld ret = new Spielfeld(felder);
-		return ret;
-	}
-	
 	public Feld getFeld(int reihe, int spalte){
 		Position pos = new Position(spalte, reihe);
+		return getFeld(pos);
+	}
+	
+	public Feld getFeld(Position pos){
 		if(karte.feldBelegt(pos)) {
 			return karte.getFeld(pos);
 		}
@@ -51,5 +36,23 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
 		
 	}
 	
+	/**
+	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
+	 * Hier werden, allerding WegberechnungsFeld er verwendet.
+	 */
+	public Spielfeld createSpielfeld(){
+		//int height = minReihe;
+		//Spielfeld ret = new Spielfeld(width, height);
+		ZweiDimensionalesArray<WegberechnungsFeld> felder = new ZweiDimensionalesArray<WegberechnungsFeld>();
+		int minX = karte.getMinSpalte();
+		int minY = karte.getMinReihe();
+		for(int x = minX;x<karte.getMaxSpalte();x++)for(int y = minY;y<karte.getMaxReihe();y++){
+			Position pos = new Position(x,y);
+			WegberechnungsFeld feld = new WegberechnungsFeld(this.getFeld(pos));
+			felder.setFeld(new Position(x-minX,y-minY),feld);
+		}
+		Spielfeld ret = new Spielfeld(felder);
+		return ret;
+	}
 	
 }

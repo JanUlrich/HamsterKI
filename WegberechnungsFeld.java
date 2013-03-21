@@ -9,10 +9,11 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     public WegberechnungsFeld(Feld feld){
     	this.feld = feld;
     	energieaufwand = new int[4];
+    	koernerChance = 50; //Initialwert für Körnerchance
     }
     
     public Feld getFeld(){
-    return feld;
+	    return feld;
     }
     
     public void setKoernerChance(int koerner) {

@@ -64,7 +64,7 @@ import de.hamster.debugger.model.Territorium;import de.hamster.debugger.model.Te
     	} 
     	
 		if(!kornDa()) 
-			karte.getFeld(reihe, spalte).setKoerner(false);
+			karte.getFeld(reihe, spalte).setKoerner(0);
     }
 	
 	public void vorwärts() throws HamsterEnergieException{

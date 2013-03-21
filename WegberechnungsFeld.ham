@@ -13,7 +13,7 @@ public class WegberechnungsFeld {
     }
     
     public Feld getFeld(){
-    return feld;
+	    return feld;
     }
     
     public void setKoernerChance(int koerner) {

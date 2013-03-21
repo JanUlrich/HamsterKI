@@ -29,7 +29,7 @@ public class Karte {
 	}
 	
 	private Feld unerkundetesFeld(){
-		return new Feld(false);
+		return new Feld(false, 25);
 	}
 	
 	public void update(Karte informationen){
