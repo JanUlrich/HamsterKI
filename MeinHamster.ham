@@ -38,15 +38,12 @@ public class MeinHamster extends Hamster {
      * @param karte Karte des Hamsters
      * @return Karte des Hamsters mit nach der Sensorabfrage 
     */
-    void KachelnAbfragen()
-    {
+    void KachelnAbfragen() {
     	int reihe = getReihe();
     	int spalte = getSpalte();
     	
-    	for (int i = reihe-1; i < reihe + 2 ; i++)	
-    	{
-    		for (int j = spalte -1; j < spalte + 2 ; j++)		
-    		{
+    	for (int i = reihe-1; i <= reihe+1; i++) {
+    		for (int j = spalte-1; j <= spalte+1; j++) {
     			if(i<0 || j<0)
     				continue;
 		    	Feld f = karte.getFeld(i,j);

@@ -3,7 +3,6 @@
  * SPielfeld. Wird zur Wegberechnung verwendet
  */
 public class Spielfeld {
-    
     public int anzahlSpalten;
     public int anzahlReihen;
     
@@ -25,14 +24,6 @@ public class Spielfeld {
     
     public double getKornChance(Position pos){
     	return spielfeld.getFeld(pos).getKornChance();
-    }
-    
-    public int getWidth(){
-    	return anzahlSpalten;
-    }
-    
-    public int getHeight(){
-    	return anzahlReihen;
     }
     
     public int getEnergieAufwand(Position pos){

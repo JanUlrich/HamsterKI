@@ -5,7 +5,6 @@
  * Quasi die Karte die der Hamster (die AI das Hamsters) dabei hat und alle aufgedeckten Felder darauf vermerkt.
  */
 public class Karte {
-
 	private ZweiDimensionalesArray<Feld> karte;
 	
 	public Karte() {
@@ -25,11 +24,7 @@ public class Karte {
 		if(karte.feldBelegt(pos)) {
 			return karte.getFeld(pos);
 		}
-		return unerkundetesFeld();
-	}
-	
-	private Feld unerkundetesFeld(){
-		return new Feld(false, 25);
+		return new Feld();
 	}
 	
 	public void update(Karte informationen){
