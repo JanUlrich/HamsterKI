@@ -46,8 +46,6 @@ public class Spielfeld {
     	return 0;
     }
     
-
-   	
     /**
      * Wichtige Funktion für Wegberechnung.
      * prüft ob der übergebene Energiewert an der übergebenene Position auf dem Spielfeld einen besseren Wert als der bereits vorhandene darstellt.

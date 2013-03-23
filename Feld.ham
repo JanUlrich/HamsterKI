@@ -25,7 +25,7 @@
 	}
 	
 	public int getKornChance(){
-		if(mauer)return 0;
+		if(mauer) return 0;
 		return koerner;
 	}
 }
