@@ -51,9 +51,9 @@ public class MeinHamster extends Hamster {
     				continue;
 		    	Feld f = karte.getFeld(i,j);
     			if (Territorium.mauerDa(i,j))
-    				f.setMauer(true);
+    				f.setMauer(1);
     			else
-    				f.setMauer(false);
+    				f.setMauer(0);
     			karte.setFeld(i,j,f);
     		}				
     	} 
@@ -114,7 +114,7 @@ public class MeinHamster extends Hamster {
      */
     private boolean freiInRichtung(int richtung) {
     	Feld feld = feldInRichtung(richtung);
-    	return !feld.getMauer();
+    	return feld.getMauer() < 1;
     }
     
     private Feld feldInRichtung(int richtung) {

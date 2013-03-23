@@ -9,7 +9,7 @@ public class Spielfeld {
     
     public Position hamsterPos;
     
-    private ZweiDimensionalesArray<WegberechnungsFeld> spielfeld;
+    private ZweiDimensionalesArray<Feld> spielfeld;
     
     public Spielfeld(int width, int height, Position hamsterPosition){
     	anzahlSpalten = width;
@@ -17,13 +17,13 @@ public class Spielfeld {
     	hamsterPos = hamsterPosition;
     }
     
-    public Spielfeld(ZweiDimensionalesArray<WegberechnungsFeld> felder){
+    public Spielfeld(ZweiDimensionalesArray<Feld> felder){
     	this.spielfeld = felder;
     	anzahlSpalten = spielfeld.getMaxSpalte();
     	anzahlReihen = spielfeld.getMaxReihe();
     }
     
-    public int getKornChance(Position pos){
+    public double getKornChance(Position pos){
     	return spielfeld.getFeld(pos).getKornChance();
     }
     
@@ -53,7 +53,7 @@ public class Spielfeld {
      * Wenn an der übergebenen Position noch kein Energiewert vorhanden ist, dann wird true zurückgegeben.
      */
     public boolean istBessererEnergiewert(Position pos, int energie){
-    	WegberechnungsFeld feld = spielfeld.getFeld(pos);
+    	Feld feld = spielfeld.getFeld(pos);
     	return feld.energieaufwand[pos.direction]>energie;
     }
     

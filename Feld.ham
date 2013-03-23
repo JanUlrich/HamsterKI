@@ -1,31 +1,37 @@
 /*class*/public class Feld {
-    private boolean mauer;
-    private int koerner;//Prozentchance auf Körner
+    public int[] energieaufwand;   
+    private double mauer;
+    private double koerner;//Prozentchance auf Körner
 	
-	public Feld(){
-		this.mauer = false;
-		this.koerner = 25;
+	public Feld() {
+    	energieaufwand = new int[4];
+		this.mauer = 0.50;
+		this.koerner = 0.50;
 	}
 	
-	public Feld(boolean mauer, int koerner){
+	public Feld(double mauer, double koerner) {
+    	energieaufwand = new int[4];
 		this.mauer = mauer;
 		this.koerner = koerner;
 	}
 
-	public void setMauer(boolean mauer){
+	public void setMauer(double mauer) {
 		this.mauer = mauer;
 	}
 	
-	public boolean getMauer() {
+	public double getMauer() {
 		return this.mauer;
 	}
 	
-	public void setKoerner(int koerner) {
+	public void setKoerner(double koerner) {
 		this.koerner = koerner;
 	}
 	
-	public int getKornChance(){
-		if(mauer) return 0;
-		return koerner;
+	public double getKoerner() {
+		return this.koerner;
+	}
+	
+	public double getKornChance() {
+		return koerner * (1-mauer);
 	}
 }
