@@ -1,6 +1,8 @@
 /*object-oriented program*/void main() {
 	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner(); //Ermittelt zu Beginn des Programms die auf dem Spielfeld liegenden Körner ...
-    MeinHamster hamster = new MeinHamster(5,5,0,0,3, 20); //Generiere den Hamster.
+	
+	int energie = Territorium.getAnzahlReihen() * Territorium.getAnzahlSpalten() * 5;
+	MeinHamster hamster = new MeinHamster(5,5,0,0,3,energie); //Generiere den Hamster.
     
 	mainLoop(hamster); //Tu Dinge
 	    
