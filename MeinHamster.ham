@@ -8,9 +8,9 @@ public class MeinHamster extends Hamster {
 	private Karte karte;
 	private int energieLevel;
     
-    public MeinHamster(int p1, int p2, int p3, int p4, int p5, int energie){
+    public MeinHamster(int p1, int p2, int p3, int p4, int p5){
     	super(p1,p2,p3,p4,p5);
-    	energieLevel = energie;
+    	energieLevel = Territorium.getAnzahlReihen() * Territorium.getAnzahlSpalten() * 5;;
    		karte = new Karte();
     }
 
@@ -21,8 +21,7 @@ public class MeinHamster extends Hamster {
 	 * in die gewünschte Richtung wird keine Energie verbraucht und 
 	 * keine Drehung ausgeführt.
 	 */
-	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException
-	{
+	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException {
 		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)
 			return this;
 		
@@ -78,7 +77,7 @@ public class MeinHamster extends Hamster {
     /**
      * Bewegt den Hamster KI gesteuert einen Schritt weiter
      */
-    public void kiStep() throws HamsterEnergieException{
+    public void kiStep() throws HamsterEnergieException {
     	// Als erstes Umgebung abfragen
     	KachelnAbfragen();
     	
@@ -88,22 +87,22 @@ public class MeinHamster extends Hamster {
     	if(kornDa())
     		nimm();
     }
-    
+
     /**
      * @return - gibt die Richtung zurück
      */
-    private int berechneZug(){
+    private int berechneZug() {
     	Spielfeld sp = karte.createSpielfeld();
     	HamsterWegfindung ki = new HamsterWegfindung(this, karte);
     	//ki.berechneEntfernungen();
-    	
+
     	int richtung = getBlickrichtung();
 		while(!freiInRichtung(richtung)) {
 			richtung = (richtung + 1) % 4;
 		}
 		return ki.getBestMove();
     }
-    
+
     /**
      * Gibt zurück, ob in der angegebenen Richtung frei ist,
      * oder ob dort eine Mauer liegt
@@ -113,12 +112,12 @@ public class MeinHamster extends Hamster {
     	Feld feld = feldInRichtung(richtung);
     	return feld.getMauer() < 1;
     }
-    
+
     /**
      * Gibt das Feld in der angegebenen Richtung zurück
      * @return Das Feld in der angegebenen Richtung
      */
-    private Feld feldInRichtung(int richtung) {    	
+    private Feld feldInRichtung(int richtung) {
     	return karte.getFeldInRichtung(getPosition(), richtung);
     }
 }

@@ -32,7 +32,7 @@ public class HamsterWegfindung {
 			}
 		}
 		
-	    System.out.println("" + bestDirection + ": " + bestChance);
+	    //hamster.schreib("" + bestDirection + ": " + bestChance);
 		
 		return bestDirection;
 	}
