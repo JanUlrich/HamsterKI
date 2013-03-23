@@ -3,34 +3,47 @@
  * auf die einzelnen Felder des Spielfelds zu gelangen. Die Werte können für weitere AI-Operationen verwendet werden.
  */
 public class HamsterWegfindung {
+    Karte karte;
     Spielfeld spielfeld;
-    MeinHamster initialHamster;
+    MeinHamster hamster;
     
     /**
      * @param hamster - Die Ausgangslage des Hamsters. Dabei ist nur die Position und die Richtung des Hamsters relevant.
      * @param felder - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
      */
-    public HamsterWegfindung(MeinHamster hamster, Spielfeld felder){
-    	spielfeld = felder;
-    	initialHamster = hamster;
+    public HamsterWegfindung(MeinHamster hamster, Karte karte){
+    	this.karte = karte;
+    	this.hamster = hamster;
     }
 
 	public int getBestMove(){
-		Position ausgangsPosition = initialHamster.getPosition();
-		berechneKornChancen();
-		for(int direction = 0; direction < 4 ; direction++){
-			berechneEntfernungen(ausgangsPosition.getPositionInRichtung(direction));
+		Position ausgangsPosition = hamster.getPosition();
+		
+		int bestDirection = -1;
+		double bestChance = -1;
+		for(int direction = 0; direction < 4; direction++) {
+			Feld f = karte.getFeldInRichtung(ausgangsPosition, direction);
+			if(f.getMauer()==1) continue;
 			
+			double chance = f.getKornChance();
+			if(chance>bestDirection) {// || (chance>=bestDirection && direction==ausgangsPosition.direction)) {
+				bestDirection = direction;
+				bestChance = chance;
+			}
 		}
 		
-		return 0;
+	    System.out.println("" + bestDirection + ": " + bestChance);
+		
+		return bestDirection;
 	}
 	
 	private int berechneKornChancen(){
 		int totalChance = 0;
-		for(int x=0;x<spielfeld.getWidth();x++)for(int y=0;y<spielfeld.getHeight();y++){
-			Position pos = new Position(x,y);
-			totalChance += spielfeld.getKornChance(pos) / spielfeld.getEnergieAufwand(pos);
+		for(int x=0;x<spielfeld.anzahlSpalten;x++) {
+			for(int y=0;y<spielfeld.anzahlReihen;y++){
+				Position pos = new Position(x,y);
+				totalChance += spielfeld.getKornChance(pos) / spielfeld.getEnergieAufwand(pos);
+			}
 		}
 		return totalChance;
 	}

@@ -94,14 +94,14 @@ public class MeinHamster extends Hamster {
      */
     private int berechneZug(){
     	Spielfeld sp = karte.createSpielfeld();
-    	HamsterWegfindung ki = new HamsterWegfindung(this, sp);
+    	HamsterWegfindung ki = new HamsterWegfindung(this, karte);
     	//ki.berechneEntfernungen();
     	
     	int richtung = getBlickrichtung();
 		while(!freiInRichtung(richtung)) {
 			richtung = (richtung + 1) % 4;
 		}
-		return richtung;
+		return ki.getBestMove();
     }
     
     /**
@@ -114,13 +114,11 @@ public class MeinHamster extends Hamster {
     	return feld.getMauer() < 1;
     }
     
-    private Feld feldInRichtung(int richtung) {
-    	int reihe = getReihe();
-    	int spalte = getSpalte();
-    	
-    	reihe += (richtung - 1) % 2;
-    	spalte += (richtung * -1 + 2) % 2;
-    	
-    	return karte.getFeld(reihe, spalte);
+    /**
+     * Gibt das Feld in der angegebenen Richtung zurück
+     * @return Das Feld in der angegebenen Richtung
+     */
+    private Feld feldInRichtung(int richtung) {    	
+    	return karte.getFeldInRichtung(getPosition(), richtung);
     }
 }

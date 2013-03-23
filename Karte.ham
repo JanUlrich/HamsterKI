@@ -33,21 +33,32 @@ public class Karte {
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
-	 * Hier werden, allerding WegberechnungsFeld er verwendet.
 	 */
 	public Spielfeld createSpielfeld(){
 		//int height = minReihe;
 		//Spielfeld ret = new Spielfeld(width, height);
-		ZweiDimensionalesArray<WegberechnungsFeld> felder = new ZweiDimensionalesArray<WegberechnungsFeld>();
+		ZweiDimensionalesArray<Feld> felder = new ZweiDimensionalesArray<Feld>();
 		int minX = karte.getMinSpalte();
 		int minY = karte.getMinReihe();
 		for(int x = minX;x<karte.getMaxSpalte();x++)for(int y = minY;y<karte.getMaxReihe();y++){
 			Position pos = new Position(x,y);
-			WegberechnungsFeld feld = new WegberechnungsFeld(this.getFeld(pos));
+			Feld feld = this.getFeld(pos);
 			felder.setFeld(new Position(x-minX,y-minY),feld);
 		}
 		Spielfeld ret = new Spielfeld(felder);
 		return ret;
 	}
+    
+    /**
+     * Gibt das Feld in der angegebenen Richtung zurück
+     * @return Das Feld in der angegebenen Richtung
+     */
+    public Feld getFeldInRichtung(Position position, int richtung) {
+    	int reihe = position.y + (richtung - 1) % 2;
+    	int spalte = position.x + (richtung * -1 + 2) % 2;
+    	
+    	
+    	return getFeld(reihe, spalte);
+    }
 	
 }
