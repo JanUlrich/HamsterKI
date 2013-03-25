@@ -24,7 +24,9 @@ public class Karte {
 		if(karte.feldBelegt(pos)) {
 			return karte.getFeld(pos);
 		}
-		return new Feld();
+		Feld ret = new Feld();
+		karte.setFeld(pos, ret);
+		return ret;
 	}
 	
 	public void update(Karte informationen){
@@ -40,9 +42,13 @@ public class Karte {
 		ZweiDimensionalesArray<Feld> felder = new ZweiDimensionalesArray<Feld>();
 		int minX = karte.getMinSpalte();
 		int minY = karte.getMinReihe();
-		for(int x = minX;x<karte.getMaxSpalte();x++)for(int y = minY;y<karte.getMaxReihe();y++){
+		
+		for(int x = minX;x<=karte.getMaxSpalte();x++)for(int y = minY;y<=karte.getMaxReihe();y++){
 			Position pos = new Position(x,y);
 			Feld feld = this.getFeld(pos);
+			if(feld == null){
+				feld = new Feld(0, 25);
+			}
 			felder.setFeld(new Position(x-minX,y-minY),feld);
 		}
 		Spielfeld ret = new Spielfeld(felder);
@@ -56,7 +62,6 @@ public class Karte {
     public Feld getFeldInRichtung(Position position, int richtung) {
     	int reihe = position.y + (richtung - 1) % 2;
     	int spalte = position.x + (richtung * -1 + 2) % 2;
-    	
     	
     	return getFeld(reihe, spalte);
     }

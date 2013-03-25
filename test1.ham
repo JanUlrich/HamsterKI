@@ -1,7 +1,7 @@
 /*object-oriented program*/void main() {
 	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner(); //Ermittelt zu Beginn des Programms die auf dem Spielfeld liegenden Körner ...
 	
-	MeinHamster hamster = new MeinHamster(5,5,0,0,3); //Generiere den Hamster.
+	MeinHamster hamster = new MeinHamster(5,5,0,0,0); //Generiere den Hamster.
 	mainLoop(hamster); //Tu Dinge
 
 	int uebrigeAnzahlKoerner = Territorium.getAnzahlKoerner(); //Ist die KI fertig (alle Körner wurden eingesammelt | Hamster hat keine Energie mehr), dann werden alle übrig gebliebenen Körnen ermittelt ...

@@ -5,7 +5,7 @@
 	
 	public Feld() {
     	energieaufwand = new int[4];
-		this.mauer = 0.50;
+		this.mauer = 0;
 		this.koerner = 0.50;
 	}
 	
@@ -13,6 +13,13 @@
     	energieaufwand = new int[4];
 		this.mauer = mauer;
 		this.koerner = koerner;
+	}
+
+	/**
+	 * 
+	*/
+	public int getEnergieaufwand(int direction){
+		return energieaufwand[direction]; //TODO überprüfen ob Wert vorhanden.
 	}
 
 	public void setMauer(double mauer) {
@@ -33,5 +40,11 @@
 	
 	public double getKornChance() {
 		return koerner * (1-mauer);
+	}
+
+	@Override
+	public String toString(){
+		if(mauer == 0)return ""+koerner+"";
+		return "M";
 	}
 }

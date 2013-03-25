@@ -43,14 +43,14 @@ public class MeinHamster extends Hamster {
     	
     	for (int i = reihe-1; i <= reihe+1; i++) {
     		for (int j = spalte-1; j <= spalte+1; j++) {
-    			if(i<0 || j<0)
-    				continue;
+    			if(i>0 || j>0){
 		    	Feld f = karte.getFeld(i,j);
     			if (Territorium.mauerDa(i,j))
     				f.setMauer(1);
     			else
     				f.setMauer(0);
     			karte.setFeld(i,j,f);
+    			}
     		}				
     	} 
     	
@@ -59,7 +59,7 @@ public class MeinHamster extends Hamster {
     }
 	
 	public void vorwärts() throws HamsterEnergieException{
-		vor();
+		this.vor();
 		verbraucheEnergie();
 	}
 	

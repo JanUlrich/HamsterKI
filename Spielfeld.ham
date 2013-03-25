@@ -20,6 +20,7 @@ public class Spielfeld {
     	this.spielfeld = felder;
     	anzahlSpalten = spielfeld.getMaxSpalte();
     	anzahlReihen = spielfeld.getMaxReihe();
+    	//Hamster.getStandardHamster().schreib(this.toString()); //DEBUG
     }
     
     public double getKornChance(Position pos){
@@ -27,7 +28,10 @@ public class Spielfeld {
     }
     
     public int getEnergieAufwand(Position pos){
-    	return 1;
+    	int ret;
+    	if(spielfeld.getFeld(pos)==null)throw new NullPointerException("");
+    	ret = spielfeld.getFeld(pos).getEnergieaufwand(pos.direction);
+    	return ret;
     }
     
     public void setEnergieAufwand(Position pos, int energie){
@@ -46,6 +50,17 @@ public class Spielfeld {
     public boolean istBessererEnergiewert(Position pos, int energie){
     	Feld feld = spielfeld.getFeld(pos);
     	return feld.energieaufwand[pos.direction]>energie;
+    }
+    
+    @Override
+    public String toString(){
+    	String ret = "Spielfeld:\n";
+    	for(int y=0;y<=anzahlReihen;y++){for(int x=0;x<=anzahlSpalten;x++){
+				ret += "|"+spielfeld.getFeld(new Position(x,y)).toString()+"|";	
+    		}
+    		ret += "\n";
+    	}
+    	return ret;
     }
     
 }
