@@ -23,15 +23,15 @@ public class HamsterWegfindung {
 		int bestDirection = -1;
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
-			Feld f = karte.getFeldInRichtung(ausgangsPosition, direction);
+			Position ziel = ausgangsPosition.getPositionInRichtung(direction);
+			Feld f = karte.getFeld(ziel);
 			if(f.getMauer()!=1){
-			
-			//double chance = f.getKornChance();
-			double chance = berechneKornChancen(ausgangsPosition.getPositionInRichtung(direction));
-			if(chance>bestDirection) {// || (chance>=bestDirection && direction==ausgangsPosition.direction)) {
-				bestDirection = direction;
-				bestChance = chance;
-			}
+				//double chance = f.getKornChance();
+				double chance = berechneKornChancen(ziel);
+				if(chance>bestDirection || (chance>=bestDirection && direction==ausgangsPosition.direction)) {
+					bestDirection = direction;
+					bestChance = chance;
+				}
 			}
 		}
 		
@@ -52,7 +52,8 @@ public class HamsterWegfindung {
 			for(int y=0;y<spielfeld.anzahlReihen;y++){
 				Position pos = new Position(x,y);
 				int energieAufwand = spielfeld.getEnergieAufwand(pos);
-				if(energieAufwand > 0)totalChance += spielfeld.getKornChance(pos) / new Double(energieAufwand);
+				if(energieAufwand > 0)
+					totalChance += spielfeld.getKornChance(pos) / new Double(energieAufwand);
 				//hamster.schreib(""+spielfeld.getKornChance(pos) + " / " + spielfeld.getEnergieAufwand(pos) +" = " +totalChance);
 			}
 		}
