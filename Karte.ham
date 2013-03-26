@@ -47,7 +47,7 @@ public class Karte {
 			Position pos = new Position(x,y);
 			Feld feld = this.getFeld(pos);
 			if(feld == null){
-				feld = new Feld(0, 25);
+				feld = new Feld(0.0, 0.25);
 			}
 			felder.setFeld(new Position(x-minX,y-minY),feld);
 		}
