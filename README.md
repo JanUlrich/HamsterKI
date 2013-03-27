@@ -34,8 +34,44 @@ KI
 KI funktioniert nach dem Heiß/Kalt Prinzip.    
 Die KI versucht zu berechnen, in welcher Richtung die größte Chance auf einen Erhalt von Körnern besteht.
 
+Klassen
+=======
+Im folgenden sind die eingesetzten Klassen und ihre öffentlichen Methoden aufgelistet:
+
+MeinHamster
+-----------
+* `Position getPosition()`
+* `int getVerbleibendeEnergie()`
+* `void kiStep()`
+
+KI
+--
+* `Konstruktor: KI(MeinHamster hamster, Karte map)`
+* `int/direction getBestMove()`
+
+Karte
+-----
+* `getEnergieAufwand(Position pos)`
+* `setEnergieAufwand(Position pos, Integer energieAufwand)` //bei get und set des Energieaufwands ist auch die richtung der Position wichtig
+* `getKornChance(Position pos)`
+* `void setKornChance(Position pos, Double kornChance)`
+* `Double getMauer(Position pos)`
+* `void setMauer(Position pos, Double mauerWahrscheinlichkeit)`
+* `Position getMaxPosition()`
+* `Position getMinPosition()`
+getMax/getMin - Position ermitteln zwei Punkte, welche das bisher vom Hamster auf der Karte eingetragene Gebiet begrenzen.
+
+Position
+--------
+Position besteht aus einer x-Koordinate (Spalte), einer y-Koordinate (Reihe) und einer Richtung (Nord -> 0, Ost -> 1, Süd -> 2, West -> 3)
+* `x`
+* `y`
+* `direction`
+
+Der Hamster startet auf Position 
+
 Javadoc
--------
+=======
 
 ## Javadoc generieren ##
 
