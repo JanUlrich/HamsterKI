@@ -6,6 +6,9 @@ public class Spielfeld {
     public int anzahlSpalten;
     public int anzahlReihen;
     
+    public int anfangsSpalte;
+    public int anfangsReihe;
+    
     public Position hamsterPos;
     
     private ZweiDimensionalesArray<Feld> spielfeld;
@@ -35,6 +38,7 @@ public class Spielfeld {
     }
     
     public void setEnergieAufwand(Position pos, int energie){
+    	spielfeld.getFeld(pos).setEnergieaufwand(pos.direction, energie);
     }
     
     public int getChance(int reihe, int spalte){
@@ -49,7 +53,10 @@ public class Spielfeld {
      */
     public boolean istBessererEnergiewert(Position pos, int energie){
     	Feld feld = spielfeld.getFeld(pos);
-    	return feld.energieaufwand[pos.direction]>energie;
+    	int energieaufwand=feld.energieaufwand[pos.direction];
+    	Hamster.getStandardHamster().schreib("Energie: "+energieaufwand);
+    	if(energieaufwand == 0) return true;
+    	return energieaufwand>energie;
     }
     
     @Override

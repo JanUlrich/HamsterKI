@@ -7,11 +7,13 @@
 public class MeinHamster extends Hamster {
 	private Karte karte;
 	private int energieLevel;
+    private Position startPosition;
     
     public MeinHamster(int p1, int p2, int p3, int p4, int p5){
     	super(p1,p2,p3,p4,p5);
     	energieLevel = Territorium.getAnzahlReihen() * Territorium.getAnzahlSpalten() * 5;;
    		karte = new Karte();
+   		startPosition = new Position(this.getSpalte(), this.getReihe(), this.getBlickrichtung());
     }
 
 	/**
@@ -38,24 +40,32 @@ public class MeinHamster extends Hamster {
      * @return Karte des Hamsters mit nach der Sensorabfrage 
     */
     void KachelnAbfragen() {
-    	int reihe = getReihe();
-    	int spalte = getSpalte();
+    	//int reihe = getReihe();
+    	//int spalte = getSpalte();
+    	Position hamsterPos = getPosition();
     	
-    	for (int i = reihe-1; i <= reihe+1; i++) {
-    		for (int j = spalte-1; j <= spalte+1; j++) {
-    			if(i>0 || j>0){
-		    	Feld f = karte.getFeld(i,j);
-    			if (Territorium.mauerDa(i,j))
-    				f.setMauer(1);
+    	for (int i = hamsterPos.y-1; i <= hamsterPos.y+1; i++) {
+    		for (int j = hamsterPos.x-1; j <= hamsterPos.x+1; j++) {
+    			
+		    	//Feld f = karte.getFeld(i,j);
+    			if (mauerDa(i,j))
+    				karte.setMauer(new Position(j,i), 1.0);
     			else
-    				f.setMauer(0);
-    			karte.setFeld(i,j,f);
-    			}
+    				karte.setMauer(new Position(j,i), 0.0);
+    			//karte.setFeld(i,j,f);
+    			
     		}				
     	} 
     	
 		if(!kornDa()) 
-			karte.getFeld(reihe, spalte).setKoerner(0);
+			//karte.getFeld(reihe, spalte).setKoerner(0);
+			karte.setKornChance(hamsterPos, 0.0);
+    }
+    
+    private boolean mauerDa(int reihe, int spalte){
+    	reihe += startPosition.y;
+    	spalte += startPosition.x;
+    	return Territorium.mauerDa(reihe, spalte);
     }
 	
 	public void vorwärts() throws HamsterEnergieException{
@@ -71,7 +81,7 @@ public class MeinHamster extends Hamster {
 	}
     
     public Position getPosition(){
-    	return new Position(this.getSpalte(), this.getReihe(), this.getBlickrichtung());
+    	return new Position(this.getSpalte() - startPosition.x, this.getReihe() - startPosition.y, this.getBlickrichtung());
     }
     
     /**
@@ -92,14 +102,14 @@ public class MeinHamster extends Hamster {
      * @return - gibt die Richtung zurück
      */
     private int berechneZug() {
-    	Spielfeld sp = karte.createSpielfeld();
+    	//Spielfeld sp = karte.createSpielfeld();
     	HamsterWegfindung ki = new HamsterWegfindung(this, karte);
     	//ki.berechneEntfernungen();
 
-    	int richtung = getBlickrichtung();
-		while(!freiInRichtung(richtung)) {
-			richtung = (richtung + 1) % 4;
-		}
+    	//int richtung = getBlickrichtung();
+		//while(!freiInRichtung(richtung)) {
+		//	richtung = (richtung + 1) % 4;
+		//}
 		return ki.getBestMove();
     }
 
@@ -107,17 +117,18 @@ public class MeinHamster extends Hamster {
      * Gibt zurück, ob in der angegebenen Richtung frei ist,
      * oder ob dort eine Mauer liegt
      * @return true, wenn in der angegebenen Richtung keine Mauer ist
-     */
+     
     private boolean freiInRichtung(int richtung) {
     	Feld feld = feldInRichtung(richtung);
     	return feld.getMauer() < 1;
     }
-
+*/
     /**
      * Gibt das Feld in der angegebenen Richtung zurück
      * @return Das Feld in der angegebenen Richtung
-     */
+     
     private Feld feldInRichtung(int richtung) {
     	return karte.getFeldInRichtung(getPosition(), richtung);
     }
+    */
 }

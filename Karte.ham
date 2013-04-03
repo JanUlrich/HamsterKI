@@ -1,41 +1,74 @@
-/*class*/
+/*class*/import java.util.HashMap;
 /**
  * Die Karte stellt ein Spielfeld mit Variabler Größe dar.
  * Die Felder der Karte können Editiert werden.
  * Quasi die Karte die der Hamster (die AI das Hamsters) dabei hat und alle aufgedeckten Felder darauf vermerkt.
+ * Bemerkung:
+ * wird auf ein Feld zugegriffen, welches noch nicht erkundet ist, so wird die FeldNichtErkundetException geworfen
  */
 public class Karte {
-	private ZweiDimensionalesArray<Feld> karte;
+	//private ZweiDimensionalesArray<Feld> karte;
 	
 	public Karte() {
-		karte = new ZweiDimensionalesArray<Feld>();
+		//karte = new ZweiDimensionalesArray<Feld>();
 	}
 	
-	public void setFeld(int reihe, int spalte, Feld feld) {
-		karte.setFeld(new Position(spalte, reihe), feld);
+	private void setFeld(int reihe, int spalte, Feld feld) {
+		feldZugriff(reihe, spalte);
+		String key = generateHashValue(reihe, spalte);
+		felder.put(key, feld);
+	}
+	
+	public int getEnergieAufwand(Position pos){
+		return 0;
+	}
+	public void setEnergieAufwand(Position pos, int energieAufwand){
+	}
+	
+	public double getKornChance(Position pos){
+		return 0;
+	}
+	public void setKornChance(Position pos, Double kornChance){
+	}
+	
+	public double getMauer(Position pos){
+		return 0;
+	}
+	public void setMauer(Position pos, Double mauerWahrscheinlichkeit){
+	}
+	
+	public Position getMaxPosition(){
+		return new Position(0,0);
+	}
+	public Position getMinPosition(){
+		return new Position(0,0);
 	}
 		
-	public Feld getFeld(int reihe, int spalte){
+	public Feld getFeld(int reihe, int spalte) throws FeldNichtErkundetException{
 		Position pos = new Position(spalte, reihe);
 		return getFeld(pos);
 	}
 	
-	public Feld getFeld(Position pos){
-		if(karte.feldBelegt(pos)) {
-			return karte.getFeld(pos);
+	/**
+	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
+	 * Dieses kann anschließend editiert werden.
+	 * @return - Das Feld an der Stelle reihe,spalte / Wenn kein Feld vorhanden, dann wird FeldNichtErkundetException geworfen.
+	 */
+	private Feld getFeld(Position pos) throws FeldNichtErkundetException{
+		if(feldBelegt(pos)) {
+			int reihe = pos.y;
+			int spalte = pos.x;		
+			feldZugriff(reihe,spalte);
+			String key = generateHashValue(reihe,spalte);
+			Feld ret = felder.get(key);
+			return ret;
 		}
-		Feld ret = new Feld();
-		karte.setFeld(pos, ret);
-		return ret;
-	}
-	
-	public void update(Karte informationen){
-		
+		throw new FeldNichtErkundetException();
 	}
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
-	 */
+	 
 	public Spielfeld createSpielfeld(){
 		//int height = minReihe;
 		//Spielfeld ret = new Spielfeld(width, height);
@@ -52,18 +85,82 @@ public class Karte {
 			felder.setFeld(new Position(x-minX,y-minY),feld);
 		}
 		Spielfeld ret = new Spielfeld(felder);
+		ret.anfangsSpalte = minX;
+		ret.anfangsReihe = minY;
 		return ret;
 	}
+    */
     
     /**
      * Gibt das Feld in der angegebenen Richtung zurück
      * @return Das Feld in der angegebenen Richtung
-     */
-    public Feld getFeldInRichtung(Position position, int richtung) {
+     
+    public Feld getFeldInRichtung(Position position, int richtung) throws FeldNichtErkundetException{
     	int reihe = position.y + (richtung - 1) % 2;
     	int spalte = position.x + (richtung * -1 + 2) % 2;
     	
     	return getFeld(reihe, spalte);
     }
+	*/
+	
+	// Ab hier das ZweidimensionaleArray zur Speicherung der Karte: ================================
+	
+	private int minReihe = -1;
+	private int maxReihe = -1;
+	private int minSpalte = -1;
+	private int maxSpalte = -1;
+	
+	private HashMap<String,Feld> felder = new HashMap<String,Feld>();
+	
+	/**
+	 * @return True, falls sich bereits ein Feld an Stelle reihe, spalte befindet - ansonsten false
+	 */
+	private boolean feldBelegt(Position pos){
+		int reihe = pos.y;
+		int spalte = pos.x;
+		String key = generateHashValue(reihe,spalte);
+		return felder.containsKey(key);
+	}
+	
+	public int getMinSpalte(){
+		if(minSpalte==-1)return 0;
+		return minSpalte;
+	}
+	
+	public int getMaxSpalte(){
+		if(maxSpalte==-1)return 0;
+		return maxSpalte;
+	}
+	
+	public int getMinReihe(){
+		if(minReihe==-1)return 0;
+		return minReihe;
+	}
+	
+	public int getMaxReihe(){
+		if(maxReihe==-1)return 0;
+		return maxReihe;
+	}
+	
+	/**
+	 * Bei einem Zugriff auf ein Feld sollte diese Funktion aufgerufen werden.
+	 * Wird benötigt um wichtige Variablen für die createSpielfeld-Methode zu setzen.
+	 */
+	private void feldZugriff(int reihe, int spalte){
+		if(reihe<0 || spalte<0)
+			throw new IllegalArgumentException("Ungültige Werte für Reihe ("+reihe+") und Spalte ("+spalte+")");
+		if(reihe<minReihe || minReihe == -1)
+			minReihe=reihe;
+		if(reihe>maxReihe || maxReihe == -1)
+			maxReihe=reihe;
+		if(spalte<minSpalte || minSpalte == -1)
+			minSpalte=reihe;
+		if(spalte>maxSpalte || maxSpalte == -1)
+			maxSpalte=reihe;
+	}
+	
+	private String generateHashValue(int reihe, int spalte){
+		return ""+reihe+","+spalte+"";
+	}
 	
 }

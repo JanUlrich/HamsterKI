@@ -13,25 +13,32 @@ public class HamsterWegfindung {
      */
     public HamsterWegfindung(MeinHamster hamster, Karte karte){
     	this.karte = karte;
-    	this.spielfeld = karte.createSpielfeld();
+    	//this.spielfeld = karte.createSpielfeld();
     	this.hamster = hamster;
     }
 
 	public int getBestMove(){
 		Position ausgangsPosition = hamster.getPosition();
+		//hamster.schreib(ausgangsPosition.toString()+" "+spielfeld.anfangsSpalte);
+		//ausgangsPosition.x -= spielfeld.anfangsSpalte;
+		//ausgangsPosition.y -= spielfeld.anfangsReihe;
 		
 		int bestDirection = -1;
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
 			Position ziel = ausgangsPosition.getPositionInRichtung(direction);
-			Feld f = karte.getFeld(ziel);
-			if(f.getMauer()!=1){
+			//			Feld f = karte.getFeld(ziel);
+			if(karte.getMauer(ziel)!=1){
 				//double chance = f.getKornChance();
+				hamster.schreib(karte.getMauer(ziel) + ", "+ ziel);
+				return direction;	
+				/*
 				double chance = berechneKornChancen(ziel);
 				if(chance>bestDirection || (chance>=bestDirection && direction==ausgangsPosition.direction)) {
 					bestDirection = direction;
 					bestChance = chance;
 				}
+			*/
 			}
 		}
 		
