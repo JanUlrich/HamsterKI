@@ -30,7 +30,6 @@ public class HamsterWegfindung {
 			//			Feld f = karte.getFeld(ziel);
 			if(karte.getMauer(ziel)!=1){
 				//double chance = f.getKornChance();
-				hamster.schreib(karte.getMauer(ziel) + ", "+ ziel);
 				return direction;	
 				/*
 				double chance = berechneKornChancen(ziel);
@@ -90,9 +89,21 @@ public class HamsterWegfindung {
 			if(pos.direction == direction)
 				benoetigteEnergie = 1;
 			
-			if(spielfeld.istBessererEnergiewert(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie)){
-				spielfeld.setEnergieAufwand(pos.getPositionInRichtung(direction), momentaneEnergie + benoetigteEnergie);
-				doStepfrom(pos.getPositionInRichtung(direction)); // 
+			Position nextPosition = pos.getPositionInRichtung(direction);
+			Position drehPosition = nextPosition.clone();
+			for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
+				if(drehRichtung!=pos.direction){
+					drehPosition.direction = drehRichtung;
+					if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + 1)){
+						spielfeld.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
+						doStepfrom(drehPosition); // nächster Step
+					}
+				}else{
+					if(karte.istBessererEnergiewert(nextPosition, momentaneEnergie + benoetigteEnergie)){
+						spielfeld.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
+						doStepfrom(nextPosition); // nächster Step
+					}
+				}
 			}
 		}
 	}

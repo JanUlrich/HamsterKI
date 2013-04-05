@@ -4,20 +4,24 @@
     private double koerner;//Prozentchance auf Körner
 	
 	public Feld() {
-    	energieaufwand = new int[4];
-		this.mauer = 0;
-		this.koerner = 0.50;
+    	this(0,50);
 	}
 	
+	/**
+	 * Initialisiert ein Feld mit den wahrscheinlichkeiten für das vorhandensein einer Mauer und von Körnern
+	 */
 	public Feld(double mauer, double koerner) {
     	energieaufwand = new int[4];
+    	for(int i=0;i<4;i++){
+    		energieaufwand[i]=0;
+    	}
 		this.mauer = mauer;
 		this.koerner = koerner;
 	}
 
 	/**
 	 * 
-	*/
+	 */
 	public int getEnergieaufwand(int direction){
 		return energieaufwand[direction]; //TODO überprüfen ob Wert vorhanden.
 	}

@@ -45,19 +45,7 @@ public class Spielfeld {
     	return 0;
     }
     
-    /**
-     * Wichtige Funktion für Wegberechnung.
-     * prüft ob der übergebene Energiewert an der übergebenene Position auf dem Spielfeld einen besseren Wert als der bereits vorhandene darstellt.
-     * Wichtig: ist das Spielfeld an der Position pos nicht begehbar, wird false zurückgegeben. Nicht begehbare Felder haben keinen Energiewert.
-     * Wenn an der übergebenen Position noch kein Energiewert vorhanden ist, dann wird true zurückgegeben.
-     */
-    public boolean istBessererEnergiewert(Position pos, int energie){
-    	Feld feld = spielfeld.getFeld(pos);
-    	int energieaufwand=feld.energieaufwand[pos.direction];
-    	Hamster.getStandardHamster().schreib("Energie: "+energieaufwand);
-    	if(energieaufwand == 0) return true;
-    	return energieaufwand>energie;
-    }
+
     
     @Override
     public String toString(){

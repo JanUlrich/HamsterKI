@@ -13,28 +13,34 @@ public class Karte {
 		//karte = new ZweiDimensionalesArray<Feld>();
 	}
 	
-	private void setFeld(int reihe, int spalte, Feld feld) {
-		feldZugriff(reihe, spalte);
-		String key = generateHashValue(reihe, spalte);
-		felder.put(key, feld);
+	
+	public int getEnergieAufwand(Position pos) throws FeldNichtErkundetException{
+		Feld feld = this.getFeld(pos);
+		int ret = feld.getEnergieaufwand(pos.direction);
+		return ret;
 	}
 	
-	public int getEnergieAufwand(Position pos){
-		return 0;
-	}
-	public void setEnergieAufwand(Position pos, int energieAufwand){
+	public void setEnergieAufwand(Position pos, int energieAufwand) throws FeldNichtErkundetException{
+		Feld feld = this.getFeld(pos);
+		feld.setEnergieaufwand(pos.direction,energieAufwand);
 	}
 	
-	public double getKornChance(Position pos){
+	public double getKornChance(Position pos) throws FeldNichtErkundetException{
 		return 0;
 	}
-	public void setKornChance(Position pos, Double kornChance){
+	
+	public void setKornChance(Position pos, Double kornChance) throws FeldNichtErkundetException{
+	
 	}
 	
 	public double getMauer(Position pos){
-		return 0;
+		Feld feld = null;
+			feld = this.getFeld(pos);
+		return feld.getMauer();
 	}
+	
 	public void setMauer(Position pos, Double mauerWahrscheinlichkeit){
+
 	}
 	
 	public Position getMaxPosition(){
@@ -44,7 +50,7 @@ public class Karte {
 		return new Position(0,0);
 	}
 		
-	public Feld getFeld(int reihe, int spalte) throws FeldNichtErkundetException{
+	public Feld getFeld(int reihe, int spalte){
 		Position pos = new Position(spalte, reihe);
 		return getFeld(pos);
 	}
@@ -54,7 +60,7 @@ public class Karte {
 	 * Dieses kann anschließend editiert werden.
 	 * @return - Das Feld an der Stelle reihe,spalte / Wenn kein Feld vorhanden, dann wird FeldNichtErkundetException geworfen.
 	 */
-	private Feld getFeld(Position pos) throws FeldNichtErkundetException{
+	private Feld getFeld(Position pos){
 		if(feldBelegt(pos)) {
 			int reihe = pos.y;
 			int spalte = pos.x;		
@@ -63,8 +69,24 @@ public class Karte {
 			Feld ret = felder.get(key);
 			return ret;
 		}
-		throw new FeldNichtErkundetException();
+		Feld newFeld = new Feld(0,50); //Hier wird das Standardfeld für unerkundete Felder erstellt. Seine Parameter beeinflussen die Eintscheidungen der KI-Steuerung
+		//throw new FeldNichtErkundetException();
+		return newFeld;
 	}
+	
+	/**
+     * Wichtige Funktion für Wegberechnung.
+     * prüft ob der übergebene Energiewert an der übergebenene Position auf dem Spielfeld einen besseren Wert als der bereits vorhandene darstellt.
+     * Wichtig: ist das Spielfeld an der Position pos nicht begehbar, wird false zurückgegeben. Nicht begehbare Felder haben keinen Energiewert.
+     * Wenn an der übergebenen Position noch kein Energiewert vorhanden ist, dann wird true zurückgegeben.
+     */
+    public boolean istBessererEnergiewert(Position pos, int energie){
+    	Feld feld = this.getFeld(pos);
+    	int energieaufwand=feld.getEnergieaufwand(pos.direction);
+    	//Hamster.getStandardHamster().schreib("Energie: "+energieaufwand);
+    	if(energieaufwand == 0) return true;
+    	return energieaufwand>energie;
+    }
 	
 	/**
 	 * Baut ein Spielfeld aus den momentan vorhandenen Informationen
@@ -140,6 +162,12 @@ public class Karte {
 	public int getMaxReihe(){
 		if(maxReihe==-1)return 0;
 		return maxReihe;
+	}
+
+	private void setFeld(int reihe, int spalte, Feld feld) {
+		feldZugriff(reihe, spalte);
+		String key = generateHashValue(reihe, spalte);
+		felder.put(key, feld);
 	}
 	
 	/**
