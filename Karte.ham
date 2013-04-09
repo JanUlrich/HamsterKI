@@ -33,15 +33,7 @@ public class Karte {
 		return new Feld(0,50);
 	}
 
-	/**
-	 * @return True, falls sich bereits ein Feld an Stelle y, x befindet - ansonsten false
-	 */
-	public boolean feldBelegt(Position pos){
-		String key = generateHashValue(pos);
-		return felder.containsKey(key);
-	}
-
-	public void setFeld(Position pos, Feld feld) {
+	private void setFeld(Position pos, Feld feld) {
 		feldZugriff(pos);
 		String key = generateHashValue(pos);
 		felder.put(key, feld);
@@ -49,7 +41,13 @@ public class Karte {
 
 
 
-
+	/**
+	 * @return True, falls sich bereits ein Feld an Stelle y, x befindet - ansonsten false
+	 */
+	public boolean feldBelegt(Position pos){
+		String key = generateHashValue(pos);
+		return felder.containsKey(key);
+	}
 
 	public Feld getFeld(int y, int x){
 		Position pos = new Position(x, y);
@@ -86,7 +84,12 @@ public class Karte {
 	}
 
 	public void setMauer(Position pos, Double mauerWahrscheinlichkeit){
-
+		Feld f = getFeld(pos);
+		if(f==null) {
+			f = new Feld();
+			setFeld(pos, f);
+		}
+		f.setMauer(mauerWahrscheinlichkeit);
 	}
 
 	public Position getMaxPosition(){
@@ -105,7 +108,6 @@ public class Karte {
     public boolean istBessererEnergiewert(Position pos, int energie){
     	Feld feld = getFeld(pos);
     	int energieaufwand=feld.getEnergieaufwand(pos.direction);
-    	//Hamster.getStandardHamster().schreib("Energie: "+energieaufwand);
     	if(energieaufwand == 0) return true;
     	return energieaufwand>energie;
     }
@@ -140,29 +142,26 @@ public class Karte {
 		return "" + pos.y + "," + pos.x;
 	}
 
-
-
-
-
-
-
-
     @Override
     public String toString(){
+    	return toString(null);
+    }
+
+    public String toString(Position hamsterPosition){
     	String ret = "Karte:\n";
     	for(int y=minY;y<=maxY;y++){
     		for(int x=minX;x<=maxX;x++){
-				ret += "|" + getFeld(new Position(x,y)).toString() + "|";
+    			Feld f = getFeld(new Position(x,y));
+    			if(hamsterPosition!=null && x==hamsterPosition.x && y==hamsterPosition.y) {
+    				ret += "H";
+    			} else {
+    				ret += ((f==null) ? "?" : (f.getMauer() == 1) ? "x" : "_");
+    			}
     		}
     		ret += "\n";
     	}
     	return ret;
     }
-
-
-
-
-
 
 	public int getMinX(){
 		return minX;

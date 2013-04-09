@@ -61,6 +61,7 @@ public class MeinHamster extends Hamster {
 			//karte.getFeld(y, x).setKoerner(0);
 			karte.setKornChance(hamsterPos, 0.0);
         }
+        schreib(karte.toString(position));
     }
 
     private boolean mauerDa(int y, int x){
@@ -70,8 +71,12 @@ public class MeinHamster extends Hamster {
     }
 
     public void forward() throws HamsterEnergieException {
+        int richtung = getBlickrichtung();
+
         super.vor();
-        //TODO Position aktualisieren
+        position.x -= (richtung-2)%2;
+        position.y += (richtung-1)%2;
+
         verbraucheEnergie();
     }
 
