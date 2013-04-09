@@ -1,5 +1,5 @@
 #!/bin/sh
 
 java -jar precompiler.jar
-javac -verbose *.java
+javac *.java
 echo "Kompilierung abgeschlossen"
