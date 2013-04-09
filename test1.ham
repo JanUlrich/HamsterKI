@@ -1,12 +1,19 @@
 /*object-oriented program*/void main() {
-	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner(); //Ermittelt zu Beginn des Programms die auf dem Spielfeld liegenden Körner ...
-	
-	MeinHamster hamster = new MeinHamster(5,5,0,0,0); //Generiere den Hamster.
-	mainLoop(hamster); //Tu Dinge
+	// Ermittelt zu Beginn des Programms die auf dem Spielfeld liegenden Körner ...
+    int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
-	int uebrigeAnzahlKoerner = Territorium.getAnzahlKoerner(); //Ist die KI fertig (alle Körner wurden eingesammelt | Hamster hat keine Energie mehr), dann werden alle übrig gebliebenen Körnen ermittelt ...
+    // Neuen Hamster erstellen
+	MeinHamster hamster = new MeinHamster(5,5,0,0);
+	mainLoop(hamster);
 
-    System.out.println("Ende");   // TODO Die Anzahl übrig gebliebener Körnern und andere Informationen kann am Ende als Informationen ausgegeben werden!
+
+    // Ist die KI fertig (alle Körner wurden eingesammelt | Hamster
+    // hat keine Energie mehr), dann werden alle übrig gebliebenen
+    // Körnen ermittelt ...
+	int uebrigeAnzahlKoerner = Territorium.getAnzahlKoerner();
+
+    // TODO Die Anzahl übrig gebliebener Körnern und andere Informationen kann am Ende als Informationen ausgegeben werden!
+    System.out.println("Ende");
 }
 
 void mainLoop(MeinHamster hamster) {

@@ -4,25 +4,23 @@
  */
 public class HamsterWegfindung {
     Karte karte;
-    Spielfeld spielfeld;
     MeinHamster hamster;
-    
+
     /**
      * @param hamster - Die Ausgangslage des Hamsters. Dabei ist nur die Position und die Richtung des Hamsters relevant.
-     * @param felder - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
+     * @param karte - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
      */
     public HamsterWegfindung(MeinHamster hamster, Karte karte){
     	this.karte = karte;
-    	//this.spielfeld = karte.createSpielfeld();
     	this.hamster = hamster;
     }
 
 	public int getBestMove(){
 		Position ausgangsPosition = hamster.getPosition();
-		//hamster.schreib(ausgangsPosition.toString()+" "+spielfeld.anfangsSpalte);
-		//ausgangsPosition.x -= spielfeld.anfangsSpalte;
-		//ausgangsPosition.y -= spielfeld.anfangsReihe;
-		
+		//hamster.schreib(ausgangsPosition.toString()+" "+spielfeld.anfangsX);
+		//ausgangsPosition.x -= spielfeld.anfangsX;
+		//ausgangsPosition.y -= spielfeld.anfangsY;
+
 		int bestDirection = -1;
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
@@ -30,7 +28,7 @@ public class HamsterWegfindung {
 			//			Feld f = karte.getFeld(ziel);
 			if(karte.getMauer(ziel)!=1){
 				//double chance = f.getKornChance();
-				return direction;	
+				return direction;
 				/*
 				double chance = berechneKornChancen(ziel);
 				if(chance>bestDirection || (chance>=bestDirection && direction==ausgangsPosition.direction)) {
@@ -40,32 +38,32 @@ public class HamsterWegfindung {
 			*/
 			}
 		}
-		
+
 	   // hamster.schreib("" + bestDirection + ": " + bestChance);
-		
+
 		return bestDirection;
 	}
-	
+
 	/**
 	 * Diese Funktion berechnet die Chance auf Körner / den Energieaufwand für Hamster um zu diesem Feld zu gelangen und dies für alle Felder.
 	 */
 	private double berechneKornChancen(Position fromPosition){
 		//Spielfeld-Entfernungen von fromPosition berechnen:
 		berechneEntfernungen(fromPosition);
-		
+
 		double totalChance = 0;
-		for(int x=0;x<spielfeld.anzahlSpalten;x++) {
-			for(int y=0;y<spielfeld.anzahlReihen;y++){
+		for(int x=karte.getMinX();x<karte.getMaxX();x++) {
+			for(int y=karte.getMinY();y<karte.getMaxY();y++){
 				Position pos = new Position(x,y);
-				int energieAufwand = spielfeld.getEnergieAufwand(pos);
+				int energieAufwand = karte.getEnergieAufwand(pos);
 				if(energieAufwand > 0)
-					totalChance += spielfeld.getKornChance(pos) / new Double(energieAufwand);
-				//hamster.schreib(""+spielfeld.getKornChance(pos) + " / " + spielfeld.getEnergieAufwand(pos) +" = " +totalChance);
+					totalChance += karte.getKornChance(pos) / new Double(energieAufwand);
+				//hamster.schreib(""+karte.getKornChance(pos) + " / " + karte.getEnergieAufwand(pos) +" = " +totalChance);
 			}
 		}
 		return totalChance;
 	}
-	
+
 	/**
 	 * Berechnet die Energieaufwände für den Hamster 'initialHamster' um auf die einzelnen Felder des Spielfelds zu gelangen.
 	 */
@@ -73,34 +71,36 @@ public class HamsterWegfindung {
 		doStepfrom(fromPos);
 		//hamster.schreib(""+ spielfeld +""); //DEBUG
 	}
-	
+
 	private void doStepfrom(Position pos){
 		/*
 		Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
 		auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
 		*/
-		if(pos.x > spielfeld.anzahlSpalten || pos.y > spielfeld.anzahlReihen || pos.x < 0 || pos.y < 0)return;
-		int momentaneEnergie = spielfeld.getEnergieAufwand(pos);
+		if(	   pos.x > karte.getMaxX() || pos.y > karte.getMaxY()
+			|| pos.x < karte.getMinX() || pos.y < karte.getMinY())
+			return;
+		int momentaneEnergie = karte.getEnergieAufwand(pos);
 		for(int direction = 0; direction<4;direction++){
 			int benoetigteEnergie = 2;
 
-	    	// Schaut der Hamster schon in entsprechende Richtung, 
+	    	// Schaut der Hamster schon in entsprechende Richtung,
 	    	// braucht er sich nicht mehr drehen
 			if(pos.direction == direction)
 				benoetigteEnergie = 1;
-			
+
 			Position nextPosition = pos.getPositionInRichtung(direction);
 			Position drehPosition = nextPosition.clone();
 			for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
 				if(drehRichtung!=pos.direction){
 					drehPosition.direction = drehRichtung;
 					if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + 1)){
-						spielfeld.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
+						karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
 						doStepfrom(drehPosition); // nächster Step
 					}
 				}else{
 					if(karte.istBessererEnergiewert(nextPosition, momentaneEnergie + benoetigteEnergie)){
-						spielfeld.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
+						karte.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
 						doStepfrom(nextPosition); // nächster Step
 					}
 				}
@@ -108,4 +108,4 @@ public class HamsterWegfindung {
 		}
 	}
 }
- 
+

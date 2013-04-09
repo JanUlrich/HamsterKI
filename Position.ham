@@ -2,36 +2,36 @@
     public int x;
     public int y;
     public int direction;
-    
+
     public Position(int x, int y){
     	this.x = x;
     	this.y = y;
     }
-    
+
     /**
-     * @param x - die Nummer der Spalte
-     * @param y - die Nummer der Reihe
+     * @param x - die Nummer der X
+     * @param y - die Nummer der Y
      */
     public Position(int x, int y, int direction){
     	this(x,y);
     	this.direction = direction;
     }
-    
+
     /**
      * Gibt eine neue Position zurück. Diese liegt an der Position, welche in Richtung direction an die ursprüngliche Position anliegt.
      * @param direction - direction
      */
     public Position getPositionInRichtung(int richtung){
-    	int reihe = this.y + (richtung - 1) % 2;
-    	int spalte = this.x + (richtung * -1 + 2) % 2;
-    	return new Position(spalte,reihe, richtung);
+    	int y = this.y + (richtung - 1) % 2;
+    	int x = this.x + (richtung * -1 + 2) % 2;
+    	return new Position(x,y, richtung);
     }
-    
+
     @Override
     public String toString(){
     	return "Position: "+x+", "+y+"Richtung: "+direction;
     }
-    
+
     @Override
     public Position clone(){
     	return new Position(x,y,direction);
