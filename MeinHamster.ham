@@ -5,92 +5,99 @@
  * Kann sich nur so lange bewegen, wie Energie vorhanden.
  */
 public class MeinHamster extends Hamster {
+    private Position startPosition;
+	private Position position;
 	private Karte karte;
 	private int energieLevel;
-    private Position startPosition;
-    
+
     public MeinHamster(int p1, int p2, int p3, int p4, int p5){
     	super(p1,p2,p3,p4,p5);
     	energieLevel = Territorium.getAnzahlReihen() * Territorium.getAnzahlSpalten() * 5;;
    		karte = new Karte();
-   		startPosition = new Position(this.getSpalte(), this.getReihe(), this.getBlickrichtung());
+   		position = new Position(0,0,getDirection());
+        startPosition = new Position(this.getSpalte(), this.getReihe(), this.getBlickrichtung());
     }
 
 	/**
 	 * Dreht den Hamster in die übergebene Richtung. Dabei wird Energie verbraucht.
 	 * @param Richtung - Zahl 0-3, steht für die 4 Himmelsrichtungen.
-	 * Sind die Parameter ungültig oder schaut der Hamster bereits 
-	 * in die gewünschte Richtung wird keine Energie verbraucht und 
+	 * Sind die Parameter ungültig oder schaut der Hamster bereits
+	 * in die gewünschte Richtung wird keine Energie verbraucht und
 	 * keine Drehung ausgeführt.
 	 */
 	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException {
 		if(Richtung>3 || Richtung < 0 || this.getBlickrichtung() == Richtung)
 			return this;
-		
+
 		while(this.getBlickrichtung()!=Richtung)
 			this.linksUm();
-		
+
 		verbraucheEnergie();
 		return this;
 	}
-	
+
 	/**
      * @author Simon Herrmann
      * @param karte Karte des Hamsters
-     * @return Karte des Hamsters mit nach der Sensorabfrage 
+     * @return Karte des Hamsters mit nach der Sensorabfrage
     */
     void KachelnAbfragen() {
     	//int reihe = getReihe();
     	//int spalte = getSpalte();
     	Position hamsterPos = getPosition();
-    	
+
     	for (int i = hamsterPos.y-1; i <= hamsterPos.y+1; i++) {
     		for (int j = hamsterPos.x-1; j <= hamsterPos.x+1; j++) {
-    			
+
 		    	//Feld f = karte.getFeld(i,j);
     			if (mauerDa(i,j))
     				karte.setMauer(new Position(j,i), 1.0);
     			else
     				karte.setMauer(new Position(j,i), 0.0);
     			//karte.setFeld(i,j,f);
-    			
-    		}				
-    	} 
-    	
-		if(!kornDa()) 
+
+    		}
+    	}
+
+		if(!kornDa()) {
 			//karte.getFeld(reihe, spalte).setKoerner(0);
-			karte.setKornChance(hamsterPos, 0.0);
+            try {
+    			karte.setKornChance(hamsterPos, 0.0);
+            } catch(FeldNichtErkundetException e) {
+
+            }
+        }
     }
-    
+
     private boolean mauerDa(int reihe, int spalte){
     	reihe += startPosition.y;
     	spalte += startPosition.x;
     	return Territorium.mauerDa(reihe, spalte);
     }
-	
-	public void vorwärts() throws HamsterEnergieException{
+
+	public void vorwärts() throws HamsterEnergieException {
 		this.vor();
 		verbraucheEnergie();
 	}
-	
+
 	private void verbraucheEnergie() throws HamsterEnergieException
 	{
 		if(energieLevel==0)
 			throw new HamsterEnergieException();
 		energieLevel--;
 	}
-    
+
     public Position getPosition(){
     	return new Position(this.getSpalte() - startPosition.x, this.getReihe() - startPosition.y, this.getBlickrichtung());
     }
-    
+
     /**
      * Bewegt den Hamster KI gesteuert einen Schritt weiter
      */
     public void kiStep() throws HamsterEnergieException {
     	// Als erstes Umgebung abfragen
     	KachelnAbfragen();
-    	
+
     	int richtung = berechneZug();
     	dreheInRichtung(richtung);
     	vorwärts();
@@ -117,16 +124,16 @@ public class MeinHamster extends Hamster {
      * Gibt zurück, ob in der angegebenen Richtung frei ist,
      * oder ob dort eine Mauer liegt
      * @return true, wenn in der angegebenen Richtung keine Mauer ist
-     
+
     private boolean freiInRichtung(int richtung) {
     	Feld feld = feldInRichtung(richtung);
     	return feld.getMauer() < 1;
     }
-*/
+    */
     /**
      * Gibt das Feld in der angegebenen Richtung zurück
      * @return Das Feld in der angegebenen Richtung
-     
+
     private Feld feldInRichtung(int richtung) {
     	return karte.getFeldInRichtung(getPosition(), richtung);
     }

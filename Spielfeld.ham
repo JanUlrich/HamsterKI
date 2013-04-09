@@ -27,14 +27,17 @@ public class Spielfeld {
     }
     
     public double getKornChance(Position pos){
-    	return spielfeld.getFeld(pos).getKornChance();
+	    Feld f = spielfeld.getFeld(pos);
+    	if(f==null)
+    		throw new NullPointerException("");
+    	return f.getKornChance();
     }
     
     public int getEnergieAufwand(Position pos){
-    	int ret;
-    	if(spielfeld.getFeld(pos)==null)throw new NullPointerException("");
-    	ret = spielfeld.getFeld(pos).getEnergieaufwand(pos.direction);
-    	return ret;
+	    Feld f = spielfeld.getFeld(pos);
+    	if(f==null)
+    		throw new NullPointerException("");
+    	return f.getEnergieaufwand(pos.direction);
     }
     
     public void setEnergieAufwand(Position pos, int energie){
