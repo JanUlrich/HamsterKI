@@ -58,13 +58,14 @@ class Pfad {
 
 	public static int Calculate(Position start, Karte karte, int maxSteps) {
 
-		double bestRatio = 0;
+		double bestRatio = -1;
 		Pfad bestPath = null;
 
 		int[] directions = new int[maxSteps];
 		for(int i=0; i<maxSteps; i++) directions[i] = 0;
 
-		while(directions[maxSteps-1]!=4) {
+		while(directions[0]!=4) {
+			//Hamster.getStandardHamster().schreib(Arrays.toString(directions));
 			for(int i = maxSteps-1; i>0; i--) {
 				if(directions[i]==4) {
 					directions[i]=0;
@@ -76,7 +77,7 @@ class Pfad {
 			for(int i=0; i<maxSteps; i++) {
 				p.addStep(directions[i]);
 			}
-			directions[0]++;
+			directions[maxSteps-1]++;
 
 			if(p.getRatio()>bestRatio) {
 				bestRatio = p.getRatio();
