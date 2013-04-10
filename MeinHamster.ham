@@ -52,6 +52,8 @@ public class MeinHamster extends Hamster {
 
 		if(!kornDa()) {
 			karte.setKornChance(position, 0.0);
+        } else {
+            karte.setKornChance(position, 0.6);
         }
         schreib(karte.toString(position));
     }
