@@ -21,10 +21,11 @@
      * Gibt eine neue Position zurück. Diese liegt an der Position, welche in Richtung direction an die ursprüngliche Position anliegt.
      * @param direction - direction
      */
-    public Position getPositionInRichtung(int richtung){
-    	int y = this.y + (richtung - 1) % 2;
-    	int x = this.x + (richtung * -1 + 2) % 2;
-    	return new Position(x,y, richtung);
+    public Position getPositionInRichtung(int richtung) {
+        Position position = new Position(x, y, richtung);
+        position.x -= (richtung-2)%2;
+        position.y += (richtung-1)%2;
+        return position;
     }
 
     @Override

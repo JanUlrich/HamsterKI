@@ -49,15 +49,8 @@ public class Karte {
 		return felder.containsKey(key);
 	}
 
-	public Feld getFeld(int y, int x){
-		Position pos = new Position(x, y);
-		return getFeld(pos);
-	}
-
     public int getEnergieAufwand(Position pos){
 	    Feld f = getFeld(pos);
-    	if(f==null)
-    		throw new NullPointerException("");
     	return f.getEnergieaufwand(pos.direction);
     }
 
@@ -68,8 +61,6 @@ public class Karte {
 
     public double getKornChance(Position pos){
 	    Feld f = getFeld(pos);
-    	if(f==null)
-    		throw new NullPointerException("");
     	return f.getKornChance();
     }
 
@@ -90,13 +81,6 @@ public class Karte {
 		setFeld(pos, f);
 	}
 
-	public Position getMaxPosition(){
-		return new Position(0,0);
-	}
-	public Position getMinPosition(){
-		return new Position(0,0);
-	}
-
 	/**
      * Wichtige Funktion für Wegberechnung.
      * prüft ob der übergebene Energiewert an der übergebenene Position auf dem Spielfeld einen besseren Wert als der bereits vorhandene darstellt.
@@ -115,15 +99,8 @@ public class Karte {
      * @return Das Feld in der angegebenen Richtung
 	*/
     public Feld getFeldInRichtung(Position position, int richtung) {
-    	int y = position.y + (richtung - 1) % 2;
-    	int x = position.x + (richtung * -1 + 2) % 2;
-
-    	return getFeld(y, x);
+    	return getFeld(position.getPositionInRichtung(richtung));
     }
-
-	// Ab hier das ZweidimensionaleArray zur Speicherung der Karte: ================================
-
-
 
 	/**
 	 * Bei einem Zugriff auf ein Feld sollte diese Funktion aufgerufen werden.

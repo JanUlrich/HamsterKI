@@ -25,15 +25,14 @@ public class MeinHamster extends Hamster {
 	 * in die gewünschte Richtung wird keine Energie verbraucht und
 	 * keine Drehung ausgeführt.
 	 */
-	public MeinHamster dreheInRichtung(int Richtung) throws HamsterEnergieException {
-		if(Richtung>3 || Richtung < 0 || getBlickrichtung() == Richtung)
-			return this;
+	public void dreheInRichtung(int richtung) throws HamsterEnergieException {
+		if(richtung>3 || richtung < 0 || getBlickrichtung() == richtung)
+			return;
 
-		while(getBlickrichtung()!=Richtung)
+		while(getBlickrichtung()!=richtung)
 			linksUm();
 
 		verbraucheEnergie();
-		return this;
 	}
 
 	/**
@@ -46,19 +45,14 @@ public class MeinHamster extends Hamster {
 
     	for (int i = hamsterPos.y-1; i <= hamsterPos.y+1; i++) {
     		for (int j = hamsterPos.x-1; j <= hamsterPos.x+1; j++) {
-
-		    	//Feld f = karte.getFeld(i,j);
     			if (mauerDa(i,j))
     				karte.setMauer(new Position(j,i), 1.0);
     			else
     				karte.setMauer(new Position(j,i), 0.0);
-    			//karte.setFeld(i,j,f);
-
     		}
     	}
 
 		if(!kornDa()) {
-			//karte.getFeld(y, x).setKoerner(0);
 			karte.setKornChance(hamsterPos, 0.0);
         }
         schreib(karte.toString(position));
@@ -71,22 +65,20 @@ public class MeinHamster extends Hamster {
     }
 
     public void forward() throws HamsterEnergieException {
-        int richtung = getBlickrichtung();
-
         super.vor();
-        position.x -= (richtung-2)%2;
-        position.y += (richtung-1)%2;
+
+        int richtung = getBlickrichtung();
+        position = position.getPositionInRichtung(richtung);
 
         verbraucheEnergie();
     }
 
     @Override
     public void vor() {
-        //ERROR
+        throw new RuntimeException("Invalid Method Call");
     }
 
-	private void verbraucheEnergie() throws HamsterEnergieException
-	{
+	private void verbraucheEnergie() throws HamsterEnergieException {
 		if(energieLevel==0)
 			throw new HamsterEnergieException();
 		energieLevel--;
@@ -114,14 +106,8 @@ public class MeinHamster extends Hamster {
      * @return - gibt die Richtung zurück
      */
     private int berechneZug() {
-    	//Spielfeld sp = karte.createSpielfeld();
     	HamsterWegfindung ki = new HamsterWegfindung(this, karte);
     	//ki.berechneEntfernungen();
-
-    	//int richtung = getBlickrichtung();
-		//while(!freiInRichtung(richtung)) {
-		//	richtung = (richtung + 1) % 4;
-		//}
 		return ki.getBestMove();
     }
 
@@ -140,6 +126,6 @@ public class MeinHamster extends Hamster {
      * @return Das Feld in der angegebenen Richtung
      */
     private Feld feldInRichtung(int richtung) {
-    	return karte.getFeldInRichtung(getPosition(), richtung);
+    	return karte.getFeldInRichtung(position, richtung);
     }
 }
