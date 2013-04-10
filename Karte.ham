@@ -61,12 +61,12 @@ public class Karte {
 
     public double getKornChance(Position pos){
 	    Feld f = getFeld(pos);
-    	return f.getKornChance();
+    	return f.getKoerner();
     }
 
 	public void setKornChance(Position pos, double kornChance){
 		Feld f = getFeld(pos);
-		f.setMauer(kornChance);
+		f.setKoerner(kornChance);
 		setFeld(pos, f);
 	}
 
@@ -130,6 +130,7 @@ public class Karte {
     			if(hamsterPosition!=null && x==hamsterPosition.x && y==hamsterPosition.y) {
     				ret += "h";
     			} else {
+    				//ret += f.getKornChance() + "|";
     				ret += ((f==null) ? "?" : (f.getMauer() >= 1) ? "x" : "_");
     			}
     		}

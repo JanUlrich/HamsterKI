@@ -41,10 +41,8 @@ public class MeinHamster extends Hamster {
      * @return Karte des Hamsters mit nach der Sensorabfrage
      */
     void KachelnAbfragen() {
-    	Position hamsterPos = getPosition();
-
-    	for (int i = hamsterPos.y-1; i <= hamsterPos.y+1; i++) {
-    		for (int j = hamsterPos.x-1; j <= hamsterPos.x+1; j++) {
+    	for (int i = position.y-1; i <= position.y+1; i++) {
+    		for (int j = position.x-1; j <= position.x+1; j++) {
     			if (mauerDa(i,j))
     				karte.setMauer(new Position(j,i), 1.0);
     			else
@@ -53,7 +51,7 @@ public class MeinHamster extends Hamster {
     	}
 
 		if(!kornDa()) {
-			karte.setKornChance(hamsterPos, 0.0);
+			karte.setKornChance(position, 0.0);
         }
         schreib(karte.toString(position));
     }
