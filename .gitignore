@@ -1,3 +1,4 @@
 /*.class
 /*.java
 *.sublime-workspace
+.fuse_hidden*
