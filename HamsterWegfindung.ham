@@ -2,6 +2,8 @@
  * HamsterWegfindung berechnet die Energieaufwände für einen Hamster um
  * auf die einzelnen Felder des Spielfelds zu gelangen. Die Werte können für weitere AI-Operationen verwendet werden.
  */
+import java.util.ArrayList;
+
 public class HamsterWegfindung {
     Karte karte;
     MeinHamster hamster;
@@ -71,39 +73,45 @@ public class HamsterWegfindung {
 	}
 
 	private void doStepfrom(Position pos){
+		ArrayList<Position> steps = new ArrayList<Position>();
+		steps.add(pos);
+		while(!steps.isEmpty()){
 		/*
 		Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
 		auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
 		*/
-		if(	   pos.x > karte.getMaxX() || pos.y > karte.getMaxY()
-			|| pos.x < karte.getMinX() || pos.y < karte.getMinY())
-			return;
-		int momentaneEnergie = karte.getEnergieAufwand(pos);
-		for(int direction = 0; direction<4;direction++){
-			int benoetigteEnergie = 2;
+		pos = steps.get(0);
+		steps.remove(0);
+		if(	   pos.x < karte.getMaxX() && pos.y < karte.getMaxY()
+			&& pos.x > karte.getMinX() && pos.y > karte.getMinY()){
+			int momentaneEnergie = karte.getEnergieAufwand(pos);
+			for(int direction = 0; direction<4;direction++){
+				int benoetigteEnergie = 2;
 
-	    	// Schaut der Hamster schon in entsprechende Richtung,
-	    	// braucht er sich nicht mehr drehen
-			if(pos.direction == direction)
-				benoetigteEnergie = 1;
+		    	// Schaut der Hamster schon in entsprechende Richtung,
+		    	// braucht er sich nicht mehr drehen
+				if(pos.direction == direction)
+					benoetigteEnergie = 1;
 
-			Position nextPosition = pos.getPositionInRichtung(direction);
-			Position drehPosition = nextPosition.clone();
-			for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
-				if(drehRichtung!=pos.direction){
-					drehPosition.direction = drehRichtung;
-					if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + 1)){
-						karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
-						doStepfrom(drehPosition); // nächster Step
-					}
-				}else{
-					if(karte.istBessererEnergiewert(nextPosition, momentaneEnergie + benoetigteEnergie)){
-						karte.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
-						doStepfrom(nextPosition); // nächster Step
+				Position nextPosition = pos.getPositionInRichtung(direction);
+				Position drehPosition = nextPosition.clone();
+				for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
+					if(drehRichtung!=pos.direction){
+						drehPosition.direction = drehRichtung;
+						if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + 1)){
+							karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
+							steps.add(drehPosition); // nächster Step
+						}
+					}else{
+						if(karte.istBessererEnergiewert(nextPosition, momentaneEnergie + benoetigteEnergie)){
+							karte.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
+							steps.add(nextPosition); // nächster Step
+						}
 					}
 				}
-			}
+				}
 		}
+	}
 	}
 }
 
