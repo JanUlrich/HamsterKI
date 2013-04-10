@@ -12,7 +12,8 @@
     // Körnen ermittelt ...
 	int uebrigeAnzahlKoerner = Territorium.getAnzahlKoerner();
 
-    // TODO Die Anzahl übrig gebliebener Körnern und andere Informationen kann am Ende als Informationen ausgegeben werden!
+    // TODO Die Anzahl übrig gebliebener Körnern und andere
+    // Informationen kann am Ende als Informationen ausgegeben werden!
     System.out.println("Ende");
 }
 

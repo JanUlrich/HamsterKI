@@ -25,21 +25,19 @@ public class HamsterWegfindung {
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
 			Position ziel = ausgangsPosition.getPositionInRichtung(direction);
-			//			Feld f = karte.getFeld(ziel);
-			if(karte.getMauer(ziel)!=1){
-				//double chance = f.getKornChance();
-				return direction;
-				/*
-				double chance = berechneKornChancen(ziel);
-				if(chance>bestDirection || (chance>=bestDirection && direction==ausgangsPosition.direction)) {
-					bestDirection = direction;
-					bestChance = chance;
-				}
-			*/
+			Feld f = karte.getFeld(ziel);
+
+			if(karte.getMauer(ziel)==1)
+				continue;
+
+			double chance = f.getKornChance();
+			//double chance = berechneKornChancen(ziel);
+			if(chance>bestChance || (chance>=bestChance && direction==ausgangsPosition.direction)) {
+				bestDirection = direction;
+				bestChance = chance;
 			}
 		}
-
-	   // hamster.schreib("" + bestDirection + ": " + bestChance);
+		// hamster.schreib("" + bestDirection + ": " + bestChance);
 
 		return bestDirection;
 	}

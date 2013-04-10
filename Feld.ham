@@ -35,7 +35,7 @@
 	}
 
 	public double getMauer() {
-		return this.mauer;
+		return mauer;
 	}
 
 	public void setKoerner(double koerner) {
@@ -43,11 +43,10 @@
 	}
 
 	public double getKoerner() {
-		return this.koerner;
+		return koerner;
 	}
 
 	public double getKornChance() {
-		Hamster.getStandardHamster().schreib(""+koerner * (1-mauer));
 		return koerner * (1-mauer);
 	}
 
