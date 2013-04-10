@@ -1,12 +1,12 @@
 /*class*/public class Feld {
-    public int[] energieaufwand;   
+    public int[] energieaufwand;
     private double mauer;
     private double koerner;//Prozentchance auf Körner
-	
+
 	public Feld() {
-    	this(0,50);
+    	this(0.0,0.50);
 	}
-	
+
 	/**
 	 * Initialisiert ein Feld mit den wahrscheinlichkeiten für das vorhandensein einer Mauer und von Körnern
 	 */
@@ -20,7 +20,7 @@
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public int getEnergieaufwand(int direction){
 		return energieaufwand[direction]; //TODO überprüfen ob Wert vorhanden.
@@ -33,19 +33,19 @@
 	public void setMauer(double mauer) {
 		this.mauer = mauer;
 	}
-	
+
 	public double getMauer() {
 		return this.mauer;
 	}
-	
+
 	public void setKoerner(double koerner) {
 		this.koerner = koerner;
 	}
-	
+
 	public double getKoerner() {
 		return this.koerner;
 	}
-	
+
 	public double getKornChance() {
 		Hamster.getStandardHamster().schreib(""+koerner * (1-mauer));
 		return koerner * (1-mauer);

@@ -30,7 +30,7 @@ public class Karte {
 		}
 
 		// Standardfeld zurückgeben
-		return new Feld(0,50);
+		return new Feld(0.0,0.50);
 	}
 
 	private void setFeld(Position pos, Feld feld) {
@@ -73,23 +73,21 @@ public class Karte {
     	return f.getKornChance();
     }
 
-	public void setKornChance(Position pos, Double kornChance){
-
+	public void setKornChance(Position pos, double kornChance){
+		Feld f = getFeld(pos);
+		f.setMauer(kornChance);
+		setFeld(pos, f);
 	}
 
 	public double getMauer(Position pos){
-		Feld feld = null;
-			feld = getFeld(pos);
+		Feld feld = getFeld(pos);
 		return feld.getMauer();
 	}
 
-	public void setMauer(Position pos, Double mauerWahrscheinlichkeit){
+	public void setMauer(Position pos, double mauerWahrscheinlichkeit){
 		Feld f = getFeld(pos);
-		if(f==null) {
-			f = new Feld();
-			setFeld(pos, f);
-		}
 		f.setMauer(mauerWahrscheinlichkeit);
+		setFeld(pos, f);
 	}
 
 	public Position getMaxPosition(){
@@ -153,9 +151,9 @@ public class Karte {
     		for(int x=minX;x<=maxX;x++){
     			Feld f = getFeld(new Position(x,y));
     			if(hamsterPosition!=null && x==hamsterPosition.x && y==hamsterPosition.y) {
-    				ret += "H";
+    				ret += "h";
     			} else {
-    				ret += ((f==null) ? "?" : (f.getMauer() == 1) ? "x" : "_");
+    				ret += ((f==null) ? "?" : (f.getMauer() >= 1) ? "x" : "_");
     			}
     		}
     		ret += "\n";
