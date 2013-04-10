@@ -29,8 +29,9 @@ public class HamsterWegfindung {
 			if(karte.getMauer(ziel)==1)
 				continue;
 
-			double chance = f.getKornChance();
+			//double chance = f.getKornChance();
 			//double chance = berechneKornChancen(ziel);
+			double chance = Pfad.Calculate(position, karte, 10);
 			if(chance>bestChance || (chance>=bestChance && direction==position.direction)) {
 				bestDirection = direction;
 				bestChance = chance;

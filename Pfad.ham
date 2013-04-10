@@ -4,51 +4,86 @@ class Pfad {
 	Karte karte;
 	Stack<Integer> richtungen;
 	Position start;
-	
+
 	public Pfad(Karte karte, Position start) {
 		richtungen = new Stack<Integer>();
 		this.karte = karte;
 		this.start = start;
 	}
-	
-	public void addStep(int richtung, int kornChance) {
+
+	public void addStep(int richtung) {
 		richtungen.push(new Integer(richtung));
 	}
-	
+
 	public double getRatio() {
 		Stack tempRichtungen = (Stack)richtungen.clone();
-		
+
 		Position pos = start;
 		int energie = 0;
 		int kornChance = 0;
-		
+
 		while(!tempRichtungen.isEmpty()) {
 			Integer richtung = (Integer)tempRichtungen.pop();
 			pos = getPositionInRichtung(pos, richtung);
-			
+
 			if(richtung!=pos.direction)
 				energie++;		// Drehung, wenn nötig
 			energie++;			// Schritt vorwärts
-			
+
 			Feld nextFeld = karte.getFeld(pos);
 			kornChance += nextFeld.getKornChance();
 		}
-		
+
 		return (double)kornChance/energie;
 	}
-	
+
+	public int getNextRichtung() {
+		return (Integer)richtungen.pop();
+	}
+
 	public Position getPositionInRichtung(Position start, int richtung) {
 		switch(richtung) {
 			case 0:
 				return new Position(start.x, start.y-1);
 			case 1:
 				return new Position(start.x+1, start.y);
-			case 2: 
+			case 2:
 				return new Position(start.x, start.y+1);
 			case 3:
 				return new Position(start.x-1, start.y);
 			default:
 				throw new IllegalArgumentException("Ungültige Richtungsangabe");
 		}
+	}
+
+	public static int Calculate(Position start, Karte karte, int maxSteps) {
+
+		double bestRatio = 0;
+		Pfad bestPath = null;
+
+		int[] directions = new int[maxSteps];
+		for(int i=0; i<maxSteps; i++) directions[i] = 0;
+
+		while(directions[maxSteps-1]!=4) {
+			for(int i = maxSteps-1; i>0; i--) {
+				if(directions[i]==4) {
+					directions[i]=0;
+					directions[i-1]++;
+				}
+			}
+
+			Pfad p = new Pfad(karte, start);
+			for(int i=0; i<maxSteps; i++) {
+				p.addStep(directions[i]);
+			}
+			directions[0]++;
+
+			if(p.getRatio()>bestRatio) {
+				bestRatio = p.getRatio();
+				bestPath = p;
+			}
+		}
+
+		return bestPath.getNextRichtung();
 	}
 }
