@@ -88,9 +88,9 @@ public class Karte {
      * Wenn an der übergebenen Position noch kein Energiewert vorhanden ist, dann wird true zurückgegeben.
      */
     public boolean istBessererEnergiewert(Position pos, int energie){
-    	Feld feld = getFeld(pos);
-    	int energieaufwand=feld.getEnergieaufwand(pos.direction);
-    	if(energieaufwand == 0) return true;
+    	int energieaufwand=getEnergieAufwand(pos);
+    	if(energieaufwand == 0)
+    		return true;
     	return energieaufwand>energie;
     }
 

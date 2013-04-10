@@ -18,15 +18,12 @@ public class HamsterWegfindung {
     }
 
 	public int getBestMove(){
-		Position ausgangsPosition = hamster.getPosition();
-		//hamster.schreib(ausgangsPosition.toString()+" "+spielfeld.anfangsX);
-		//ausgangsPosition.x -= spielfeld.anfangsX;
-		//ausgangsPosition.y -= spielfeld.anfangsY;
+		Position position = hamster.getPosition();
 
 		int bestDirection = -1;
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
-			Position ziel = ausgangsPosition.getPositionInRichtung(direction);
+			Position ziel = position.getPositionInRichtung(direction);
 			Feld f = karte.getFeld(ziel);
 
 			if(karte.getMauer(ziel)==1)
@@ -34,7 +31,7 @@ public class HamsterWegfindung {
 
 			double chance = f.getKornChance();
 			//double chance = berechneKornChancen(ziel);
-			if(chance>bestChance || (chance>=bestChance && direction==ausgangsPosition.direction)) {
+			if(chance>bestChance || (chance>=bestChance && direction==position.direction)) {
 				bestDirection = direction;
 				bestChance = chance;
 			}
@@ -72,6 +69,10 @@ public class HamsterWegfindung {
 		//hamster.schreib(""+ spielfeld +""); //DEBUG
 	}
 
+	/**
+	 * Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
+	 * auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
+	 */
 	private void doStepfrom(Position pos){
 		ArrayList<Position> steps = new ArrayList<Position>();
 		steps.add(pos);
