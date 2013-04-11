@@ -22,12 +22,16 @@ public class Karte {
 	 * Dieses kann anschließend editiert werden.
 	 * @return - Das Feld an der Stelle y,x / Wenn kein Feld vorhanden, dann wird ein Standardfeld generiert.
 	 */
-	public Feld getFeld(Position pos){
-		feldZugriff(pos);
+	private Feld getFeld(Position pos){
 		String key = generateHashValue(pos);
 		if(feldBelegt(pos)) {
+			feldZugriff(pos);
 			return felder.get(key);
 		}
+		//if(pos.x>maxX || pos.y>maxY || pos.x<minX || pos.y<minY){
+		//	throw new RuntimeException("Zugriff auf Kartenelement out of bounds: "+pos);
+		//}
+		feldZugriff(pos);
 		//Standardfeld generieren:
 		Feld feld = new Feld(0.0,0.50);
 		setFeld(pos, feld); // und der Karte anfügen.
@@ -41,6 +45,9 @@ public class Karte {
 		felder.put(key, feld);
 	}
 
+	/**
+	* Setzt den Energieaufwand aller Felder auf der karte auf 0 zurück.
+	*/
 	public void resetEnergieaufwand(){
 		for(Feld feld : felder.values()){
 			for(int i=0;i<4;i++){
@@ -85,7 +92,6 @@ public class Karte {
 	public void setMauer(Position pos, double mauerWahrscheinlichkeit){
 		Feld f = getFeld(pos);
 		f.setMauer(mauerWahrscheinlichkeit);
-		setFeld(pos, f);
 	}
 
 	/**

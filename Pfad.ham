@@ -30,8 +30,8 @@ class Pfad {
 				energie++;		// Drehung, wenn nötig
 			energie++;			// Schritt vorwärts
 
-			Feld nextFeld = karte.getFeld(pos);
-			kornChance += nextFeld.getKornChance();
+			//Feld nextFeld = karte.getFeld(pos);
+			kornChance += karte.getKornChance(pos);
 		}
 
 		return (double)kornChance/energie;

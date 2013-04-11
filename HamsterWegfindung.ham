@@ -24,13 +24,15 @@ public class HamsterWegfindung {
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
 			Position ziel = position.getPositionInRichtung(direction);
-			Feld f = karte.getFeld(ziel);
+			//Feld f = karte.getFeld(ziel);
 
 			if(karte.getMauer(ziel)==1)
 				continue;
-
+			int initialEnergieaufwand = 2;
+			if(position.direction == direction)initialEnergieaufwand=1;
 			//double chance = f.getKornChance();
-			double chance = berechneKornChancen(ziel);
+			double chance = berechneKornChancen(ziel, initialEnergieaufwand);
+			
 			//double chance = Pfad.Calculate(position, karte, 10);
 			if(chance>bestChance || (chance>=bestChance && direction==position.direction)) {
 				bestDirection = direction;
@@ -45,15 +47,20 @@ public class HamsterWegfindung {
 	/**
 	 * Diese Funktion berechnet die Chance auf Körner / den Energieaufwand für Hamster um zu diesem Feld zu gelangen und dies für alle Felder.
 	 */
-	private double berechneKornChancen(Position fromPosition){
+	private double berechneKornChancen(Position fromPosition, int initialEnergieaufwand){
 		//Spielfeld-Entfernungen von fromPosition berechnen:
-		berechneEntfernungen(fromPosition);
-
+		berechneEntfernungen(fromPosition, initialEnergieaufwand);
+		//hamster.schreib(karte.toString());
 		double totalChance = 0;
-		for(int x=karte.getMinX();x<karte.getMaxX();x++) {
-			for(int y=karte.getMinY();y<karte.getMaxY();y++){
-				Position pos = new Position(x,y);
+		for(int x=karte.getMinX();x<=karte.getMaxX();x++) {
+			for(int y=karte.getMinY();y<=karte.getMaxY();y++){
+				Position pos = new Position(x,y,0);
 				int energieAufwand = karte.getEnergieAufwand(pos);
+				for(int richtung = 1; richtung < 4; richtung++){
+					pos.direction = richtung;
+					if(karte.getEnergieAufwand(pos)<energieAufwand)energieAufwand = karte.getEnergieAufwand(pos);
+				}
+				
 				if(energieAufwand > 0)
 					totalChance += karte.getKornChance(pos) / new Double(energieAufwand);
 				//hamster.schreib(""+karte.getKornChance(pos) + " / " + karte.getEnergieAufwand(pos) +" = " +totalChance);
@@ -65,8 +72,8 @@ public class HamsterWegfindung {
 	/**
 	 * Berechnet die Energieaufwände für den Hamster 'initialHamster' um auf die einzelnen Felder des Spielfelds zu gelangen.
 	 */
-	private void berechneEntfernungen(Position fromPos){
-		doStepfrom(fromPos);
+	private void berechneEntfernungen(Position fromPos, int initialEnergieaufwand){
+		doStepfrom(fromPos, initialEnergieaufwand);
 		//hamster.schreib(""+ spielfeld +""); //DEBUG
 	}
 
@@ -74,7 +81,7 @@ public class HamsterWegfindung {
 	 * Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
 	 * auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
 	 */
-	private void doStepfrom(Position pos){
+	private void doStepfrom(Position pos, int initialEnergieaufwand){
 		ArrayList<Position> steps = new ArrayList<Position>();
 		steps.add(pos);
 		int maxX=karte.getMaxX();
@@ -83,6 +90,7 @@ public class HamsterWegfindung {
 		int minY=karte.getMinY();
 
 		karte.resetEnergieaufwand();
+		karte.setEnergieAufwand(pos, initialEnergieaufwand);
 
 		while(!steps.isEmpty()){
 		/*
@@ -91,8 +99,8 @@ public class HamsterWegfindung {
 		*/
 		pos = steps.get(0);
 		steps.remove(0);
-		if(	   pos.x <= maxX && pos.y <= maxY
-			&& pos.x >= minX && pos.y >= minY){
+		//if(	   pos.x <= maxX && pos.y <= maxY
+		//	&& pos.x >= minX && pos.y >= minY){
 			int momentaneEnergie = karte.getEnergieAufwand(pos);
 			for(int direction = 0; direction<4;direction++){
 				int benoetigteEnergie;
@@ -103,6 +111,8 @@ public class HamsterWegfindung {
 					benoetigteEnergie = 1;
 
 				Position nextPosition = pos.getPositionInRichtung(direction);
+				if(	   nextPosition.x <= maxX && nextPosition.y <= maxY
+					&& nextPosition.x >= minX && nextPosition.y >= minY){
 				if(karte.getMauer(nextPosition)==0){//Es kann nur auf Feldern ohne Mauer gelaufen werden.
 					Position drehPosition = nextPosition.clone();
 					for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
