@@ -65,7 +65,7 @@ class Pfad {
 		for(int i=0; i<maxSteps; i++) directions[i] = 0;
 
 		while(directions[0]!=4) {
-			//Hamster.getStandardHamster().schreib(Arrays.toString(directions));
+			Log.write(Arrays.toString(directions));
 			for(int i = maxSteps-1; i>0; i--) {
 				if(directions[i]==4) {
 					directions[i]=0;

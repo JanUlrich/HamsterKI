@@ -1,0 +1,8 @@
+/*class*/class Log {
+	public static boolean DEBUG = false;
+	public static void write(String s) {
+		if(!DEBUG)
+			return;
+		Hamster.getStandardHamster().schreib(s);
+	}
+}

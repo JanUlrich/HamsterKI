@@ -39,7 +39,7 @@ public class HamsterWegfindung {
 				bestChance = chance;
 			}
 		}
-		// hamster.schreib("" + bestDirection + ": " + bestChance);
+		Log.write("" + bestDirection + ": " + bestChance);
 
 		return bestDirection;
 	}
@@ -63,7 +63,7 @@ public class HamsterWegfindung {
 				
 				if(energieAufwand > 0)
 					totalChance += karte.getKornChance(pos) / new Double(energieAufwand);
-				//hamster.schreib(""+karte.getKornChance(pos) + " / " + karte.getEnergieAufwand(pos) +" = " +totalChance);
+				Log.write(""+karte.getKornChance(pos) + " / " + karte.getEnergieAufwand(pos) +" = " +totalChance);
 			}
 		}
 		return totalChance;
@@ -74,7 +74,6 @@ public class HamsterWegfindung {
 	 */
 	private void berechneEntfernungen(Position fromPos, int initialEnergieaufwand){
 		doStepfrom(fromPos, initialEnergieaufwand);
-		//hamster.schreib(""+ spielfeld +""); //DEBUG
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class HamsterWegfindung {
 		//if(	   pos.x <= maxX && pos.y <= maxY
 		//	&& pos.x >= minX && pos.y >= minY){
 			int momentaneEnergie = karte.getEnergieAufwand(pos);
-			for(int direction = 0; direction<4;direction++){
+            for(int direction = 0; direction<4;direction++){
 				int benoetigteEnergie;
 				benoetigteEnergie = 2;
 		    	// Schaut der Hamster schon in entsprechende Richtung,
@@ -111,8 +110,8 @@ public class HamsterWegfindung {
 					benoetigteEnergie = 1;
 
 				Position nextPosition = pos.getPositionInRichtung(direction);
-				if(	   nextPosition.x <= maxX && nextPosition.y <= maxY
-					&& nextPosition.x >= minX && nextPosition.y >= minY){
+                if(    nextPosition.x <= maxX && nextPosition.y <= maxY
+                    && nextPosition.x >= minX && nextPosition.y >= minY){
 				if(karte.getMauer(nextPosition)==0){//Es kann nur auf Feldern ohne Mauer gelaufen werden.
 					Position drehPosition = nextPosition.clone();
 					for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){

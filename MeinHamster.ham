@@ -56,7 +56,7 @@ public class MeinHamster extends Hamster {
         } else {
             karte.setKornChance(position, 2);
         }
-        //schreib(karte.toString(position));
+        Log.write(karte.toString(position));
     }
 
     private boolean mauerDa(int y, int x){
