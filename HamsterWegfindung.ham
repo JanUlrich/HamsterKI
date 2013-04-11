@@ -92,10 +92,6 @@ public class HamsterWegfindung {
 		karte.setEnergieAufwand(pos, initialEnergieaufwand);
 
 		while(!steps.isEmpty()){
-		/*
-		Probiere alle Richtungen durch. Falls ein Feld gefunden wird,
-		auf dem der hamster noch nicht in entsprechender Richtung war oder hier ein neuer bester Energiewe
-		*/
 		pos = steps.get(0);
 		steps.remove(0);
 		//if(	   pos.x <= maxX && pos.y <= maxY
@@ -120,20 +116,17 @@ public class HamsterWegfindung {
 							if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + 1)){
 								karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
 								steps.add(drehPosition); // nächster Step
-								//Hamster.getStandardHamster().schreib(""+(momentaneEnergie+benoetigteEnergie +1)+", "+drehPosition+" = "+karte.getEnergieAufwand(drehPosition));
 							}
 						}else{
 							if(karte.istBessererEnergiewert(nextPosition, momentaneEnergie + benoetigteEnergie)){
 								karte.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
 								steps.add(nextPosition); // nächster Step
-								//Hamster.getStandardHamster().schreib(""+(momentaneEnergie+benoetigteEnergie)+", "+nextPosition+" = "+karte.getEnergieAufwand(nextPosition));
 							}
 						}
 					}
-					}
 				}
+			}
 		}
-	}
 	}
 }
 
