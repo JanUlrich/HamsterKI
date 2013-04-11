@@ -20,17 +20,19 @@ public class Karte {
 	/**
 	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
 	 * Dieses kann anschließend editiert werden.
-	 * @return - Das Feld an der Stelle y,x / Wenn kein Feld vorhanden, dann wird FeldNichtErkundetException geworfen.
+	 * @return - Das Feld an der Stelle y,x / Wenn kein Feld vorhanden, dann wird ein Standardfeld generiert.
 	 */
 	public Feld getFeld(Position pos){
 		feldZugriff(pos);
 		String key = generateHashValue(pos);
-		if(felder.containsKey(key)) {
+		if(feldBelegt(pos)) {
 			return felder.get(key);
 		}
-
+		//Standardfeld generieren:
+		Feld feld = new Feld(0.0,0.50);
+		setFeld(pos, feld); // und der Karte anfügen.
 		// Standardfeld zurückgeben
-		return new Feld(0.0,0.50);
+		return feld;
 	}
 
 	private void setFeld(Position pos, Feld feld) {
@@ -39,7 +41,13 @@ public class Karte {
 		felder.put(key, feld);
 	}
 
-
+	public void resetEnergieaufwand(){
+		for(Feld feld : felder.values()){
+			for(int i=0;i<4;i++){
+				feld.setEnergieaufwand(i,0);
+			}
+		}
+	}
 
 	/**
 	 * @return True, falls sich bereits ein Feld an Stelle y, x befindet - ansonsten false
@@ -67,7 +75,6 @@ public class Karte {
 	public void setKornChance(Position pos, double kornChance){
 		Feld f = getFeld(pos);
 		f.setKoerner(kornChance);
-		setFeld(pos, f);
 	}
 
 	public double getMauer(Position pos){
@@ -89,6 +96,8 @@ public class Karte {
      */
     public boolean istBessererEnergiewert(Position pos, int energie){
     	int energieaufwand=getEnergieAufwand(pos);
+    	//debug:
+    	//Hamster.getStandardHamster().schreib(pos.toString()+" -> "+energie+", "+energieaufwand+"="+(energieaufwand>energie));
     	if(energieaufwand == 0)
     		return true;
     	return energieaufwand>energie;
