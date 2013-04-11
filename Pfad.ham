@@ -37,9 +37,8 @@ class Pfad {
 				energie++;		// Drehung, wenn nötig
 			energie++;			// Schritt vorwärts
 
-			Feld nextFeld = karte.getFeld(pos);
-			kornChance += nextFeld.getKornChance();
-			if(nextFeld.getMauer()==1) {
+			kornChance += karte.getKornChance(pos);
+			if(karte.getMauer(pos)==1) {
 				return -999;
 			}
 		}
@@ -53,8 +52,7 @@ class Pfad {
 		while(!tempRichtungen.isEmpty()) {
 			Integer richtung = (Integer)tempRichtungen.pop();
 			pos = getPositionInRichtung(pos, richtung);
-			Feld nextFeld = karte.getFeld(pos);
-			if(nextFeld.getMauer()==1) {
+			if(karte.getMauer(pos)==1) {
 				return false;
 			}
 		}
