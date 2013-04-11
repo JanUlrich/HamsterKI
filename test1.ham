@@ -3,7 +3,7 @@
     int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
     // Neuen Hamster erstellen
-	MeinHamster hamster = new MeinHamster(5,5,0,0);
+	MeinHamster hamster = new MeinHamster(5,0,0,0);
 	mainLoop(hamster);
 
 

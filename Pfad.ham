@@ -11,6 +11,13 @@ class Pfad {
 		this.start = start;
 	}
 
+	public Pfad(Karte karte, Position start, int[] directions) {
+		this(karte, start);
+		for(int i=directions.length-1; i>=0; i--) {
+			addStep(directions[i]);
+		}
+	}
+
 	public void addStep(int richtung) {
 		richtungen.push(new Integer(richtung));
 	}
@@ -20,7 +27,7 @@ class Pfad {
 
 		Position pos = start;
 		int energie = 0;
-		int kornChance = 0;
+		double kornChance = 0;
 
 		while(!tempRichtungen.isEmpty()) {
 			Integer richtung = (Integer)tempRichtungen.pop();
@@ -30,15 +37,33 @@ class Pfad {
 				energie++;		// Drehung, wenn nötig
 			energie++;			// Schritt vorwärts
 
-			//Feld nextFeld = karte.getFeld(pos);
-			kornChance += karte.getKornChance(pos);
+			Feld nextFeld = karte.getFeld(pos);
+			kornChance += nextFeld.getKornChance();
+			if(nextFeld.getMauer()==1) {
+				kornChance = -1;
+			}
 		}
 
 		return (double)kornChance/energie;
 	}
 
+	public boolean isValid() {
+
+		Stack tempRichtungen = (Stack)richtungen.clone();
+		Position pos = start;
+		while(!tempRichtungen.isEmpty()) {
+			Integer richtung = (Integer)tempRichtungen.pop();
+			pos = getPositionInRichtung(pos, richtung);
+			Feld nextFeld = karte.getFeld(pos);
+			if(nextFeld.getMauer()==1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public int getNextRichtung() {
-		return (Integer)richtungen.pop();
+		return (Integer)richtungen.peek();
 	}
 
 	public Position getPositionInRichtung(Position start, int richtung) {
@@ -57,34 +82,31 @@ class Pfad {
 	}
 
 	public static int Calculate(Position start, Karte karte, int maxSteps) {
-
 		double bestRatio = -1;
 		Pfad bestPath = null;
 
 		int[] directions = new int[maxSteps];
 		for(int i=0; i<maxSteps; i++) directions[i] = 0;
 
+		int z = 0;
 		while(directions[0]!=4) {
-			Log.write(Arrays.toString(directions));
+			Pfad p = new Pfad(karte, start, directions);
+			double ratio = p.getRatio();
+
+			if(ratio>bestRatio && p.isValid()) {
+				//Log.write("" + ++z + Arrays.toString(directions) + ": " + ratio);
+				bestRatio = ratio;
+				bestPath = p;
+			}
+
+			directions[maxSteps-1]++;
 			for(int i = maxSteps-1; i>0; i--) {
 				if(directions[i]==4) {
 					directions[i]=0;
 					directions[i-1]++;
 				}
 			}
-
-			Pfad p = new Pfad(karte, start);
-			for(int i=0; i<maxSteps; i++) {
-				p.addStep(directions[i]);
-			}
-			directions[maxSteps-1]++;
-
-			if(p.getRatio()>bestRatio) {
-				bestRatio = p.getRatio();
-				bestPath = p;
-			}
 		}
-
 		return bestPath.getNextRichtung();
 	}
 }
