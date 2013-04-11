@@ -40,7 +40,7 @@ class Pfad {
 			Feld nextFeld = karte.getFeld(pos);
 			kornChance += nextFeld.getKornChance();
 			if(nextFeld.getMauer()==1) {
-				kornChance = -1;
+				return -999;
 			}
 		}
 
@@ -48,7 +48,6 @@ class Pfad {
 	}
 
 	public boolean isValid() {
-
 		Stack tempRichtungen = (Stack)richtungen.clone();
 		Position pos = start;
 		while(!tempRichtungen.isEmpty()) {
