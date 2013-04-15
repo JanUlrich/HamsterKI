@@ -19,9 +19,9 @@ public class HamsterWegfindung {
 
 	public int getBestMove(){
 		Position position = hamster.getPosition();
-		if(true) {
-			return Pfad.Calculate(position, karte, 10);
-		}
+		//if(true) {
+		//	return Pfad.Calculate(position, karte, 10);
+		//}
 
 		int bestDirection = -1;
 		double bestChance = -1;
@@ -31,15 +31,20 @@ public class HamsterWegfindung {
 
 			if(karte.getMauer(ziel)==1)
 				continue;
-			int initialEnergieaufwand = 2;
+			int initialEnergieaufwand;
+			initialEnergieaufwand = 2;
 			if(position.direction == direction)initialEnergieaufwand=1;
 			//double chance = f.getKornChance();
 			double chance = berechneKornChancen(ziel, initialEnergieaufwand);
-			if(chance>bestChance || (chance>=bestChance && direction==position.direction)) {
+
+			//double chance = Pfad.Calculate(position, karte, 10);
+			if(chance>bestChance || (chance>=bestChance && direction!=position.direction)) { //Bevorzuge abzweigungen.
+
 				bestDirection = direction;
 				bestChance = chance;
 			}
 		}
+
 		Log.write("" + bestDirection + ": " + bestChance);
 
 		return bestDirection;
@@ -59,12 +64,14 @@ public class HamsterWegfindung {
 				int energieAufwand = karte.getEnergieAufwand(pos);
 				for(int richtung = 1; richtung < 4; richtung++){
 					pos.direction = richtung;
-					if(karte.getEnergieAufwand(pos)<energieAufwand)energieAufwand = karte.getEnergieAufwand(pos);
+					if(karte.getEnergieAufwand(pos)<energieAufwand && karte.getEnergieAufwand(pos)>0)energieAufwand = karte.getEnergieAufwand(pos);
 				}
 				
 				if(energieAufwand > 0)
 					totalChance += karte.getKornChance(pos) / new Double(energieAufwand);
+
 				Log.write(""+karte.getKornChance(pos) + " / " + karte.getEnergieAufwand(pos) +" = " +totalChance);
+
 			}
 		}
 		return totalChance;
@@ -83,7 +90,7 @@ public class HamsterWegfindung {
 	 */
 	private void doStepfrom(Position pos, int initialEnergieaufwand){
 		ArrayList<Position> steps = new ArrayList<Position>();
-		steps.add(pos);
+		steps.add(pos.clone());
 		int maxX=karte.getMaxX();
 		int maxY=karte.getMaxY();
 		int minX=karte.getMinX();

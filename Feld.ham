@@ -43,6 +43,7 @@
 	}
 
 	public double getKoerner() {
+		if(getMauer()>0)return 0;
 		return koerner;
 	}
 
