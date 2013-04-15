@@ -102,6 +102,10 @@ public class MeinHamster extends Hamster {
     	if(kornDa())
     		nimm();
     }
+    
+    public int getEnergie(){
+    	return energieLevel;
+    }
 
     /**
      * @return - gibt die Richtung zurück

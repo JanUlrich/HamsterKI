@@ -21,6 +21,10 @@ void mainLoop(MeinHamster hamster) {
     while(true) {
     	try {
 	    	hamster.kiStep();
+	    	if(Territorium.getAnzahlKoerner()==0){
+	    		hamster.schreib("Alle Körner gefunden\nRestenergie: "+hamster.getEnergie());
+	    	return; //Ende
+	    	}
     	} catch(HamsterEnergieException e) {
     		return;
     	}
