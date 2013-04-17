@@ -20,18 +20,32 @@ class Pfad {
 		}
 	}
 
+	/**
+	 * @return true if Path contains no more directions
+	 */
 	public boolean isEmpty() {
 		return richtungen.isEmpty();
 	}
 
+	/**
+	 * @return the number of directions this Path contains
+	 */
 	public int length() {
 		return richtungen.size();
 	}
 
+	/**
+	 * Adds the specified direction to the Path
+	 * @param richtung the direction to be added
+	 */
 	public void addStep(int richtung) {
 		richtungen.push(new Integer(richtung));
 	}
 
+	/**
+	 * Calculates the Corn/Energy ratio
+	 * @return the path's Corn/Energy ratio
+	 */
 	public double getRatio() {
 		Stack tempRichtungen = (Stack)richtungen.clone();
 
@@ -41,7 +55,7 @@ class Pfad {
 
 		while(!tempRichtungen.isEmpty()) {
 			Integer richtung = (Integer)tempRichtungen.pop();
-			pos = getPositionInRichtung(pos, richtung);
+			pos = pos.getPositionInRichtung(richtung);
 
 			if(richtung!=pos.direction)
 				energie++;		// Drehung, wenn nötig
@@ -56,6 +70,10 @@ class Pfad {
 		return (double)kornChance/energie;
 	}
 
+	/**
+	 * Calculates the energy Consumption for the current path
+	 * @return the path's total energy consumption
+	 */
 	public int getEnergie() {
 		Stack tempRichtungen = (Stack)richtungen.clone();
 		int energie = 0;
@@ -71,17 +89,25 @@ class Pfad {
 		}
 		return energie;
 	}
+
+	/**
+	 * @return true, if the current Path does not collide
+	 */
 	public boolean isValid() {
 		return isValid(false);
 	}
 
+	/**
+	 * @param print Pass true, if debug output should be shown
+	 * @return true, if the current Path does not collide
+	 */
 	public boolean isValid(boolean print) {
 		Stack tempRichtungen = (Stack)richtungen.clone();
 		Position pos = start;
 		String x = "";
 		while(!tempRichtungen.isEmpty()) {
 			Integer richtung = (Integer)tempRichtungen.pop();
-			pos = getPositionInRichtung(pos, richtung);
+			pos = pos.getPositionInRichtung(richtung);
 			x += "" + pos.x + ", " + pos.y + "   " + karte.getMauer(pos) + "\n";
 			if(karte.getMauer(pos)==1) {
 				return false;
@@ -91,24 +117,12 @@ class Pfad {
 		return true;
 	}
 
+	/**
+	 * @return the next path's next direction
+	 */
 	public int getNextRichtung() {
 		int richtung = (Integer)richtungen.pop();
-		start = getPositionInRichtung(start, richtung);
+		start = start.getPositionInRichtung(richtung);
 		return richtung;
-	}
-
-	public Position getPositionInRichtung(Position start, int richtung) {
-		switch(richtung) {
-			case 0:
-				return new Position(start.x, start.y-1);
-			case 1:
-				return new Position(start.x+1, start.y);
-			case 2:
-				return new Position(start.x, start.y+1);
-			case 3:
-				return new Position(start.x-1, start.y);
-			default:
-				throw new IllegalArgumentException("Ungültige Richtungsangabe");
-		}
 	}
 }
