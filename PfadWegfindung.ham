@@ -1,6 +1,35 @@
-/*class*/class PfadWegfindung extends Wegfindung {
+/*class*/
+import java.util.Arrays;
+class PfadWegfindung extends Wegfindung {
+	public static final int maxSteps = 10;
+
 	public int getBestMove(){
-		Position position = hamster.getPosition();
-		return Pfad.Calculate(position, karte, 10);
+		Position start = hamster.getPosition();
+		double bestRatio = -1;
+		Pfad bestPath = null;
+
+		int[] directions = new int[maxSteps];
+		for(int i=0; i<maxSteps; i++) directions[i] = 0;
+
+		int z = 0;
+		while(directions[0]!=4) {
+			Pfad p = new Pfad(karte, start, directions);
+			double ratio = p.getRatio();
+
+			if(ratio>bestRatio && p.isValid()) {
+				Log.write(Arrays.toString(directions) + ": " + ratio);
+				bestRatio = ratio;
+				bestPath = p;
+			}
+
+			directions[maxSteps-1]++;
+			for(int i = maxSteps-1; i>0; i--) {
+				if(directions[i]==4) {
+					directions[i]=0;
+					directions[i-1]++;
+				}
+			}
+		}
+		return bestPath.getNextRichtung();
 	}
 }
