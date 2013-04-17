@@ -13,7 +13,7 @@
 			"name": "make",
 			"cmd": ["${project_path}/make.sh"],
 			"file_regex": "^(...*?):([0-9]*):?([0-9]*)",
-			"working_dir": "${project_path}",
+			"working_dir": "${project_path}"
 		}
 	]
 }

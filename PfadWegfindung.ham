@@ -30,7 +30,7 @@ class PfadWegfindung extends Wegfindung {
 				directions = nextCombination(directions);
 			}
 		}
-		hamster.schreib("" + bestPath.length() + "\n" + bestPath.isEmpty() + bestPath.isValid(true));
+		//hamster.schreib("" + bestPath.length() + "\n" + bestPath.isEmpty() + bestPath.isValid(true));
 		return bestPath.getNextRichtung();
 	}
 
