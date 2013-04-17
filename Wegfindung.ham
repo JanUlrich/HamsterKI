@@ -1,0 +1,15 @@
+/*class*/abstract class Wegfindung {
+    protected Karte karte;
+    protected MeinHamster hamster;
+
+    /**
+     * @param hamster - Die Ausgangslage des Hamsters. Dabei ist nur die Position und die Richtung des Hamsters relevant.
+     * @param karte - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
+     */
+    public void initialize(MeinHamster hamster, Karte karte){
+    	this.karte = karte;
+    	this.hamster = hamster;
+    }
+
+	public abstract int getBestMove();
+}

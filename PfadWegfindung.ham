@@ -1,0 +1,6 @@
+/*class*/class PfadWegfindung extends Wegfindung {
+	public int getBestMove(){
+		Position position = hamster.getPosition();
+		return Pfad.Calculate(position, karte, 10);
+	}
+}

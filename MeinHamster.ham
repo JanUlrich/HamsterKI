@@ -9,14 +9,16 @@ public class MeinHamster extends Hamster {
 	private Position position;
 	private Karte karte;
 	private int energieLevel;
-    private HamsterWegfindung ki;
-    public MeinHamster(int y, int x, int blickrichtung, int koerner){
+    private Wegfindung ki;
+
+    public MeinHamster(int y, int x, int blickrichtung, int koerner, Wegfindung wegfindung){
     	super(y,x,blickrichtung,koerner);
     	energieLevel = Territorium.getAnzahlSpalten() * Territorium.getAnzahlReihen() * 5;;
    		karte = new Karte();
    		position = new Position(0,0,getDirection());
         startPosition = new Position(getSpalte(), getReihe(), getBlickrichtung());
-        ki = new HamsterWegfindung(this, karte);
+        ki = wegfindung;
+        wegfindung.initialize(this, karte);
     }
 
 	/**
@@ -96,24 +98,15 @@ public class MeinHamster extends Hamster {
     	// Als erstes Umgebung abfragen
     	KachelnAbfragen();
 
-    	int richtung = berechneZug();
+    	int richtung = ki.getBestMove();
     	dreheInRichtung(richtung);
     	forward();
     	if(kornDa())
     		nimm();
     }
-    
+
     public int getEnergie(){
     	return energieLevel;
-    }
-
-    /**
-     * @return - gibt die Richtung zurück
-     */
-    private int berechneZug() {
-    	
-    	//ki.berechneEntfernungen();
-		return ki.getBestMove();
     }
 
     /**

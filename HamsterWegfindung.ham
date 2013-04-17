@@ -4,24 +4,9 @@
  */
 import java.util.ArrayList;
 
-public class HamsterWegfindung {
-    Karte karte;
-    MeinHamster hamster;
-
-    /**
-     * @param hamster - Die Ausgangslage des Hamsters. Dabei ist nur die Position und die Richtung des Hamsters relevant.
-     * @param karte - Das Spielfeld. Hier sind alle bisher bekannten Informationen gespeichert.
-     */
-    public HamsterWegfindung(MeinHamster hamster, Karte karte){
-    	this.karte = karte;
-    	this.hamster = hamster;
-    }
-
+public class HamsterWegfindung extends Wegfindung {
 	public int getBestMove(){
 		Position position = hamster.getPosition();
-		//if(true) {
-		//	return Pfad.Calculate(position, karte, 10);
-		//}
 
 		int bestDirection = -1;
 		double bestChance = -1;

@@ -1,10 +1,25 @@
-/*object-oriented program*/void main() {
+/*object-oriented program*/
+import java.util.ArrayList;
+void main() {
 	// Ermittelt zu Beginn des Programms die auf dem Spielfeld liegenden Körner ...
     int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
+
+
     // Neuen Hamster erstellen
-	MeinHamster hamster = new MeinHamster(5,0,0,0);
-	mainLoop(hamster);
+
+
+    ArrayList<Wegfindung> algos = new ArrayList<Wegfindung>();
+    algos.add(new HamsterWegfindung());
+    algos.add(new PfadWegfindung());
+
+    ArrayList<MeinHamster> hamsters = new ArrayList<MeinHamster>();
+
+    for (Wegfindung wf : algos) {
+        MeinHamster hamster = new MeinHamster(5, 0, 0, 0, wf);
+        hamsters.add(hamster);
+    }
+    mainLoop(hamsters);
 
 
     // Ist die KI fertig (alle Körner wurden eingesammelt | Hamster
@@ -17,14 +32,16 @@
     System.out.println("Ende");
 }
 
-void mainLoop(MeinHamster hamster) {
+void mainLoop(ArrayList<MeinHamster> hamsters) {
     while(true) {
     	try {
-	    	hamster.kiStep();
-	    	if(Territorium.getAnzahlKoerner()==0){
-	    		hamster.schreib("Alle Körner gefunden\nRestenergie: "+hamster.getEnergie());
-	    	return; //Ende
-	    	}
+            for (MeinHamster hamster : hamsters) {
+    	    	hamster.kiStep();
+    	    	if(Territorium.getAnzahlKoerner()==0){
+    	    		hamster.schreib("Alle Körner gefunden\nRestenergie: "+hamster.getEnergie());
+                    return; //Ende
+    	    	}
+            }
     	} catch(HamsterEnergieException e) {
     		return;
     	}
