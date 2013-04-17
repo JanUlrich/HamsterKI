@@ -71,22 +71,30 @@ class Pfad {
 		}
 		return energie;
 	}
-
 	public boolean isValid() {
+		return isValid(false);
+	}
+
+	public boolean isValid(boolean print) {
 		Stack tempRichtungen = (Stack)richtungen.clone();
 		Position pos = start;
+		String x = "";
 		while(!tempRichtungen.isEmpty()) {
 			Integer richtung = (Integer)tempRichtungen.pop();
 			pos = getPositionInRichtung(pos, richtung);
+			x += "" + pos.x + ", " + pos.y + "   " + karte.getMauer(pos) + "\n";
 			if(karte.getMauer(pos)==1) {
 				return false;
 			}
 		}
+		if(print) Hamster.getStandardHamster().schreib(x);
 		return true;
 	}
 
 	public int getNextRichtung() {
-		return (Integer)richtungen.pop();
+		int richtung = (Integer)richtungen.pop();
+		start = getPositionInRichtung(start, richtung);
+		return richtung;
 	}
 
 	public Position getPositionInRichtung(Position start, int richtung) {
