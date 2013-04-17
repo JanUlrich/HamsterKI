@@ -66,7 +66,7 @@ public class HamsterWegfindung {
 					pos.direction = richtung;
 					if(karte.getEnergieAufwand(pos)<energieAufwand && karte.getEnergieAufwand(pos)>0)energieAufwand = karte.getEnergieAufwand(pos);
 				}
-				
+
 				if(energieAufwand > 0)
 					totalChance += karte.getKornChance(pos) / new Double(energieAufwand);
 

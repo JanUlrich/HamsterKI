@@ -14,6 +14,9 @@ class Pfad {
 	public Pfad(Karte karte, Position start, int[] directions) {
 		this(karte, start);
 		for(int i=directions.length-1; i>=0; i--) {
+			if( !richtungen.empty() &&
+				(directions[i]-richtungen.peek())%2 == 0)
+				break;
 			addStep(directions[i]);
 		}
 	}
@@ -26,7 +29,7 @@ class Pfad {
 		Stack tempRichtungen = (Stack)richtungen.clone();
 
 		Position pos = start;
-		int energie = 0;
+		double energie = 0;
 		double kornChance = 0;
 
 		while(!tempRichtungen.isEmpty()) {
@@ -91,7 +94,7 @@ class Pfad {
 			double ratio = p.getRatio();
 
 			if(ratio>bestRatio && p.isValid()) {
-				//Log.write("" + ++z + Arrays.toString(directions) + ": " + ratio);
+				Log.write(Arrays.toString(directions) + ": " + ratio);
 				bestRatio = ratio;
 				bestPath = p;
 			}
