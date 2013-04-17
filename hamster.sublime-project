@@ -4,7 +4,7 @@
 		{
 			"file_exclude_patterns": ["*.java", "*.class", "*.jar"],
 			"follow_symlinks": true,
-			"path": "/home/jacob/Dropbox/Projects/HamsterKI"
+			"path": "./"
 		}
 	],
 	"build_systems":
