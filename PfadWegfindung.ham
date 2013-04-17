@@ -2,34 +2,46 @@
 import java.util.Arrays;
 class PfadWegfindung extends Wegfindung {
 	public static final int maxSteps = 10;
+	private Pfad bestPath = null;
 
 	public int getBestMove(){
-		Position start = hamster.getPosition();
-		double bestRatio = -1;
-		Pfad bestPath = null;
+		if(bestPath==null || bestPath.isEmpty() || !bestPath.isValid()) {
+			bestPath = null;
+			Position start = hamster.getPosition();
+			int bestEnergie = 99999;
+			double bestRatio = -1;
 
-		int[] directions = new int[maxSteps];
-		for(int i=0; i<maxSteps; i++) directions[i] = 0;
+			int[] directions = new int[maxSteps];
+			for(int i=0; i<maxSteps; i++) directions[i] = 0;
 
-		int z = 0;
-		while(directions[0]!=4) {
-			Pfad p = new Pfad(karte, start, directions);
-			double ratio = p.getRatio();
+			int z = 0;
+			while(directions[0]!=4) {
+				Pfad p = new Pfad(karte, start, directions);
 
-			if(ratio>bestRatio && p.isValid()) {
-				Log.write(Arrays.toString(directions) + ": " + ratio);
-				bestRatio = ratio;
-				bestPath = p;
-			}
-
-			directions[maxSteps-1]++;
-			for(int i = maxSteps-1; i>0; i--) {
-				if(directions[i]==4) {
-					directions[i]=0;
-					directions[i-1]++;
+				double ratio = p.getRatio();
+				int energie = p.getEnergie();
+				if(p.isValid() && (ratio>bestRatio || ratio>=bestRatio && energie<bestEnergie)) {
+					Log.write(Arrays.toString(directions) + ": " + ratio);
+					bestRatio = ratio;
+					bestPath = p;
+					bestEnergie = energie;
 				}
+
+				directions = nextCombination(directions);
 			}
 		}
+		//hamster.schreib("" + bestPath.length());
 		return bestPath.getNextRichtung();
+	}
+
+	private int[] nextCombination(int[] directions) {
+		directions[maxSteps-1]++;
+		for(int i = maxSteps-1; i>0; i--) {
+			if(directions[i]==4) {
+				directions[i]=0;
+				directions[i-1]++;
+			}
+		}
+		return directions;
 	}
 }

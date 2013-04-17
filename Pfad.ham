@@ -14,11 +14,18 @@ class Pfad {
 	public Pfad(Karte karte, Position start, int[] directions) {
 		this(karte, start);
 		for(int i=directions.length-1; i>=0; i--) {
-			if( !richtungen.empty() &&
-				(directions[i]-richtungen.peek())%2 == 0)
+			if( !richtungen.empty() && (directions[i]-richtungen.peek())%2 == 0)
 				break;
 			addStep(directions[i]);
 		}
+	}
+
+	public boolean isEmpty() {
+		return richtungen.isEmpty();
+	}
+
+	public int length() {
+		return richtungen.size();
 	}
 
 	public void addStep(int richtung) {
@@ -49,6 +56,22 @@ class Pfad {
 		return (double)kornChance/energie;
 	}
 
+	public int getEnergie() {
+		Stack tempRichtungen = (Stack)richtungen.clone();
+		int energie = 0;
+		int lastDirection = start.direction;
+
+		while(!tempRichtungen.isEmpty()) {
+			Integer richtung = (Integer)tempRichtungen.pop();
+
+			if(richtung!=lastDirection)
+				energie++;		// Drehung, wenn nötig
+			energie++;			// Schritt vorwärts
+			lastDirection = richtung;
+		}
+		return energie;
+	}
+
 	public boolean isValid() {
 		Stack tempRichtungen = (Stack)richtungen.clone();
 		Position pos = start;
@@ -63,7 +86,7 @@ class Pfad {
 	}
 
 	public int getNextRichtung() {
-		return (Integer)richtungen.peek();
+		return (Integer)richtungen.pop();
 	}
 
 	public Position getPositionInRichtung(Position start, int richtung) {
