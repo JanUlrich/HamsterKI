@@ -11,6 +11,15 @@ public class MeinHamster extends Hamster {
 	private int energieLevel;
     private Wegfindung ki;
 
+
+	/**
+	  * Konstruktor der Klasse MeinHamster
+	  * @param y die Reihe des Territoriums, in der der Hamster erzeugt wird
+	  * @param x die Spalte des Territoriums, in der der Hamster erzeugt wird
+	  * @param blickrichtung die Richtung, in der der Hamster anfangs schaut
+	  * @param koerner die Anzahl an Koernern, die der Hamster anfangs im Maul hat
+	  * @param wegfindung Objekt der Klasse Wegfindung, welches mit der Karte initialisiert wird
+	  */
     public MeinHamster(int y, int x, int blickrichtung, int koerner, Wegfindung wegfindung){
     	super(y,x,blickrichtung,koerner);
     	energieLevel = Territorium.getAnzahlSpalten() * Territorium.getAnzahlReihen() * 5;;
@@ -23,7 +32,7 @@ public class MeinHamster extends Hamster {
 
 	/**
 	 * Dreht den Hamster in die √ºbergebene Richtung. Dabei wird Energie verbraucht.
-	 * @param Richtung - Zahl 0-3, steht f√ºr die 4 Himmelsrichtungen.
+	 * @param richtung - Zahl 0-3, steht f√ºr die 4 Himmelsrichtungen.
 	 * Sind die Parameter ung√ºltig oder schaut der Hamster bereits
 	 * in die gew√ºnschte Richtung wird keine Energie verbraucht und
 	 * keine Drehung ausgef√ºhrt.
@@ -39,10 +48,8 @@ public class MeinHamster extends Hamster {
 	}
 
 	/**
-     * @author Simon Herrmann
-     * @param karte Karte des Hamsters
-     * @return Karte des Hamsters mit nach der Sensorabfrage
-     */
+      * Methode, welche die umliegenden Felder des Hamsters auf Mauern untersucht.
+      */
     void KachelnAbfragen() {
     	for (int i = position.y-1; i <= position.y+1; i++) {
     		for (int j = position.x-1; j <= position.x+1; j++) {
@@ -61,12 +68,21 @@ public class MeinHamster extends Hamster {
         Log.write(karte.toString(position));
     }
 
+	/**
+	  * Methode pr¸ft ob sich an Position eine Mauer befindet.
+	  * @param y y-Koordinate der zu pr¸fenden Position
+	  * @param x x-Koordinate der zu pr¸fenden Position
+	  * @return Boolean-Wert, ob sich an Position eine Mauer befindet
+	  */
     private boolean mauerDa(int y, int x){
     	y += startPosition.y;
     	x += startPosition.x;
     	return Territorium.mauerDa(y, x);
     }
 
+	/**
+	  * Methode bewegt den Hamster ein Feld in Blickrichtung.
+	  */
     public void forward() throws HamsterEnergieException {
         super.vor();
 
@@ -81,12 +97,19 @@ public class MeinHamster extends Hamster {
         throw new RuntimeException("Invalid Method Call");
     }
 
+	/**
+	  * Methode zieht dem Hamster Energie ab
+	  */
 	private void verbraucheEnergie() throws HamsterEnergieException {
 		if(energieLevel==0)
 			throw new HamsterEnergieException();
 		energieLevel--;
 	}
 
+	/**
+	  * Methode liefert die Position zur¸ck
+	  * @param position Position des Hamsters
+	  */
     public Position getPosition(){
     	return position;
     }

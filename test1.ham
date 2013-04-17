@@ -1,45 +1,52 @@
 /*object-oriented program*/
 import java.util.ArrayList;
-void main() {
-	// Ermittelt zu Beginn des Programms die auf dem Spielfeld liegenden KÃ¶rner ...
-    int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
 
+/**
+  * Hauptfunktion, mit welcher ein vollständiger Testlauf durchgeführt werden kann.
+  */
+void main() 
+{
+	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
-    // Neuen Hamster erstellen
-
-
-    ArrayList<Wegfindung> algos = new ArrayList<Wegfindung>();
+	//Algorithmen hinzufügen
+	ArrayList<Wegfindung> algos = new ArrayList<Wegfindung>();
     algos.add(new HamsterWegfindung());
     algos.add(new PfadWegfindung());
 
+	//Hamster für jeden Algorithmus hinzufügen
     ArrayList<MeinHamster> hamsters = new ArrayList<MeinHamster>();
-
     for (Wegfindung wf : algos) {
         MeinHamster hamster = new MeinHamster(5, 0, 0, 0, wf);
         hamsters.add(hamster);
     }
+    
+    //KI ausführen
     mainLoop(hamsters);
-
-
-    // Ist die KI fertig (alle KÃ¶rner wurden eingesammelt | Hamster
-    // hat keine Energie mehr), dann werden alle Ã¼brig gebliebenen
-    // KÃ¶rnen ermittelt ...
-	int uebrigeAnzahlKoerner = Territorium.getAnzahlKoerner();
-
-    // TODO Die Anzahl Ã¼brig gebliebener KÃ¶rnern und andere
-    // Informationen kann am Ende als Informationen ausgegeben werden!
-    System.out.println("Ende");
+    
+    //Ergebnis ausgeben
+    for (int i = 0; i < hamsters.size() && gesamtAnzahlKoerner > 0; i++)
+    {
+    	int anzahl = hamsters.get(i).getAnzahlKoerner();
+    	int prozent = anzahl * 100 / gesamtAnzahlKoerner;
+    	int energie = hamsters.get(i).getEnergie();
+    	
+    	hamsters.get(i).schreib("Hamster"+i+"\nGefundene Körner: "+ anzahl + "\nHamster"+i+" hat " + prozent + " Prozent der Körner gefunden!\nRestenergie: " + energie);
+    }
 }
 
+
+/**
+  * Die Methode läuft die KI für alle existierenden Hamster durch.
+  * @param hamsters Existierende Hamster
+  */
 void mainLoop(ArrayList<MeinHamster> hamsters) {
     while(true) {
     	try {
             for (MeinHamster hamster : hamsters) {
     	    	hamster.kiStep();
     	    	if(Territorium.getAnzahlKoerner()==0){
-    	    		hamster.schreib("Alle KÃ¶rner gefunden\nRestenergie: "+hamster.getEnergie());
-                    return; //Ende
+                    return; 
     	    	}
             }
     	} catch(HamsterEnergieException e) {
