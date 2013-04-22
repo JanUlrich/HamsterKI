@@ -14,8 +14,8 @@ class Pfad {
 	public Pfad(Karte karte, Position start, int[] directions) {
 		this(karte, start);
 		for(int i=directions.length-1; i>=0; i--) {
-			if( !richtungen.empty() && (directions[i]-richtungen.peek())%2 == 0)
-				break;
+			//if( !richtungen.empty() && (directions[i]-richtungen.peek())%2 == 0)
+			//	break;
 			addStep(directions[i]);
 		}
 	}
@@ -71,6 +71,29 @@ class Pfad {
 	}
 
 	/**
+	 * Calculates the Corn/Energy ratio
+	 * @return the path's Corn/Energy ratio
+	 */
+	public double getKornChance() {
+		Stack tempRichtungen = (Stack)richtungen.clone();
+
+		Position pos = start;
+		double kornChance = 0;
+
+		while(!tempRichtungen.isEmpty()) {
+			Integer richtung = (Integer)tempRichtungen.pop();
+			pos = pos.getPositionInRichtung(richtung);
+
+			kornChance += karte.getKornChance(pos);
+			if(karte.getMauer(pos)==1) {
+				return -999;
+			}
+		}
+
+		return (double)kornChance;
+	}
+
+	/**
 	 * Calculates the energy Consumption for the current path
 	 * @return the path's total energy consumption
 	 */
@@ -113,7 +136,8 @@ class Pfad {
 				return false;
 			}
 		}
-		if(print) Hamster.getStandardHamster().schreib(x);
+		if(print)
+			Log.write(x);
 		return true;
 	}
 
@@ -124,5 +148,10 @@ class Pfad {
 		int richtung = (Integer)richtungen.pop();
 		start = start.getPositionInRichtung(richtung);
 		return richtung;
+	}
+
+	@Override
+	public String toString() {
+		return Arrays.toString(richtungen.toArray());
 	}
 }
