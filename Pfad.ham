@@ -1,23 +1,20 @@
 /*class*/
 import java.util.Stack;
+import java.util.Arrays;
 class Pfad {
 	Karte karte;
 	Stack<Integer> richtungen;
 	Position start;
 
+	/**
+	 * Erstellt einen neuen Pfad
+	 * @param karte Die Karte die zur Validierung verwendet werden soll
+	 * @param start Der Startpunkt des Pfades
+	 */
 	public Pfad(Karte karte, Position start) {
 		richtungen = new Stack<Integer>();
 		this.karte = karte;
 		this.start = start;
-	}
-
-	public Pfad(Karte karte, Position start, int[] directions) {
-		this(karte, start);
-		for(int i=directions.length-1; i>=0; i--) {
-			//if( !richtungen.empty() && (directions[i]-richtungen.peek())%2 == 0)
-			//	break;
-			addStep(directions[i]);
-		}
 	}
 
 	/**
@@ -37,7 +34,7 @@ class Pfad {
 	}
 
 	/**
-	 * @return the number of directions this Path contains
+	 * @return Die Anzahl der im Pfad gespeicherten Schritte
 	 */
 	public int length() {
 		return richtungen.size();
