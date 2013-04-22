@@ -21,6 +21,15 @@ class Pfad {
 	}
 
 	/**
+	 * @return Gibt eine Kopie des aktuellen Pfades zurück
+	 */
+	public Pfad clone() {
+		Pfad newPfad = new Pfad(karte, start);
+		newPfad.richtungen = (Stack)richtungen.clone();
+		return newPfad;
+	}
+
+	/**
 	 * @return true if Path contains no more directions
 	 */
 	public boolean isEmpty() {

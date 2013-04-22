@@ -1,8 +1,40 @@
 /*class*/
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 class PfadWegfindung extends Wegfindung {
 	public static int maxSteps = 1;
 	private Pfad bestPath = null;
+
+	public List<Pfad> x(Position start, Pfad pfad) {
+		if(pfad==null) {
+			pfad = new Pfad(karte, start);
+		}
+
+		List<Pfad> pfade = new ArrayList<Pfad>();
+
+		if(pfad.length()==maxSteps) {
+			pfade.add(pfad);
+			return pfade;
+		}
+
+		for(int r=0; r<4; r++) {
+			Position nextPos = start.getPositionInRichtung(r);
+			if(karte.getMauer(nextPos)==1)
+				continue;
+			Pfad p = pfad.clone();
+			p.addStep(r);
+			pfade.addAll(x(nextPos, p));
+		}
+
+
+		return pfade;
+	}
+
+
+
+
 
 	public int getBestMove(){
 		double kornChance = -1;
