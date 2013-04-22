@@ -1,35 +1,48 @@
 /*class*/
 import java.util.Arrays;
 class PfadWegfindung extends Wegfindung {
-	public static final int maxSteps = 10;
+	public static int maxSteps = 1;
 	private Pfad bestPath = null;
 
 	public int getBestMove(){
-		if(bestPath==null || bestPath.isEmpty() || !bestPath.isValid()) {
-			bestPath = null;
-			Position start = hamster.getPosition();
-			int bestEnergie = 99999;
-			double bestRatio = -1;
+		double kornChance = -1;
+		if(	bestPath==null ||
+			bestPath.isEmpty() ||
+			!bestPath.isValid() ||
+			(maxSteps<3 &&bestPath.length()<maxSteps) ||
+			bestPath.length()<maxSteps/2) {
+			do {
+				bestPath = null;
+				Position start = hamster.getPosition();
+				int bestEnergie = 99999;
 
-			int[] directions = new int[maxSteps];
-			for(int i=0; i<maxSteps; i++) directions[i] = 0;
+				int[] directions = new int[maxSteps];
+				while(directions[0]!=4) {
+					Pfad p = new Pfad(karte, start, directions);
 
-			int z = 0;
-			while(directions[0]!=4) {
-				Pfad p = new Pfad(karte, start, directions);
+					double ratio = p.getKornChance();
+					int energie = p.getEnergie();
+					if(p.isValid() && (ratio>kornChance || (ratio>=kornChance && energie<bestEnergie))) {
+						Log.write(Arrays.toString(directions) + ": " + ratio);
+						kornChance = ratio;
+						bestPath = p;
+						bestEnergie = energie;
+					}
 
-				double ratio = p.getRatio();
-				int energie = p.getEnergie();
-				if(p.isValid() && (ratio>bestRatio || ratio>=bestRatio && energie<bestEnergie)) {
-					Log.write(Arrays.toString(directions) + ": " + ratio);
-					bestRatio = ratio;
-					bestPath = p;
-					bestEnergie = energie;
+					directions = nextCombination(directions);
 				}
+				if(kornChance>0) break;
+					maxSteps++;
 
-				directions = nextCombination(directions);
-			}
+				String debug = karte.toString(start);
+				debug += "\n\n" + bestPath.toString();
+				debug += "\n\n" + maxSteps;
+				debug += "\n\n" + bestEnergie + "\n" + kornChance;
+				hamster.schreib("Vorausschau um ein Feld erhöht\n" + debug);
+
+			} while(kornChance <=0);
 		}
+
 		//hamster.schreib("" + bestPath.length() + "\n" + bestPath.isEmpty() + bestPath.isValid(true));
 		return bestPath.getNextRichtung();
 	}
