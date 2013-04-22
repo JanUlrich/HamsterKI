@@ -5,32 +5,31 @@ import java.util.ArrayList;
 /**
   * Hauptfunktion, mit welcher ein vollständiger Testlauf durchgeführt werden kann.
   */
-void main() 
+void main()
 {
 	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
 	//Algorithmen hinzufügen
 	ArrayList<Wegfindung> algos = new ArrayList<Wegfindung>();
     algos.add(new HamsterWegfindung());
-    algos.add(new PfadWegfindung());
+    //algos.add(new PfadWegfindung());
 
 	//Hamster für jeden Algorithmus hinzufügen
     ArrayList<MeinHamster> hamsters = new ArrayList<MeinHamster>();
     for (Wegfindung wf : algos) {
-        MeinHamster hamster = new MeinHamster(5, 0, 0, 0, wf);
+        MeinHamster hamster = new MeinHamster(0, 0, 0, 0, wf);
         hamsters.add(hamster);
     }
-    
+
     //KI ausführen
     mainLoop(hamsters);
-    
+
     //Ergebnis ausgeben
-    for (int i = 0; i < hamsters.size() && gesamtAnzahlKoerner > 0; i++)
-    {
+    for (int i = 0; i < hamsters.size() && gesamtAnzahlKoerner > 0; i++) {
     	int anzahl = hamsters.get(i).getAnzahlKoerner();
     	int prozent = anzahl * 100 / gesamtAnzahlKoerner;
     	int energie = hamsters.get(i).getEnergie();
-    	
+
     	hamsters.get(i).schreib("Hamster"+i+"\nGefundene Körner: "+ anzahl + "\nHamster"+i+" hat " + prozent + " Prozent der Körner gefunden!\nRestenergie: " + energie);
     }
 }
@@ -46,7 +45,7 @@ void mainLoop(ArrayList<MeinHamster> hamsters) {
             for (MeinHamster hamster : hamsters) {
     	    	hamster.kiStep();
     	    	if(Territorium.getAnzahlKoerner()==0){
-                    return; 
+                    return;
     	    	}
             }
     	} catch(HamsterEnergieException e) {
