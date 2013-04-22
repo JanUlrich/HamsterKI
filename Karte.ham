@@ -23,6 +23,15 @@ public class Karte {
 	 * @return - Das Feld an der Stelle y,x / Wenn kein Feld vorhanden, dann wird ein Standardfeld generiert.
 	 */
 	private Feld getFeld(Position pos){
+		return getFeld(pos, true);
+	}
+
+	/**
+	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
+	 * Dieses kann anschließend editiert werden.
+	 * @return - Das Feld an der Stelle y,x / Wenn kein Feld vorhanden, dann wird ein Standardfeld generiert.
+	 */
+	private Feld getFeld(Position pos, boolean save){
 		String key = generateHashValue(pos);
 		if(feldBelegt(pos)) {
 			feldZugriff(pos);
@@ -34,7 +43,10 @@ public class Karte {
 		feldZugriff(pos);
 		//Standardfeld generieren:
 		Feld feld = new Feld(0.0,0.50);
-		setFeld(pos, feld); // und der Karte anfügen.
+
+		if(save)
+			setFeld(pos, feld); // und der Karte anfügen.
+
 		// Standardfeld zurückgeben
 		return feld;
 	}
@@ -65,7 +77,7 @@ public class Karte {
 	}
 
     public int getEnergieAufwand(Position pos){
-	    Feld f = getFeld(pos);
+	    Feld f = getFeld(pos, false);
     	return f.getEnergieaufwand(pos.direction);
     }
 
@@ -75,7 +87,7 @@ public class Karte {
 	}
 
     public double getKornChance(Position pos){
-	    Feld f = getFeld(pos);
+	    Feld f = getFeld(pos, false);
     	return f.getKoerner();
     }
 
@@ -85,7 +97,7 @@ public class Karte {
 	}
 
 	public double getMauer(Position pos){
-		Feld feld = getFeld(pos);
+		Feld feld = getFeld(pos, false);
 		return feld.getMauer();
 	}
 
