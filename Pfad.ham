@@ -156,6 +156,10 @@ class Pfad {
 		return richtung;
 	}
 
+	public int peekNextRichtung() {
+		return (Integer)richtungen.peek();
+	}
+
 	@Override
 	public String toString() {
 		return Arrays.toString(richtungen.toArray());

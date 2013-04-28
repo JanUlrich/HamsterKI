@@ -181,4 +181,48 @@ public class Karte {
 	public int getMaxY(){
 		return maxY;
 	}
+
+	public boolean cleanMap(Position start) {
+		boolean hasCleaned = false;
+		for(int x=minX+1; x<maxX-1; x++) {
+			for(int y=minY+1; y<maxY-1; y++) {
+				Position pos = new Position(x, y);
+				if(pos.x==start.x && pos.y==start.y)
+					continue;
+				if(getMauer(pos)!=1 && !isNeededSpace(x, y)) {
+					this.setMauer(pos, 1.0);
+					Hamster.getStandardHamster().schreib("" + x + ", " + y);
+					hasCleaned = true;
+				}
+			}
+		}
+		return hasCleaned;
+	}
+
+	public boolean feldBelegtInRichtung(int x, int y, int r) {
+		return feldBelegt(new Position(x, y).getPositionInRichtung(r));
+	}
+
+	private boolean isNeededSpace(int x, int y) {
+		Position pos = new Position(x, y);
+		if(getKornChance(pos)>0) {
+			return true;
+		}
+		if(!feldBelegtInRichtung(x, y, 0) || !feldBelegtInRichtung(x, y, 1) || !feldBelegtInRichtung(x, y, 2) || !feldBelegtInRichtung(x, y, 3)) {
+			return true;
+		}
+		boolean left   = getMauer(pos.getPositionInRichtung(3)) == 1;
+		boolean top    = getMauer(pos.getPositionInRichtung(0)) == 1;
+		boolean right  = getMauer(pos.getPositionInRichtung(1)) == 1;
+		boolean bottom = getMauer(pos.getPositionInRichtung(2)) == 1;
+		if(		left &&  top && !right && !bottom
+			|| !left &&  top &&  right && !bottom
+			|| !left && !top &&  right &&  bottom
+			||  left && !top && !right &&  bottom)
+			return false;
+		return true;
+	}
 }
+
+
+
