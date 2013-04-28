@@ -1,9 +1,9 @@
 /*class*/
-import java.util.Stack;
+import java.util.LinkedList;
 import java.util.Arrays;
 class Pfad {
 	Karte karte;
-	Stack<Integer> richtungen;
+	LinkedList<Integer> richtungen;
 	Position start;
 
 	/**
@@ -12,7 +12,7 @@ class Pfad {
 	 * @param start Der Startpunkt des Pfades
 	 */
 	public Pfad(Karte karte, Position start) {
-		richtungen = new Stack<Integer>();
+		richtungen = new LinkedList<Integer>();
 		this.karte = karte;
 		this.start = start;
 	}
@@ -22,7 +22,7 @@ class Pfad {
 	 */
 	public Pfad clone() {
 		Pfad newPfad = new Pfad(karte, start);
-		newPfad.richtungen = (Stack)richtungen.clone();
+		newPfad.richtungen = (LinkedList)richtungen.clone();
 		return newPfad;
 	}
 
@@ -45,7 +45,7 @@ class Pfad {
 	 * @param richtung the direction to be added
 	 */
 	public void addStep(int richtung) {
-		richtungen.push(new Integer(richtung));
+		richtungen.offer(new Integer(richtung));
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Pfad {
 	 * @return the path's Corn/Energy ratio
 	 */
 	public double getRatio() {
-		Stack tempRichtungen = (Stack)richtungen.clone();
+		LinkedList tempRichtungen = (LinkedList)richtungen.clone();
 
 		Position pos = start;
 		double energie = 0;
@@ -81,7 +81,7 @@ class Pfad {
 	 * @return the path's Corn/Energy ratio
 	 */
 	public double getKornChance() {
-		Stack tempRichtungen = (Stack)richtungen.clone();
+		LinkedList tempRichtungen = (LinkedList)richtungen.clone();
 
 		Position pos = start;
 		double kornChance = 0;
@@ -104,7 +104,7 @@ class Pfad {
 	 * @return the path's total energy consumption
 	 */
 	public int getEnergie() {
-		Stack tempRichtungen = (Stack)richtungen.clone();
+		LinkedList tempRichtungen = (LinkedList)richtungen.clone();
 		int energie = 0;
 		int lastDirection = start.direction;
 
@@ -131,7 +131,7 @@ class Pfad {
 	 * @return true, if the current Path does not collide
 	 */
 	public boolean isValid(boolean print) {
-		Stack tempRichtungen = (Stack)richtungen.clone();
+		LinkedList tempRichtungen = (LinkedList)richtungen.clone();
 		Position pos = start;
 		String x = "";
 		while(!tempRichtungen.isEmpty()) {
@@ -158,6 +158,10 @@ class Pfad {
 
 	public int peekNextRichtung() {
 		return (Integer)richtungen.peek();
+	}
+
+	public int peekLastRichtung() {
+		return (Integer)richtungen.getLast();
 	}
 
 	@Override
