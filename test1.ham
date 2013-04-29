@@ -3,25 +3,26 @@ import java.util.ArrayList;
 
 
 /**
-  * Hauptfunktion, mit welcher ein vollständiger Testlauf durchgeführt werden kann.
+  * Hauptfunktion, mit welcher ein vollstï¿½ndiger Testlauf durchgefï¿½hrt werden kann.
   */
 void main()
 {
 	int gesamtAnzahlKoerner = Territorium.getAnzahlKoerner();
 
-	//Algorithmen hinzufügen
+	//Algorithmen hinzufï¿½gen
 	ArrayList<Wegfindung> algos = new ArrayList<Wegfindung>();
     algos.add(new HamsterWegfindung());
     //algos.add(new PfadWegfindung());
 
-	//Hamster für jeden Algorithmus hinzufügen
+	//Hamster fï¿½r jeden Algorithmus hinzufï¿½gen
     ArrayList<MeinHamster> hamsters = new ArrayList<MeinHamster>();
     for (Wegfindung wf : algos) {
-        MeinHamster hamster = new MeinHamster(0, 0, 0, 0, wf);
+    	Hamster standard = Hamster.getStandardHamster();
+        MeinHamster hamster = new MeinHamster(standard.getReihe(), standard.getSpalte(), 0, 0, wf);
         hamsters.add(hamster);
     }
 
-    //KI ausführen
+    //KI ausfï¿½hren
     mainLoop(hamsters);
 
     //Ergebnis ausgeben
@@ -30,13 +31,13 @@ void main()
     	int prozent = anzahl * 100 / gesamtAnzahlKoerner;
     	int energie = hamsters.get(i).getEnergie();
 
-    	hamsters.get(i).schreib("Hamster"+i+"\nGefundene Körner: "+ anzahl + "\nHamster"+i+" hat " + prozent + " Prozent der Körner gefunden!\nRestenergie: " + energie);
+    	hamsters.get(i).schreib("Hamster"+i+"\nGefundene Kï¿½rner: "+ anzahl + "\nHamster"+i+" hat " + prozent + " Prozent der Kï¿½rner gefunden!\nRestenergie: " + energie);
     }
 }
 
 
 /**
-  * Die Methode läuft die KI für alle existierenden Hamster durch.
+  * Die Methode lï¿½uft die KI fï¿½r alle existierenden Hamster durch.
   * @param hamsters Existierende Hamster
   */
 void mainLoop(ArrayList<MeinHamster> hamsters) {
