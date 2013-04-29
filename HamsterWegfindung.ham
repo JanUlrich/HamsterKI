@@ -17,13 +17,14 @@ public class HamsterWegfindung extends Wegfindung {
 			if(karte.getMauer(ziel)==1)
 				continue;
 			int initialEnergieaufwand;
-			initialEnergieaufwand = 2;
-			if(position.direction == direction)initialEnergieaufwand=1;
+			initialEnergieaufwand = 2 ;//+ new Double(Math.random() * 2).intValue(); // initialEnergieaufwand ist random Value zwischen 1 und 3. Das verhindert Deadlocks!
+			if(position.direction == direction)initialEnergieaufwand-=1;
+			if(Math.abs(position.direction - direction)==2)initialEnergieaufwand+=1;
 			//double chance = f.getKornChance();
 			double chance = berechneKornChancen(ziel, initialEnergieaufwand);
 
 			//double chance = Pfad.Calculate(position, karte, 10);
-			if(chance>bestChance || (chance>=bestChance && direction!=position.direction)) { //Bevorzuge abzweigungen.
+			if(bestDirection==-1 || chance>bestChance || (chance>=bestChance && direction==position.direction)) { //Bevorzuge abzweigungen.
 
 				bestDirection = direction;
 				bestChance = chance;
