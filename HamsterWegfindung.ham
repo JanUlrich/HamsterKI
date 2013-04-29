@@ -104,17 +104,13 @@ public class HamsterWegfindung extends Wegfindung {
 				if(karte.getMauer(nextPosition)==0){//Es kann nur auf Feldern ohne Mauer gelaufen werden.
 					Position drehPosition = nextPosition.clone();
 					for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
-						if(drehRichtung!=pos.direction){
-							drehPosition.direction = drehRichtung;
-							if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + 1)){
-								karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + 1 );
-								steps.add(drehPosition); // nächster Step
-							}
-						}else{
-							if(karte.istBessererEnergiewert(nextPosition, momentaneEnergie + benoetigteEnergie)){
-								karte.setEnergieAufwand(nextPosition, momentaneEnergie + benoetigteEnergie);
-								steps.add(nextPosition); // nächster Step
-							}
+						int drehEnergie = 0;
+						if(drehRichtung!=pos.direction)drehEnergie = 1;
+						if(Math.abs(pos.direction-drehRichtung)==2)drehEnergie=2; //Muss sich der Hamster umdrehen, dann kostet es 2 Energiepunkte!
+						drehPosition.direction = drehRichtung;
+						if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + drehEnergie)){
+							karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + drehEnergie );
+							steps.add(drehPosition); // nächster Step
 						}
 					}
 				}

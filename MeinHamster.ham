@@ -37,13 +37,15 @@ public class MeinHamster extends Hamster {
 	 * keine Drehung ausgeführt.
 	 */
 	public void dreheInRichtung(int richtung) throws HamsterEnergieException {
-		if(richtung>3 || richtung < 0 || getBlickrichtung() == richtung)
+		int ausgangsRichtung = getBlickrichtung();
+        if(richtung>3 || richtung < 0 || getBlickrichtung() == richtung)
 			return;
 
 		while(getBlickrichtung()!=richtung)
 			linksUm();
 
 		verbraucheEnergie();
+        if(Math.abs(ausgangsRichtung-richtung)==2)verbraucheEnergie();
 	}
 
 	/**
