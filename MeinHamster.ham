@@ -125,12 +125,12 @@ public class MeinHamster extends Hamster {
     public void kiStep() throws HamsterEnergieException {
     	// Als erstes Umgebung abfragen
     	KachelnAbfragen();
+        if(kornDa())
+            nimm();
 
     	int richtung = ki.getBestMove();
     	dreheInRichtung(richtung);
     	forward();
-    	if(kornDa())
-    		nimm();
     }
 
     public int getEnergie(){
