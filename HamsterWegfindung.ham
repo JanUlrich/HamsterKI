@@ -5,6 +5,18 @@
 import java.util.ArrayList;
 
 public class HamsterWegfindung extends Wegfindung {
+	public int getEnergieAufwand(int richtung, int blickRichtung) {
+		// energieaufwand ist random Value zwischen 1 und 3. Das verhindert Deadlocks!
+		//+ new Double(Math.random() * 2).intValue();
+
+		int energieaufwand = 1;
+		if(richtung != blickRichtung)
+			energieaufwand+=1;
+		if(Math.abs(richtung - blickRichtung)==2)
+			energieaufwand+=1;
+		return energieaufwand;
+	}
+
 	public int getBestMove(){
 		Position position = hamster.getPosition();
 
@@ -12,37 +24,31 @@ public class HamsterWegfindung extends Wegfindung {
 		double bestChance = -1;
 		for(int direction = 0; direction < 4; direction++) {
 			Position ziel = position.getPositionInRichtung(direction);
-			//Feld f = karte.getFeld(ziel);
-
 			if(karte.getMauer(ziel)==1)
 				continue;
-			int initialEnergieaufwand;
-			initialEnergieaufwand = 2 ;//+ new Double(Math.random() * 2).intValue(); // initialEnergieaufwand ist random Value zwischen 1 und 3. Das verhindert Deadlocks!
-			if(position.direction == direction)initialEnergieaufwand-=1;
-			if(Math.abs(position.direction - direction)==2)initialEnergieaufwand+=1;
-			//double chance = f.getKornChance();
+
+			int initialEnergieaufwand = getEnergieAufwand(direction, position.direction);
 			double chance = berechneKornChancen(ziel, initialEnergieaufwand);
 
-			//double chance = Pfad.Calculate(position, karte, 10);
-			if(bestDirection==-1 || chance>bestChance || (chance>=bestChance && direction==position.direction)) { //Bevorzuge abzweigungen.
-
+			// Besseren Weg wählen
+			//  || (chance==bestChance && direction==position.direction)
+			if(bestDirection==-1 || chance>bestChance) {
 				bestDirection = direction;
 				bestChance = chance;
 			}
 		}
 
-		Log.write("" + bestDirection + ": " + bestChance);
-
 		return bestDirection;
 	}
 
 	/**
-	 * Diese Funktion berechnet die Chance auf Körner / den Energieaufwand für Hamster um zu diesem Feld zu gelangen und dies für alle Felder.
+	 * Diese Funktion berechnet für alle Felder die Chance auf Körner
+	 * sowie den Energieaufwand um zu diesem Feld zu gelangen.
 	 */
 	private double berechneKornChancen(Position fromPosition, int initialEnergieaufwand){
 		//Spielfeld-Entfernungen von fromPosition berechnen:
-		berechneEntfernungen(fromPosition, initialEnergieaufwand);
-		//hamster.schreib(karte.toString());
+		doStepfrom(fromPosition, initialEnergieaufwand);
+
 		double totalChance = 0;
 		for(int x=karte.getMinX();x<=karte.getMaxX();x++) {
 			for(int y=karte.getMinY();y<=karte.getMaxY();y++){
@@ -57,17 +63,9 @@ public class HamsterWegfindung extends Wegfindung {
 					totalChance += karte.getKornChance(pos) / new Double(energieAufwand);
 
 				Log.write(""+karte.getKornChance(pos) + " / " + karte.getEnergieAufwand(pos) +" = " +totalChance);
-
 			}
 		}
 		return totalChance;
-	}
-
-	/**
-	 * Berechnet die Energieaufwände für den Hamster 'initialHamster' um auf die einzelnen Felder des Spielfelds zu gelangen.
-	 */
-	private void berechneEntfernungen(Position fromPos, int initialEnergieaufwand){
-		doStepfrom(fromPos, initialEnergieaufwand);
 	}
 
 	/**
@@ -77,46 +75,33 @@ public class HamsterWegfindung extends Wegfindung {
 	private void doStepfrom(Position pos, int initialEnergieaufwand){
 		ArrayList<Position> steps = new ArrayList<Position>();
 		steps.add(pos.clone());
-		int maxX=karte.getMaxX();
-		int maxY=karte.getMaxY();
-		int minX=karte.getMinX();
-		int minY=karte.getMinY();
 
 		karte.resetEnergieaufwand();
 		karte.setEnergieAufwand(pos, initialEnergieaufwand);
 
 		while(!steps.isEmpty()){
-		pos = steps.get(0);
-		steps.remove(0);
-		//if(	   pos.x <= maxX && pos.y <= maxY
-		//	&& pos.x >= minX && pos.y >= minY){
+			pos = steps.get(0);
+			steps.remove(0);
 			int momentaneEnergie = karte.getEnergieAufwand(pos);
-            for(int direction = 0; direction<4;direction++){
-				int benoetigteEnergie;
-				benoetigteEnergie = 2;
-		    	// Schaut der Hamster schon in entsprechende Richtung,
-		    	// braucht er sich nicht mehr drehen
-				if(pos.direction == direction)
-					benoetigteEnergie = 1;
+            for(int direction = 0; direction<4; direction++){
+				int benoetigteEnergie = getEnergieAufwand(direction, pos.direction);
 
 				Position nextPosition = pos.getPositionInRichtung(direction);
-                if(    nextPosition.x <= maxX && nextPosition.y <= maxY
-                    && nextPosition.x >= minX && nextPosition.y >= minY){
-				if(karte.getMauer(nextPosition)==0){//Es kann nur auf Feldern ohne Mauer gelaufen werden.
-					Position drehPosition = nextPosition.clone();
-					for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
-						int drehEnergie = 0;
-						if(drehRichtung!=pos.direction)drehEnergie = 1;
-						if(Math.abs(pos.direction-drehRichtung)==2)drehEnergie=2; //Muss sich der Hamster umdrehen, dann kostet es 2 Energiepunkte!
-						drehPosition.direction = drehRichtung;
-						if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + drehEnergie)){
-							karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + drehEnergie );
-							steps.add(drehPosition); // nächster Step
-						}
+                if(    nextPosition.x > karte.getMaxX() || nextPosition.y > karte.getMaxY()
+                    || nextPosition.x < karte.getMinX() || nextPosition.y < karte.getMinY()
+                    || karte.getMauer(nextPosition)==1)
+					continue;
+
+				Position drehPosition = nextPosition.clone();
+				for(int drehRichtung = 0; drehRichtung < 4; drehRichtung++){
+					int drehEnergie = getEnergieAufwand(drehRichtung, pos.direction) - 1;
+					drehPosition.direction = drehRichtung;
+					if(karte.istBessererEnergiewert(drehPosition, momentaneEnergie + benoetigteEnergie + drehEnergie)){
+						karte.setEnergieAufwand(drehPosition, momentaneEnergie + benoetigteEnergie + drehEnergie );
+						steps.add(drehPosition); // nächster Step
 					}
 				}
 			}
-		}
 		}
 	}
 }
