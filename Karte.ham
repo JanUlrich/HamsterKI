@@ -205,7 +205,6 @@ public class Karte {
 					continue;
 				if(getMauer(pos)!=1 && !isNeededSpace(x, y)) {
 					this.setMauer(pos, 1.0);
-					Hamster.getStandardHamster().schreib("" + x + ", " + y);
 					hasCleaned = true;
 				}
 			}

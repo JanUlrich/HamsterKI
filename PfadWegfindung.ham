@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 class PfadWegfindung extends Wegfindung {
-	public static int maxSteps = 1;
-	private static int lastSteps = 0;
+	public static int maxSteps = 5;
+	private static int lastSteps = 5;
 	private Pfad bestPath = null;
 
 	public List<Pfad> FindPaths(Position start, Pfad pfad, boolean first) {
@@ -25,7 +25,8 @@ class PfadWegfindung extends Wegfindung {
 				pfade.add(pfad);
 				return pfade;
 			}
-			hamster.schreib("Pfad: " + pfad.toString() + "\nKornChance: " + pfad.getKornChance() + "\nPosition: " + start.x + ", " + start.y);
+			return pfade;
+			//hamster.schreib("Pfad: " + pfad.toString() + "\nKornChance: " + pfad.getKornChance() + "\nPosition: " + start.x + ", " + start.y);
 		}
 
 		boolean fst = true;
@@ -56,42 +57,39 @@ class PfadWegfindung extends Wegfindung {
 		lastSteps = maxSteps;
 
 		Position start = hamster.getPosition();
-		while(karte.cleanMap(start)) {
-			hamster.schreib(karte.toString());
-		}
+		//while(karte.cleanMap(start)) {
+		//	hamster.schreib(karte.toString());
+		//}
 
 		double kornChance = -1;
 		if(bestPath!=null && !bestPath.isEmpty() && bestPath.isValid() && maxSteps<4 && bestPath.length()>maxSteps/2) {
 			return bestPath.getNextRichtung();
 		}
 
-		//while(kornChance<=0) {
-			bestPath = null;
-			int bestEnergie = 99999;
+		bestPath = null;
+		int bestEnergie = 99999;
 
-			List<Pfad> pfade = FindPaths(start, null, true);
-			for(Pfad p : pfade) {
-				double ratio = p.getKornChance();
-				int energie = p.getEnergie();
-				if((ratio>kornChance || (ratio>=kornChance && energie<bestEnergie))) {
-					kornChance = ratio;
-					bestPath = p;
-					bestEnergie = energie;
-				}
+		List<Pfad> pfade = FindPaths(start, null, true);
+		for(Pfad p : pfade) {
+			double ratio = p.getRatio();
+			int energie = p.getEnergie();
+			if((ratio>kornChance || (ratio>=kornChance && (energie/p.length())<bestEnergie))) {
+				kornChance = ratio;
+				bestPath = p;
+				bestEnergie = energie;
 			}
-		//	if(kornChance>0)
-		//		break;
+		}
 
-			maxSteps++;
-
-			String debug = karte.toString(start) + "\n\n"
-				+ ((bestPath!=null) ? bestPath.toString() : "NULL") + "\n\n"
-				+ maxSteps + "\n\n"
-				+ bestEnergie + "\n" + kornChance;
+		String debug = karte.toString(start) + "\n\n"
+			+ ((bestPath!=null) ? bestPath.toString() : "NULL") + "\n\n"
+			+ maxSteps + "\n\n"
+			+ bestEnergie + "\n" + kornChance;
 			//hamster.schreib("Vorausschau um ein Feld erhöht\n" + debug);
-		//}
 
 		// Verhindert, dass Vorausschau zu schnell ansteigt
+		if(kornChance<=0) {
+			maxSteps++;
+		}
 		maxSteps = maxSteps - (maxSteps - lastSteps) / 2;
 
 		return bestPath.getNextRichtung();

@@ -65,6 +65,8 @@ class Pfad {
 
 			if(richtung!=pos.direction)
 				energie++;		// Drehung, wenn nötig
+			if(Math.abs(richtung-pos.direction)==2)
+				energie++;		// 180 Grad
 			energie++;			// Schritt vorwärts
 
 			kornChance += karte.getKornChance(pos);
@@ -113,6 +115,8 @@ class Pfad {
 
 			if(richtung!=lastDirection)
 				energie++;		// Drehung, wenn nötig
+			if(Math.abs(richtung-lastDirection)==2)
+				energie++;		// 180 Grad
 			energie++;			// Schritt vorwärts
 			lastDirection = richtung;
 		}
