@@ -1,4 +1,8 @@
-/*class*/abstract class Wegfindung {
+/*class*/
+/**
+ * Abstrakte Basisklasse für alle Wegfindungsalgorithmen
+ */
+abstract class Wegfindung {
     protected Karte karte;
     protected MeinHamster hamster;
 
@@ -11,5 +15,8 @@
     	this.hamster = hamster;
     }
 
+    /**
+     * Methode, die den nächsten Zug berechnet
+     */
 	public abstract int getBestMove();
 }

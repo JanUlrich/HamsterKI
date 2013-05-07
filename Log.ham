@@ -1,5 +1,14 @@
-/*class*/class Log {
+/*class*/
+/**
+ * Statische Klasse für Logging-Mechanismen
+ * @author Jan Bader
+ */
+class Log {
 	public static boolean DEBUG = false;
+
+	/**
+	 * Gibt eine Nachricht aus, wenn das Logging aktiviert ist
+	 */
 	public static void write(String s) {
 		if(!DEBUG)
 			return;

@@ -1,9 +1,9 @@
 /*object-oriented program*/
 import java.util.ArrayList;
 
-
 /**
   * Hauptfunktion, mit welcher ein vollständiger Testlauf durchgeführt werden kann.
+  * @author Simon Herrmann
   */
 void main()
 {
