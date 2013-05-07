@@ -11,6 +11,9 @@ public class MeinHamster extends Hamster {
 	private int energieLevel;
     private Wegfindung ki;
 
+    public int drehungen = 0;
+    public int schritte = 0;
+
 	/**
 	  * Konstruktor der Klasse MeinHamster
 	  * @param y die Reihe des Territoriums, in der der Hamster erzeugt wird
@@ -41,8 +44,10 @@ public class MeinHamster extends Hamster {
         if(richtung>3 || richtung < 0 || getBlickrichtung() == richtung)
 			return;
 
-		while(getBlickrichtung()!=richtung)
+		while(getBlickrichtung()!=richtung) {
 			linksUm();
+            drehungen++;
+        }
 
 		verbraucheEnergie();
         if(Math.abs(ausgangsRichtung-richtung)==2)verbraucheEnergie();
@@ -95,6 +100,7 @@ public class MeinHamster extends Hamster {
         position = position.getPositionInRichtung(richtung);
 
         verbraucheEnergie();
+        schritte++;
     }
 
     @Override

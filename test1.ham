@@ -31,7 +31,11 @@ void main()
     	int prozent = anzahl * 100 / gesamtAnzahlKoerner;
     	int energie = hamsters.get(i).getEnergie();
 
-    	hamsters.get(i).schreib("Hamster"+i+"\nGefundene Körner: "+ anzahl + "\nHamster"+i+" hat " + prozent + " Prozent der Körner gefunden!\nRestenergie: " + energie);
+    	hamsters.get(i).schreib("Hamster" + i + "\n"
+            + "Gefundene Körner: "+ anzahl + " / " + prozent + "%\n"
+            + "Restenergie: " + energie + "\n"
+            + "Drehungen: " + hamsters.get(i).drehungen + "\n"
+            + "Schritte: " + hamsters.get(i).schritte);
     }
 }
 
