@@ -1,3 +1,7 @@
-/*class*/class FeldNichtErkundetException extends Exception {
-    
+/*class*/
+/**
+ * @author Andreas Stadelmeier
+ */
+class FeldNichtErkundetException extends Exception {
+
 }

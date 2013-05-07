@@ -1,3 +1,7 @@
-/*class*/public class HamsterEnergieException extends Exception {
-    
+/*class*/
+/**
+ * @author Andreas Stadelmeier
+ */
+ public class HamsterEnergieException extends Exception {
+
 }

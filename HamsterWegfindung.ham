@@ -1,10 +1,17 @@
-/*class*//**
- * HamsterWegfindung berechnet die Energieaufwände für einen Hamster um
- * auf die einzelnen Felder des Spielfelds zu gelangen. Die Werte können für weitere AI-Operationen verwendet werden.
- */
+/*class*/
 import java.util.ArrayList;
 
+/**
+ * HamsterWegfindung berechnet die Energieaufwände für einen Hamster um
+ * auf die einzelnen Felder des Spielfelds zu gelangen. Die Werte können
+ * für weitere AI-Operationen verwendet werden.
+ */
 public class HamsterWegfindung extends Wegfindung {
+	/**
+	 * Liefert den Energieaufwand für einen Schritt
+	 * @param richtung Die Richtung, in die der Schritt getätigt werden soll
+	 * @param blickRichtung Die Richtung, in die der Hamster im Moment blickt
+	 */
 	public int getEnergieAufwand(int richtung, int blickRichtung) {
 		// energieaufwand ist random Value zwischen 1 und 3. Das verhindert Deadlocks!
 		//+ new Double(Math.random() * 2).intValue();
@@ -17,6 +24,9 @@ public class HamsterWegfindung extends Wegfindung {
 		return energieaufwand;
 	}
 
+	/**
+	 * Berechnet den bestmöglichen Zug
+	 */
 	public int getBestMove(){
 		Position position = hamster.getPosition();
 
@@ -31,8 +41,7 @@ public class HamsterWegfindung extends Wegfindung {
 			double chance = berechneKornChancen(ziel, initialEnergieaufwand);
 
 			// Besseren Weg wählen
-			//  || (chance==bestChance && direction==position.direction)
-			if(bestDirection==-1 || chance>bestChance) {
+			if(bestDirection==-1 || chance>bestChance || (chance==bestChance && direction==position.direction)) {
 				bestDirection = direction;
 				bestChance = chance;
 			}
