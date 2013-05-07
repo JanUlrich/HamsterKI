@@ -1,8 +1,15 @@
-/*class*/public class Feld {
+/*class*/
+/**
+ * @author Jan Bader
+ */
+public class Feld {
     public int[] energieaufwand;
     private double mauer;
     private double koerner;//Prozentchance auf Körner
 
+    /**
+     * Erstellt ein neues Feld mit den Standardwerten
+     */
 	public Feld() {
     	this(0.0,0.50);
 	}
@@ -20,20 +27,30 @@
 	}
 
 	/**
-	 *
+	 * Gibt den Energieaufwand für einen Schritt in die gegebene Richtung zurück
 	 */
 	public int getEnergieaufwand(int direction){
-		return energieaufwand[direction]; //TODO überprüfen ob Wert vorhanden.
+		//TODO überprüfen ob Wert vorhanden.
+		return energieaufwand[direction];
 	}
 
+	/**
+	 * Setzt den Energieaufwand für einen Schritt in die gegebene Richtung
+	 */
 	public void setEnergieaufwand(int direction, int energie){
 		energieaufwand[direction] = energie;
 	}
 
+	/**
+	 * Setzt die Wahrscheinlichkeit für eine Mauer
+	 */
 	public void setMauer(double mauer) {
 		this.mauer = mauer;
 	}
 
+	/**
+	 * Gibt die Wahrscheinlichkeit für eine Mauer zurück
+	 */
 	public double getMauer() {
 		return mauer;
 	}
@@ -42,18 +59,17 @@
 		this.koerner = koerner;
 	}
 
-	public double getKoerner() {
-		if(getMauer()>0)return 0;
-		return koerner;
-	}
-
+	/**
+	 * Gibt die Wahrscheinlichkeit für Körner zurück
+	 */
 	public double getKornChance() {
 		return koerner * (1-mauer);
 	}
 
 	@Override
 	public String toString(){
-		if(mauer == 0)return ""+koerner+"";
+		if(mauer == 0)
+			return ""+koerner;
 		return "M";
 	}
 }

@@ -88,7 +88,7 @@ public class Karte {
 
     public double getKornChance(Position pos){
 	    Feld f = getFeld(pos, false);
-    	return f.getKoerner();
+    	return f.getKornChance();
     }
 
 	public void setKornChance(Position pos, double kornChance){
