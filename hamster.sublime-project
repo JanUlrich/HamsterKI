@@ -2,7 +2,7 @@
 	"folders":
 	[
 		{
-			"file_exclude_patterns": ["*.java", "*.class", "*.jar"],
+			"file_exclude_patterns": ["*.java", "*.class", "*.jar", ".fuse*"],
 			"follow_symlinks": true,
 			"path": "./"
 		}
