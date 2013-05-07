@@ -1,10 +1,12 @@
-/*class*/import java.util.HashMap;
+/*class*/
+import java.util.HashMap;
 /**
  * Die Karte stellt ein Spielfeld mit Variabler Größe dar.
  * Die Felder der Karte können Editiert werden.
  * Quasi die Karte die der Hamster (die AI das Hamsters) dabei hat und alle aufgedeckten Felder darauf vermerkt.
  * Bemerkung:
  * wird auf ein Feld zugegriffen, welches noch nicht erkundet ist, so wird die FeldNichtErkundetException geworfen
+ * @author Jan Bader, Andreas Stadelmeier
  */
 public class Karte {
 	private HashMap<String,Feld> felder = new HashMap<String,Feld>();
@@ -13,9 +15,6 @@ public class Karte {
 	private int maxY = 0;
 	private int minX = 0;
 	private int maxX = 0;
-
-	public Karte() {
-	}
 
 	/**
 	 * Gibt ein Feld mit den bisher auf diesem Feld eingetragenen Informationen zurück.
@@ -51,6 +50,9 @@ public class Karte {
 		return feld;
 	}
 
+	/**
+	 * Setzt das Feld an der gegebenen Position
+	 */
 	private void setFeld(Position pos, Feld feld) {
 		feldZugriff(pos);
 		String key = generateHashValue(pos);
@@ -140,6 +142,9 @@ public class Karte {
 		if(pos.x>maxX)	maxX=pos.x;
 	}
 
+	/**
+	 * Erstellt einen Hash-Wert für die gegebene Position
+	 */
 	private String generateHashValue(Position pos){
 		return "" + pos.y + "," + pos.x;
 	}
@@ -149,6 +154,11 @@ public class Karte {
     	return toString(null);
     }
 
+    /**
+     * Erstellt eine textuelle Repräsentation der Karte
+     * @param hamsterPosition Die aktuelle Position des Hamsters
+	 * @author Jan Bader
+	 */
     public String toString(Position hamsterPosition){
     	String ret = "Karte:\n";
     	for(int y=minY;y<=maxY;y++){
@@ -182,6 +192,10 @@ public class Karte {
 		return maxY;
 	}
 
+	/**
+	 * Räumt die Karte auf. D.h. sperrt nicht mehr benötigte Felder.
+	 * @author Jan Bader
+	 */
 	public boolean cleanMap(Position start) {
 		boolean hasCleaned = false;
 		for(int x=minX+1; x<maxX-1; x++) {
@@ -203,6 +217,10 @@ public class Karte {
 		return feldBelegt(new Position(x, y).getPositionInRichtung(r));
 	}
 
+	/**
+	 * Prüft, ob auf ein Feld verzichtet werden kann
+	 * @author Jan Bader
+	 */
 	private boolean isNeededSpace(int x, int y) {
 		Position pos = new Position(x, y);
 		if(getKornChance(pos)>0) {
